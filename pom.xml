@@ -27,6 +27,10 @@
         <url>https://github.com/molgenis/molgenis-apps-core</url>
     </scm>
 
+    <modules>
+        <module>web-app</module>
+    </modules>
+
     <properties>
         <molgenis.dependency>4.0.0</molgenis.dependency>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
