@@ -1,23 +1,24 @@
-package app.controller;
+package org.molgenis.org.controller.app.controller;
 
 import org.molgenis.ui.MolgenisPluginController;
 import org.molgenis.ui.controller.AbstractStaticContentController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static app.controller.ContactController.URI;
+import static org.molgenis.org.controller.app.controller.ReferencesController.URI;
 
 /**
- * Controller that handles contact page requests
+ * Controller that handles references page requests
  */
 @Controller
 @RequestMapping(URI)
-public class ContactController extends AbstractStaticContentController
+public class ReferencesController extends AbstractStaticContentController
 {
-	public static final String ID = "contact";
+	public static final String ID = "references";
 	public static final String URI = MolgenisPluginController.PLUGIN_URI_PREFIX + ID;
 
-	public ContactController()
+	public ReferencesController()
+
 	{
 		super(ID, URI);
 	}

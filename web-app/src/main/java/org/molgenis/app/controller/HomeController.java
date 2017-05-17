@@ -1,11 +1,11 @@
-package app.controller;
+package org.molgenis.org.controller.app.controller;
 
 import org.molgenis.ui.MolgenisPluginController;
 import org.molgenis.ui.controller.AbstractStaticContentController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static app.controller.HomeController.URI;
+import static org.molgenis.org.controller.app.controller.HomeController.URI;
 
 /**
  * Controller that handles home page requests
