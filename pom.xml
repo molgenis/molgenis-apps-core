@@ -2,6 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>web-app</module>
+    </modules>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -26,4 +29,11 @@
         <connection>scm:git:git://github.com/molgenis/molgenis-apps-core.git</connection>
         <url>https://github.com/molgenis/molgenis-apps-core</url>
     </scm>
+
+    <properties>
+        <molgenis.dependency>4.0.0</molgenis.dependency>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.3.7.RELEASE</spring.version>
+        <spring.security.version>4.2.0.RELEASE</spring.security.version>
+    </properties>
 </project>
