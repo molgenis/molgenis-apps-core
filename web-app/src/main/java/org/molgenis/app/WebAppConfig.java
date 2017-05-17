@@ -1,4 +1,4 @@
-package app;
+package org.molgenis.org.controller.app;
 
 import freemarker.template.TemplateException;
 import org.molgenis.CommandLineOnlyConfiguration;

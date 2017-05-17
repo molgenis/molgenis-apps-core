@@ -1,4 +1,4 @@
-package app;
+package org.molgenis.org.controller.app;
 
 import org.molgenis.security.MolgenisRoleHierarchy;
 import org.molgenis.security.MolgenisWebAppSecurityConfig;

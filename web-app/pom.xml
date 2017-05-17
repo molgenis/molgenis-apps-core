@@ -9,6 +9,11 @@
     <artifactId>web-app</artifactId>
     <packaging>war</packaging>
 
+    <properties>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm z</maven.build.timestamp.format>
+        <molgenis.build.timestamp>${maven.build.timestamp}</molgenis.build.timestamp>
+    </properties>
+
     <build>
         <resources>
             <resource>
@@ -265,7 +270,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- MOLGENIS UI app list -->
+        <!-- MOLGENISorg.molgenis.org.controller.app app list -->
         <dependency>
             <groupId>org.molgenis</groupId>
             <artifactId>gene-network</artifactId>

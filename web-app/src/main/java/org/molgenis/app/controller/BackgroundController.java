@@ -1,11 +1,11 @@
-package app.controller;
+package org.molgenis.org.controller.app.controller;
 
 import org.molgenis.ui.MolgenisPluginController;
 import org.molgenis.ui.controller.AbstractStaticContentController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static app.controller.BackgroundController.URI;
+import static org.molgenis.org.controller.app.controller.BackgroundController.URI;
 
 /**
  * Controller that handles contact page requests
