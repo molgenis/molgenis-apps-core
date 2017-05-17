@@ -396,8 +396,4 @@
         </dependency>
     </dependencies>
 
-    <modules>
-        <module>web-org.molgenis.org.controller.app</module>
-    </modules>
-
 </project>
