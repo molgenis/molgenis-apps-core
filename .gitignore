@@ -23,6 +23,7 @@
 hs_err_pid*
 
 web-app/target/**/*
+navigator/target/**/*
 .idea/
 molgenis-apps-core.iml
 web-app/web-app.iml
