@@ -1,6 +1,5 @@
 import 'es6-promise/auto'
 import Vue from 'vue'
-import i18n from '@molgenis/molgenis-i18n-js/dist/molgenis-i18n.esm'
 import MgApp from './MgApp'
 import { sync } from 'vuex-router-sync'
 import store from './store'
@@ -16,19 +15,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 sync(store, router)
 
 Vue.use(BootstrapVue)
-
-Vue.use(i18n, {
-  lng: window.lng,
-  fallbackLng: window.fallbackLng,
-  namespace: 'navigator',
-  callback () {
-    /* eslint-disable no-new */
-    new Vue({
-      el: '#app',
-      store,
-      router,
-      template: '<MgApp />',
-      components: { MgApp }
-    })
-  }
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  store,
+  router,
+  template: '<MgApp />',
+  components: { MgApp }
 })
