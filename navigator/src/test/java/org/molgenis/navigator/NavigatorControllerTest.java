@@ -1,10 +1,8 @@
 package org.molgenis.navigator;
 
-import org.apache.http.entity.ContentType;
 import org.mockito.InjectMocks;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.testng.annotations.BeforeMethod;
