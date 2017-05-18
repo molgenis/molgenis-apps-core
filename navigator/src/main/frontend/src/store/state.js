@@ -4,7 +4,7 @@ export type State = {
   date: Date
 }
 
-const message: string = window.__INITIAL_STATE__
+const message: string = 'Hallo'
 const state: State = {
   message,
   date: new Date()

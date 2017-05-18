@@ -18,15 +18,14 @@ public class NavigatorController extends MolgenisPluginController
 {
 	public static final String URI = PLUGIN_URI_PREFIX + "navigator";
 
-	@Autowired
-	public NavigatorController(String uri, MolgenisPluginFactory molgenisPluginFactory)
+	public NavigatorController()
 	{
-		super(uri, molgenisPluginFactory);
+		super(URI);
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String init(HttpServletRequest request, Model model)
 	{
-		return "view-gn-app";
+		return "view-navigator";
 	}
 }

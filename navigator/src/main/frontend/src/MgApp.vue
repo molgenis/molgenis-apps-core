@@ -1,21 +1,17 @@
 <template>
   <div class="container">
     <div id="app">
+      <h2>Hello world</h2>
       <b-alert show dismissible>A vue bootstrap alert component</b-alert>
       <router-view></router-view>
-      <mg-i18n></mg-i18n>
     </div>
   </div>
 </template>
 
 <script>
-import MgI18n from './components/MgI18n'
 
 export default {
-  name: 'molgenis-app',
-  components: {
-    MgI18n
-  }
+  name: 'molgenis-app'
 }
 </script>
 
