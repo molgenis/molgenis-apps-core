@@ -28,3 +28,6 @@ web-app/target/**/*
 .idea/
 molgenis-apps-core.iml
 web-app/web-app.iml
+
+# Cobertura test reports
+**/coverage
