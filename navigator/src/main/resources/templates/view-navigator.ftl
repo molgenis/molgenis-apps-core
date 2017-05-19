@@ -9,6 +9,9 @@
 <body>
 <div id="app">
     <h1>Hello Navigator!</h1>
+    <#list rootPackages as package>
+        ${package.id}<br/>
+    </#list>
 </div>
 <script type="text/javascript">
 
