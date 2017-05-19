@@ -12,10 +12,9 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>>molgenis-apps-core</name>
-    <description>
-        Molgenis core userinterface
-    </description>
+    <name>molgenis-apps-core</name>
+    <description>Core User interface modules for the MOLGENIS platform</description>
+
     <url>http://www.molgenis.org</url>
     <licenses>
         <license>
