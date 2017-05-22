@@ -1,4 +1,4 @@
-package org.molgenis.org.controller.app;
+package org.molgenis.app;
 
 import org.molgenis.ui.MolgenisWebAppInitializer;
 import org.springframework.web.WebApplicationInitializer;
