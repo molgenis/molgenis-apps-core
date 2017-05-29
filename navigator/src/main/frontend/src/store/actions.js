@@ -23,11 +23,15 @@ export default {
     )
   },
   [GET_ENTITIES] ({commit, state}, query) {
+    if (!query) {
+      return
+    }
     Vue.http.headers.common['x-molgenis-token'] = state.token
     Vue.http.get('/api/v2/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
       const entities = response.data.items.map(function (item) {
         return {
           'id': item.fullName,
+          'type': 'entity',
           'label': item.label,
           'description': item.description
         }

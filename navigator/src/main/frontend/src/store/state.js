@@ -7,7 +7,13 @@ export type State = {
 const message: string = 'Hallo'
 const state: State = {
   message,
-  date: new Date()
+  date: new Date(),
+  token: undefined,
+  query: undefined,
+  packages: [],
+  entities: [],
+  selectedPackage: undefined,
+  error: undefined
 }
 
 export default state
