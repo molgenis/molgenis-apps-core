@@ -1,76 +1,31 @@
-<style>
-  td {
-    white-space: nowrap;
-  }
-</style>
-
-<script>
-  import getStateForPackage from '../getStateForPackage.js'
-  import getStateForSearch from '../getStateForSearch.js'
-  import state from '../exampledata.js'
-
-  export default {
-    data: function () {
-      return state
-    },
-    methods: {
-      selectPackage: function (packageId) {
-        getStateForPackage(this, packageId)
-      },
-      openDataset: function (datasetId) {
-        window.open('/menu/main/dataexplorer?entity=' + datasetId)
-      },
-      updateSearch: function () {
-        if (this.search !== undefined) getStateForSearch(this, this.search)
-      },
-      clearSearch: function () {
-        this.search = null
-        getStateForPackage(this, null)
-      }
-    },
-    // initialize to root (which is 'null' package)
-    mounted: function () {
-      getStateForPackage(this, null)
-    }
-  }
-</script>
-
 <template>
   <div class="container">
-    <!-- search box; will match all packages/entities by name -->
-    <div class="input-group">
-      <input v-model="search" type="text" class="form-control" placeholder="Search packages and data ...">
-      <span @click="updateSearch()" class="input-group-addon">search</span>
-      <span @click="clearSearch()" class="input-group-addon">clear</span>
+
+    <!-- Put this in a separate component -->
+    <div v-if="error != undefined" class="alert alert-danger" role="alert">
+      <button @click="error=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{error}}
     </div>
 
-    <!-- search based breadcrumb -->
-    <ol v-if="search != null" class="breadcrumb">
+    <!-- Put this in a separate component -->
+    <div class="input-group">
+      <input v-model="query" type="text" class="form-control" placeholder="Search packages and data ...">
+      <span @click="submitQuery()" class="input-group-addon">search</span>
+      <span @click="clearQuery()" class="input-group-addon">clear</span>
+    </div>
+
+    <!-- Put this in a separate component -->
+    <ol v-if="query != undefined" class="breadcrumb">
       <li><a @click="selectPackage(null);">My MOLGENIS</a></li>
-      <li><a><b>Showing result matching "{{search}}""</b></a></li>
+      <li><a><b>Showing result matching "{{query}}""</b></a></li>
     </ol>
-    <!-- path based breadcrumb -->
+
     <ol v-else class="breadcrumb">
       <li><a @click="selectPackage(null);">My MOLGENIS</a></li>
       <li v-for="package in path"><a @click="selectPackage(package.id)">{{package.label}}</a></li>
       <li><a><b>{{currentLabel}}</b></a></li>
     </ol>
 
-    <!-- status message -->
-    <div v-if="message != null" class="alert alert-info" role="alert">
-      <button @click="message=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{message}}
-    </div>
-
-    <!-- error message -->
-    <div v-if="error != null" class="alert alert-danger" role="alert">
-      <button @click="error=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{error}}
-    </div>
-
-    <!--<button class="btn btn-primary" type="submit">New</button>-->
-
-
-    <!-- table showing the contents of curren package, no sorting now -->
-    <!-- one click selects, right-click shows context menu, doubleclick goes into folder/view entity-->
+    <!-- Put this in a separate component -->
     <table class="table">
       <thead>
       <tr>
@@ -79,15 +34,16 @@
       </tr>
       </thead>
       <tbody>
-      <!-- render packages-->
       <tr v-for="package in packages">
-        <td @dblclick="selectPackage(package.id)" @click="selected = package.id" :class="{active: package.id == selected}"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>&nbsp; {{package.label}}
+        <td @dblclick="setSelectedPackage(package.id)" @click="selected = package.id"
+            :class="{active: package.id == selected}"><span class="glyphicon glyphicon-folder-open"
+                                                            aria-hidden="true"></span>&nbsp; {{package.label}}
         </td>
-        <td @dblclick="selectPackage(package.id)" @click="selected = package.id" :class="{active: package.id == selected}" class="hidden-xs">
+        <td @dblclick="selectPackage(package.id)" @click="selected = package.id"
+            :class="{active: package.id == selected}" class="hidden-xs">
           <i>{{package.description}}</i>
         </td>
       </tr>
-      <!-- render entities -->
       <tr v-for="entity in entities">
         <td @dblclick="openDataset(entity.id)" @click="selected = entity.id" :class="{active: entity.id == selected}">
           <span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp; {{entity.label}}
@@ -98,5 +54,61 @@
       </tr>
       </tbody>
     </table>
+
   </div>
 </template>
+
+<script>
+  import {GET_PACKAGES, GET_ENTITIES, LOGIN} from '../store/actions'
+  import {SET_QUERY, SET_SELECTED_PACKAGE} from '../store/mutations'
+
+  export default {
+    name: 'Navigator',
+    data () {
+      return {
+        path: 'test',
+        currentLabel: 'test'
+      }
+    },
+    methods: {
+      submitQuery: function () {
+        this.$store.dispatch(GET_PACKAGES, this.$store.state.query)
+        this.$store.dispatch(GET_ENTITIES, this.$store.state.query)
+      },
+      clearQuery: function () {
+        this.$store.commit(SET_QUERY, undefined)
+        this.$store.dispatch(GET_PACKAGES)
+      }
+    },
+    computed: {
+      query: {
+        get () {
+          return this.$store.state.query
+        },
+        set (query) {
+          this.$store.commit(SET_QUERY, query)
+        }
+      },
+      packages () {
+        return this.$store.state.packages
+      },
+      entities () {
+        return this.$store.state.entities
+      },
+      error () {
+        return this.$store.state.error
+      },
+      selected: {
+        get () {
+          return this.$store.state.selectedPackage
+        },
+        set (packageID) {
+          this.$store.commit(SET_SELECTED_PACKAGE, packageID)
+        }
+      }
+    },
+    mounted: function () {
+      this.$store.state.token ? this.$store.dispatch(GET_PACKAGES) : this.$store.dispatch(LOGIN)
+    }
+  }
+</script>
