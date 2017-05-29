@@ -33,43 +33,43 @@ export default function (state, packageId) {
       }
     }
 
-    // get packages that when parent.fullName === currentId or currentId = null && parent == null
+    // get packages that when parent.id === currentId or currentId = null && parent == null
     state.packages = response.data.items.filter(function (obj) {
-      if ('parent' in obj) return obj.parent.fullName === state.currentId
+      if ('parent' in obj) return obj.parent.id === state.currentId
       else if (state.currentId === null && obj.parent === undefined) return true
       return false
     }).map(function (obj) {
       return {
-        id: obj.fullName,
+        id: obj.id,
         label: obj.label,
         description: obj.description
       }
     })
-
+    console.log('breakpointa')
     // refresh the path
     state.path = []
     var parent = null
     if (_current !== null) {
       parent = _current.parent
     }
-    while (parent !== undefined) {
-      // find the parent package object based on parent.fullName reference
+    while (parent !== null) {
+      // find the parent package object based on parent.id reference
       parent = response.data.items.find(function (obj) {
-        return obj.fullName === parent.fullName
+        return obj.id === parent.id
       })
-
+      console.log('breakpointb')
       // prepend parent to path
       state.path.unshift({
-        id: parent.fullName,
+        id: parent.id,
         label: parent.label
       })
-
+      console.log('breakpointc')
       // get parents parent
       if (parent.parent === null) {
         parent = null
       } else {
         parent = response.data.items.find(function (obj) {
-          return obj.fullName === parent.parent.fullName
+          return obj.id === parent.parent.id
         })
       }
       console.log('breakpoint2')
@@ -82,10 +82,10 @@ export default function (state, packageId) {
       console.log(response.data)
       state.entities = response.data.items.filter(function (obj) {
         if (state.currentId === null) return obj.package === undefined
-        else return obj.package.fullName === state.currentId
+        else return obj.package.id === state.currentId
       }).map(function (obj) {
         return {
-          id: obj.fullName,
+          id: obj.id,
           label: obj.label,
           description: obj.description
         }
