@@ -17,7 +17,6 @@
 *.zip
 *.tar.gz
 *.rar
-*.iml
 
 */target
 
@@ -26,8 +25,7 @@ hs_err_pid*
 
 web-app/target/**/*
 .idea/
-molgenis-apps-core.iml
-web-app/web-app.iml
+*.iml
 
 # Cobertura test reports
 **/coverage

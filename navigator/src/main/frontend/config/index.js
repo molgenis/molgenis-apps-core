@@ -24,6 +24,9 @@ module.exports = {
       },
       '/api': {
         target: 'http://localhost:8080'
+      },
+      '/plugin/importwizard/importFile': {
+        target: 'http://localhost:8080'
       }
     },
     cssSourceMap: false
