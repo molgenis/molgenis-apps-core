@@ -271,7 +271,7 @@
         </dependency>
         <dependency>
             <groupId>org.molgenis</groupId>
-            <artifactId>navigator</artifactId>
+            <artifactId>molgenis-navigator</artifactId>
             <version>${project.version}</version>
         </dependency>
 
