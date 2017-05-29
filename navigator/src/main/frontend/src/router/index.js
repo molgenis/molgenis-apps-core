@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MgHello from 'components/MgHello'
+import Navigator from 'components/Navigator'
 
 Vue.use(Router)
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'MgHello',
-      component: MgHello
+      name: 'Navigator',
+      component: Navigator
     }
   ]
 })
