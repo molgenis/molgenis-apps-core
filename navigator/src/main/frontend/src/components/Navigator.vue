@@ -36,8 +36,10 @@
       <tbody>
       <tr v-for="package in packages">
         <td @dblclick="setSelectedPackage(package.id)" @click="selected = package.id"
-            :class="{active: package.id == selected}"><span class="glyphicon glyphicon-folder-open"
-                                                            aria-hidden="true"></span>&nbsp; {{package.label}}
+            :class="{active: package.id == selected}">
+          <span>
+            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+          </span>&nbsp; {{package.label}}
         </td>
         <td @dblclick="selectPackage(package.id)" @click="selected = package.id"
             :class="{active: package.id == selected}" class="hidden-xs">
@@ -46,7 +48,8 @@
       </tr>
       <tr v-for="entity in entities">
         <td @dblclick="openDataset(entity.id)" @click="selected = entity.id" :class="{active: entity.id == selected}">
-          <span class="glyphicon glyphicon-list" aria-hidden="true"></span>&nbsp; {{entity.label}}
+            <i class="fa fa-list" aria-hidden="true"></i>
+          </span>&nbsp; {{entity.label}}
         </td>
         <td @dblclick="openDataset(entity.id)" @click="selected = entity.id" :class="{active: entity.id == selected}" class="hidden-xs">
           <i>{{entity.description}}</i>

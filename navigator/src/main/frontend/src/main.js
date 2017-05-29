@@ -11,6 +11,8 @@ import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import 'font-awesome/css/font-awesome.min.css'
+
 // Keeps the router and the store in sync @https://github.com/vuejs/vuex-router-sync
 sync(store, router)
 
