@@ -1,19 +1,16 @@
 <template>
   <div class="container">
     <div id="app">
-      <h2>Hello world</h2>
-      <b-alert show dismissible>A vue bootstrap alert component</b-alert>
-      <router-view></router-view>
+      <!--<h2>Hello world</h2>-->
+      <!--<b-alert show dismissible>A vue bootstrap alert component</b-alert>-->
+      <div class="row">
+        <div class="col">
+          <router-view></router-view>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
-<script>
-
-export default {
-  name: 'molgenis-app'
-}
-</script>
 
 <style>
 #app {
@@ -24,3 +21,10 @@ export default {
   color: #2c3e50;
 }
 </style>
+
+<script>
+
+  export default {
+    name: 'molgenis-app'
+  }
+</script>
