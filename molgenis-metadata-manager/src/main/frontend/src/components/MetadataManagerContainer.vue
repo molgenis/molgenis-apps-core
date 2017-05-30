@@ -18,11 +18,20 @@
   import MetadataManagerHeader from './MetadataManagerHeader'
   import MetadataManagerEntityEditForm from './MetadataManagerEntityEditForm'
 
+  import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID } from '../store/actions'
+
   export default {
     name: 'metadata-manager',
     components: {
       MetadataManagerHeader,
       MetadataManagerEntityEditForm
+    },
+    created: function () {
+      this.$store.dispatch(GET_ENTITY_TYPES)
+      const entityTypeID = this.$route.params.entityTypeID
+      if (entityTypeID !== undefined) {
+        this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, entityTypeID)
+      }
     }
   }
 </script>
