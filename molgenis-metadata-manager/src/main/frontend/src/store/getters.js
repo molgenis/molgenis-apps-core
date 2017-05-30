@@ -6,5 +6,7 @@ export default {
     })[0]
   },
   getEntityTypes: state => state.entityTypes,
-  getEditorEntityType: state => state.editorEntityType
+  getEditorEntityType: state => {
+    return JSON.parse(JSON.stringify(state.editorEntityType))
+  }
 }
