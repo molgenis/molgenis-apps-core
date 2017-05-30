@@ -8,7 +8,7 @@
       <metadata-manager-entity-edit-form v-if="entityType"></metadata-manager-entity-edit-form>
 
       <div slot="footer">
-        Attribute edit stuff
+        <metadata-manager-attribute-edit-form></metadata-manager-attribute-edit-form>
       </div>
     </b-card>
   </div>
@@ -17,6 +17,7 @@
 <script>
   import MetadataManagerHeader from './MetadataManagerHeader'
   import MetadataManagerEntityEditForm from './MetadataManagerEntityEditForm'
+  import MetadataManagerAttributeEditForm from './MetadataManagerAttributeEditForm'
 
   import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID } from '../store/actions'
   import { mapGetters } from 'vuex'
@@ -30,7 +31,8 @@
     },
     components: {
       MetadataManagerHeader,
-      MetadataManagerEntityEditForm
+      MetadataManagerEntityEditForm,
+      MetadataManagerAttributeEditForm
     },
     created: function () {
       this.$store.dispatch(GET_ENTITY_TYPES)
