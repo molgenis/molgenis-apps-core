@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import static java.util.Objects.requireNonNull;
 
 @Component
-class PackageMapper
+public class PackageMapper
 {
 	private final PackageFactory packageFactory;
 	private final DataService dataService;
@@ -23,7 +23,7 @@ class PackageMapper
 		this.dataService = requireNonNull(dataService);
 	}
 
-	EditorPackageIdentifier toEditorPackage(Package package_)
+	public EditorPackageIdentifier toEditorPackage(Package package_)
 	{
 		if (package_ == null)
 		{

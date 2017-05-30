@@ -5,12 +5,11 @@ import org.molgenis.data.UnknownEntityException;
 import org.molgenis.data.meta.MetaDataService;
 import org.molgenis.data.meta.model.EntityType;
 import org.molgenis.data.meta.model.EntityTypeMetadata;
+import org.molgenis.data.meta.model.Package;
 import org.molgenis.metadata.manager.mapper.AttributeMapper;
 import org.molgenis.metadata.manager.mapper.EntityTypeMapper;
-import org.molgenis.metadata.manager.model.EditorAttribute;
-import org.molgenis.metadata.manager.model.EditorAttributeResponse;
-import org.molgenis.metadata.manager.model.EditorEntityType;
-import org.molgenis.metadata.manager.model.EditorEntityTypeResponse;
+import org.molgenis.metadata.manager.mapper.PackageMapper;
+import org.molgenis.metadata.manager.model.*;
 import org.molgenis.ui.MolgenisPluginController;
 import org.molgenis.util.ErrorMessageResponse;
 import org.slf4j.Logger;
@@ -21,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Objects.requireNonNull;
@@ -40,15 +40,17 @@ public class MetadataManagerController extends MolgenisPluginController
 	public static final String URI = PLUGIN_URI_PREFIX + METADATA_MANAGER;
 
 	private final MetaDataService metadataService;
+	private final PackageMapper packageMapper;
 	private final EntityTypeMapper entityTypeMapper;
 	private final AttributeMapper attributeMapper;
 
 	@Autowired
-	public MetadataManagerController(MetaDataService metadataService, EntityTypeMapper entityTypeMapper,
-			AttributeMapper attributeMapper)
+	public MetadataManagerController(MetaDataService metadataService, PackageMapper packageMapper,
+			EntityTypeMapper entityTypeMapper, AttributeMapper attributeMapper)
 	{
 		super(URI);
 		this.metadataService = requireNonNull(metadataService);
+		this.packageMapper = requireNonNull(packageMapper);
 		this.entityTypeMapper = requireNonNull(entityTypeMapper);
 		this.attributeMapper = requireNonNull(attributeMapper);
 	}
@@ -57,6 +59,13 @@ public class MetadataManagerController extends MolgenisPluginController
 	public String init()
 	{
 		return "view-metadata-manager";
+	}
+
+	@RequestMapping(value = "/editorPackages", method = GET)
+	@ResponseBody
+	public List<EditorPackageIdentifier> getPackages()
+	{
+		return createPackageResponse(metadataService.getPackages());
 	}
 
 	@RequestMapping(value = "/entityType/{id:.+}", method = GET)
@@ -110,6 +119,16 @@ public class MetadataManagerController extends MolgenisPluginController
 		LOG.error("", e);
 		return new ErrorMessageResponse(
 				Collections.singletonList(new ErrorMessageResponse.ErrorMessage(e.getMessage())));
+	}
+
+	private List<EditorPackageIdentifier> createPackageResponse(List<Package> packages)
+	{
+		List<EditorPackageIdentifier> response = newArrayList();
+		for (Package package_ : packages)
+		{
+			response.add(packageMapper.toEditorPackage(package_));
+		}
+		return response;
 	}
 
 	private EditorEntityTypeResponse createEntityTypeResponse()
