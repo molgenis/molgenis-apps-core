@@ -1,5 +1,10 @@
 export default {
-  entityTypeID: state => state.route.params.entityTypeID,
-  entityTypes: state => state.entityTypes,
-  editorEntityType: state => state.editorEntityType
+  getSelectedEntityType: state => {
+    const entityTypeID = state.route.params.entityTypeID
+    return state.entityTypes.filter(entityType => {
+      return entityType.id === entityTypeID
+    })[0]
+  },
+  getEntityTypes: state => state.entityTypes,
+  getEditorEntityType: state => state.editorEntityType
 }
