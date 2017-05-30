@@ -2,10 +2,13 @@
   <div class="row">
     <div class="col inner-column">
       <strong>Entity:</strong> {{editorEntityType.id}}<br>
+
       <strong>Extends:</strong> <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span
       v-else>N/A</span><br>
+
       <strong>Extended by:</strong> N/A<br>
-      <strong>Abstract:</strong> {{editorEntityType.abstract0}}
+
+      <strong>Abstract:</strong> <span v-if="editorEntityType.abstract0">Yes</span><span v-else>No</span>
     </div>
     <div class="col inner-column">
       <strong>Label:</strong> {{editorEntityType.label}}<br>
