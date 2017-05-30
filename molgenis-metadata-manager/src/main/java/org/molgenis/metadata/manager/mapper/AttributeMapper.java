@@ -1,4 +1,4 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -6,7 +6,7 @@ import org.molgenis.data.meta.AttributeType;
 import org.molgenis.data.meta.model.Attribute;
 import org.molgenis.data.meta.model.AttributeFactory;
 import org.molgenis.data.meta.model.AttributeMetadata;
-import org.molgenis.ui.metadataeditor.model.*;
+import org.molgenis.metadata.manager.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

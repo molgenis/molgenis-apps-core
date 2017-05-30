@@ -1,11 +1,11 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import com.google.common.collect.ImmutableList;
 import org.molgenis.data.DataService;
 import org.molgenis.data.meta.model.Tag;
 import org.molgenis.data.meta.model.TagFactory;
 import org.molgenis.data.support.LazyEntity;
-import org.molgenis.ui.metadataeditor.model.EditorTagIdentifier;
+import org.molgenis.metadata.manager.model.EditorTagIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

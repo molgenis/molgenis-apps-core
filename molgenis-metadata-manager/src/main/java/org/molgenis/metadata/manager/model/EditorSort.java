@@ -1,4 +1,4 @@
-package org.molgenis.ui.metadataeditor.model;
+package org.molgenis.metadata.manager.model;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;

@@ -1,12 +1,12 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import com.google.common.collect.ImmutableList;
 import org.molgenis.data.DataService;
 import org.molgenis.data.meta.model.EntityType;
 import org.molgenis.data.meta.model.EntityTypeMetadata;
 import org.molgenis.data.support.LazyEntity;
-import org.molgenis.ui.metadataeditor.model.EditorAttributeIdentifier;
-import org.molgenis.ui.metadataeditor.model.EditorEntityTypeParent;
+import org.molgenis.metadata.manager.model.EditorAttributeIdentifier;
+import org.molgenis.metadata.manager.model.EditorEntityTypeParent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ class EntityTypeParentMapper
 			return null;
 		}
 
-		String id = entityType.getName();
+		String id = entityType.getId();
 		String label = entityType.getLabel();
 		ImmutableList<EditorAttributeIdentifier> attributes = attributeReferenceMapper
 				.toEditorAttributeIdentifiers(entityType.getOwnAllAttributes());

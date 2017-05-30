@@ -1,4 +1,4 @@
-package org.molgenis.ui.metadataeditor.model;
+package org.molgenis.metadata.manager.model;
 
 import com.google.auto.value.AutoValue;
 import org.molgenis.gson.AutoGson;
@@ -12,9 +12,6 @@ import java.util.Map;
 public abstract class EditorEntityType
 {
 	public abstract String getId();
-
-	@Nullable
-	public abstract String getName();
 
 	@Nullable
 	public abstract String getLabel();
@@ -36,8 +33,6 @@ public abstract class EditorEntityType
 	@Nullable
 	public abstract EditorEntityTypeParent getParent();
 
-	public abstract List<EditorEntityTypeIdentifier> getChildren();
-
 	public abstract List<EditorAttribute> getAttributes();
 
 	public abstract List<EditorTagIdentifier> getTags();
@@ -50,16 +45,13 @@ public abstract class EditorEntityType
 
 	public abstract List<EditorAttributeIdentifier> getLookupAttributes();
 
-	public static EditorEntityType create(String id, @Nullable String name, @Nullable String label,
-			Map<String, String> i18nLabel,
+	public static EditorEntityType create(String id, @Nullable String label, Map<String, String> i18nLabel,
 			@Nullable String description, Map<String, String> i18nDescription, boolean abstract_, String backend,
-			EditorPackageIdentifier package_,
-			@Nullable EditorEntityTypeParent entityTypeParent, List<EditorEntityTypeIdentifier> entityTypeChildren,
+			EditorPackageIdentifier package_, @Nullable EditorEntityTypeParent entityTypeParent,
 			List<EditorAttribute> attributes, List<EditorTagIdentifier> tags, EditorAttributeIdentifier idAttribute,
 			EditorAttributeIdentifier labelAttribute, List<EditorAttributeIdentifier> lookupAttributes)
 	{
-		return new AutoValue_EditorEntityType(id, name, label, i18nLabel, description, i18nDescription, abstract_,
-				backend, package_, entityTypeParent, entityTypeChildren, attributes, tags, idAttribute, labelAttribute,
-				lookupAttributes);
+		return new AutoValue_EditorEntityType(id, label, i18nLabel, description, i18nDescription, abstract_, backend,
+				package_, entityTypeParent, attributes, tags, idAttribute, labelAttribute, lookupAttributes);
 	}
 }

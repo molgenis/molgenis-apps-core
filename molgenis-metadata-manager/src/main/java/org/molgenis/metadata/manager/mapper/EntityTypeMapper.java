@@ -1,11 +1,11 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import org.molgenis.data.meta.model.EntityType;
 import org.molgenis.data.meta.model.EntityTypeFactory;
 import org.molgenis.data.meta.model.EntityTypeMetadata;
-import org.molgenis.ui.metadataeditor.model.*;
+import org.molgenis.metadata.manager.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +40,7 @@ public class EntityTypeMapper
 
 	public EditorEntityType toEditorEntityType(EntityType entityType)
 	{
-		String id = entityType.getFullyQualifiedName();
-		String name = entityType.getName();
+		String id = entityType.getId();
 		String label = entityType.getLabel();
 		ImmutableMap<String, String> i18nLabel = toI18nLabel(entityType);
 		String description = entityType.getDescription();
@@ -51,8 +50,8 @@ public class EntityTypeMapper
 		EditorPackageIdentifier package_ = packageMapper.toEditorPackage(entityType.getPackage());
 		EditorEntityTypeParent entityTypeParent = entityTypeParentMapper
 				.toEditorEntityTypeParent(entityType.getExtends());
-		ImmutableList<EditorEntityTypeIdentifier> entityTypeChildren = entityTypeReferenceMapper
-				.toEditorEntityTypeIdentifiers(entityType.getExtendedBy());
+//		ImmutableList<EditorEntityTypeIdentifier> entityTypeChildren = entityTypeReferenceMapper
+//				.toEditorEntityTypeIdentifiers(entityType.getExtendedBy());
 		ImmutableList<EditorAttribute> attributes = attributeMapper
 				.toEditorAttributes(entityType.getOwnAllAttributes());
 		ImmutableList<EditorTagIdentifier> tags = tagMapper.toEditorTags(entityType.getTags());
@@ -64,8 +63,8 @@ public class EntityTypeMapper
 				.toEditorAttributeIdentifiers(entityType.getLookupAttributes());
 
 		return EditorEntityType
-				.create(id, name, label, i18nLabel, description, i18nDescription, abstract_, backend, package_,
-						entityTypeParent, entityTypeChildren, attributes, tags, idAttribute, labelAttribute,
+				.create(id, label, i18nLabel, description, i18nDescription, abstract_, backend, package_,
+						entityTypeParent, attributes, tags, idAttribute, labelAttribute,
 						lookupAttributes);
 	}
 
@@ -78,8 +77,7 @@ public class EntityTypeMapper
 	public EntityType toEntityType(EditorEntityType editorEntityType)
 	{
 		EntityType entityType = entityTypeFactory.create();
-		entityType.setFullyQualifiedName(editorEntityType.getId());
-		entityType.setName(editorEntityType.getName());
+		entityType.setId(editorEntityType.getId());
 		entityType.setPackage(packageMapper.toPackageReference(editorEntityType.getPackage()));
 		entityType.setLabel(editorEntityType.getLabel());
 		getLanguageCodes().forEach(

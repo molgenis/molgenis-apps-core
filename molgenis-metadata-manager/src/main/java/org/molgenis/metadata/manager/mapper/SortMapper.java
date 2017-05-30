@@ -1,9 +1,9 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import com.google.common.collect.ImmutableList;
 import org.molgenis.data.Sort;
-import org.molgenis.ui.metadataeditor.model.EditorOrder;
-import org.molgenis.ui.metadataeditor.model.EditorSort;
+import org.molgenis.metadata.manager.model.EditorOrder;
+import org.molgenis.metadata.manager.model.EditorSort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

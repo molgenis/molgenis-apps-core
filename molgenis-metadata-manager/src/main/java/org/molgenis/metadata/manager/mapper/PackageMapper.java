@@ -1,10 +1,10 @@
-package org.molgenis.ui.metadataeditor.mapper;
+package org.molgenis.metadata.manager.mapper;
 
 import org.molgenis.data.DataService;
 import org.molgenis.data.meta.model.Package;
 import org.molgenis.data.meta.model.PackageFactory;
 import org.molgenis.data.support.LazyEntity;
-import org.molgenis.ui.metadataeditor.model.EditorPackageIdentifier;
+import org.molgenis.metadata.manager.model.EditorPackageIdentifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ class PackageMapper
 		{
 			return null;
 		}
-		return EditorPackageIdentifier.create(package_.getName(), package_.getLabel());
+		return EditorPackageIdentifier.create(package_.getId(), package_.getLabel());
 	}
 
 	Package toPackageReference(EditorPackageIdentifier editorPackageIdentifier)
