@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<template>
+  <div>
+    Attribute edit stuff here
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'metadata-manager-attribute-edit-form'
+  }
+</script>
