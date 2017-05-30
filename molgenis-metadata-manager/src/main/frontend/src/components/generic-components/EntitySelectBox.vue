@@ -8,6 +8,7 @@
                  @input="onChange"
                  label="label"
                  selectLabel=""
+                 deselectLabel=""
                  placeholder="Select an entity"
                  track-by="id"></multiselect>
   </div>

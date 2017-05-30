@@ -30,8 +30,12 @@
     },
     methods: {
       onChange: function (selectedEntity) {
-        this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: selectedEntity.id}})
-        this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, selectedEntity.id)
+        if (selectedEntity !== null) {
+          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: selectedEntity.id}})
+          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, selectedEntity.id)
+        } else {
+          this.$router.push({name: 'metadata-manager-without-id'})
+        }
       },
       createNewEntity: function () {
         alert('Not yet implemented :)')

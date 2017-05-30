@@ -5,7 +5,7 @@
         <metadata-manager-header></metadata-manager-header>
       </div>
 
-      <metadata-manager-entity-edit-form></metadata-manager-entity-edit-form>
+      <metadata-manager-entity-edit-form v-if="entityType"></metadata-manager-entity-edit-form>
 
       <div slot="footer">
         Attribute edit stuff
@@ -19,9 +19,15 @@
   import MetadataManagerEntityEditForm from './MetadataManagerEntityEditForm'
 
   import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID } from '../store/actions'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'metadata-manager',
+    computed: {
+      ...mapGetters({
+        entityType: 'getSelectedEntityType'
+      })
+    },
     components: {
       MetadataManagerHeader,
       MetadataManagerEntityEditForm

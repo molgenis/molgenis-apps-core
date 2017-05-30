@@ -2,22 +2,27 @@
   <div class="row">
     <div class="col inner-column">
       <strong>Entity:</strong> {{editorEntityType.id}}<br>
-      <strong>Extends:</strong>  <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span v-else>N/A</span><br>
+      <strong>Extends:</strong> <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span
+      v-else>N/A</span><br>
       <strong>Extended by:</strong> N/A<br>
       <strong>Abstract:</strong> {{editorEntityType.abstract0}}
     </div>
     <div class="col inner-column">
       <strong>Label:</strong> {{editorEntityType.label}}<br>
-      <strong>Package:</strong> <span v-if="editorEntityType.package0">{{editorEntityType.package0.label}}</span><span v-else>N/A</span><br>
+      <strong>Package:</strong> <span v-if="editorEntityType.package0">{{editorEntityType.package0.label}}</span><span
+      v-else>N/A</span><br>
       <strong>Description:</strong> {{editorEntityType.description}}
     </div>
     <div class="col outer-column">
-      <strong>Id attribute:</strong> <span v-if="editorEntityType.idAttribute">{{editorEntityType.idAttribute.label}}</span><span v-else>N/A</span><br>
-      <strong>Label attribute:</strong> <span v-if="editorEntityType.labelAttribute">{{editorEntityType.labelAttribute.label}}</span><span v-else>N/A</span><br>
+      <strong>Id attribute:</strong> <span
+      v-if="editorEntityType.idAttribute">{{editorEntityType.idAttribute.label}}</span><span v-else>N/A</span><br>
+      <strong>Label attribute:</strong> <span
+      v-if="editorEntityType.labelAttribute">{{editorEntityType.labelAttribute.label}}</span><span v-else>N/A</span><br>
       <strong>Lookup attributes:</strong>
       <span v-if="editorEntityType.lookupAttributes && editorEntityType.lookupAttributes.length > 0">
         <span v-for="(lookupAttribute, index) in editorEntityType.lookupAttributes">
-          <span>{{lookupAttribute.label}}</span><span v-if="index+1 < editorEntityType.lookupAttributes.length">, </span>
+          <span>{{lookupAttribute.label}}</span><span
+          v-if="index+1 < editorEntityType.lookupAttributes.length">, </span>
         </span>
       </span><span v-else>N/A</span><br>
     </div>
@@ -67,7 +72,6 @@
     },
     computed: {
       ...mapGetters({
-        entityTypeID: 'getEntityTypeID',
         editorEntityType: 'getEditorEntityType'
       })
     }
