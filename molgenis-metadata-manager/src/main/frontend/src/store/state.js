@@ -8,7 +8,7 @@ const state = {
     type: null
   },
   entityTypeID: null,
-  entityTypes: data
+  json: data
 }
 
 export default state

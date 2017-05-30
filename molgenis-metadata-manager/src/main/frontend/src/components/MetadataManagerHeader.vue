@@ -15,7 +15,7 @@
   import { mapGetters } from 'vuex'
 
   import EntitySelectBox from './generic-components/EntitySelectBox'
-  import { GET_ENTITY_TYPES } from '../store/actions'
+  import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID } from '../store/actions'
 
   export default {
     name: 'metadata-manager-header',
@@ -27,9 +27,16 @@
     },
     methods: {
       onChange: function (selectedEntity) {
-        // If id is undefined, we were sent here on page load
+        let id
         if (selectedEntity.id !== undefined) {
-          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: selectedEntity.id}})
+          // If id is defined, we have an object from selection
+          id = selectedEntity.id
+          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: id}})
+          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, id)
+        } else {
+          // If id is undefined, we were sent here on page load
+          id = selectedEntity
+          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, id)
         }
       }
     },

@@ -47,7 +47,8 @@
        */
       searchable: {
         type: Boolean,
-        required: false
+        required: false,
+        default: true
       },
       /**
        * Equivalent to the `multiple` attribute on a `<select>` input.
@@ -63,7 +64,8 @@
        */
       placeholder: {
         type: String,
-        required: false
+        required: false,
+        default: 'Search for an entity...'
       },
       /**
        * Sets a Vue transition property on the `.dropdown-menu`. vue-select

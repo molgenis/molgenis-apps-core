@@ -1,7 +1,7 @@
 <template>
   <div>
     Entity: {{entityTypeID}}
-    <entity-type-form :entityTypeID="entityTypeID"></entity-type-form>
+    <entity-type-form :metadata="metadata"></entity-type-form>
   </div>
 </template>
 
@@ -14,7 +14,8 @@
     name: 'metadata-manager-entity-edit-form',
     computed: {
       ...mapGetters([
-        'entityTypeID'
+        'entityTypeID',
+        'metadata'
       ])
     },
     components: {
