@@ -29,7 +29,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8080'
       },
-      '/metadata-manager': {
+      '/plugin/metadata-manager': {
         target: 'http://localhost:8080'
       }
     },

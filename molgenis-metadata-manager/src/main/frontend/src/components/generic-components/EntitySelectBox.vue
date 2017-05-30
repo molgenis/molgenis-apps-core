@@ -82,7 +82,8 @@
        */
       clearSearchOnSelect: {
         type: Boolean,
-        required: false
+        required: false,
+        default: true
       },
       /**
        * Tells vue-select what key to use when generating option labels when

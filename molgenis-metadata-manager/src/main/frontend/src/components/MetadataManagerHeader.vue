@@ -4,7 +4,7 @@
       <div class="col-4">
         <h2>Metadata manager</h2>
       </div>
-      <div class="col-4">
+      <div class="col-8">
         <entity-select-box :value="entityTypeID" :options="entityTypes" :onChange="onChange"></entity-select-box>
       </div>
     </div>
@@ -27,16 +27,13 @@
     },
     methods: {
       onChange: function (selectedEntity) {
-        let id
+        // If id is defined, we have an object from selection
+        // If id is undefined, we were sent here on page load
         if (selectedEntity.id !== undefined) {
-          // If id is defined, we have an object from selection
-          id = selectedEntity.id
-          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: id}})
-          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, id)
+          // Push will 'reload' the page, triggering the else, and dispatching action
+          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: selectedEntity.id}})
         } else {
-          // If id is undefined, we were sent here on page load
-          id = selectedEntity
-          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, id)
+          this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, selectedEntity)
         }
       }
     },

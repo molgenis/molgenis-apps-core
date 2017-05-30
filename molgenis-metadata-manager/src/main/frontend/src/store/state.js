@@ -1,5 +1,3 @@
-import data from './data'
-
 export const INITIAL_STATE = window.__INITIAL_STATE__ || {}
 
 const state = {
@@ -8,7 +6,8 @@ const state = {
     type: null
   },
   entityTypeID: null,
-  json: data
+  entityTypes: [],
+  editorEntityType: {}
 }
 
 export default state
