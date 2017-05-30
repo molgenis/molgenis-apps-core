@@ -1,22 +1,45 @@
 <template>
   <div class="row">
-    <div class="col inner-column">
+    <!-- Column containing  -->
+    <div class="col-md-2 col-sm-1 inner-column">
       <strong>Entity:</strong> {{editorEntityType.id}}<br>
-
       <strong>Extends:</strong> <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span
       v-else>N/A</span><br>
-
       <strong>Extended by:</strong> N/A<br>
-
       <strong>Abstract:</strong> <span v-if="editorEntityType.abstract0">Yes</span><span v-else>No</span>
     </div>
-    <div class="col inner-column">
-      <strong>Label:</strong> {{editorEntityType.label}}<br>
-      <strong>Package:</strong> <span v-if="editorEntityType.package0">{{editorEntityType.package0.label}}</span><span
-      v-else>N/A</span><br>
-      <strong>Description:</strong> {{editorEntityType.description}}
+    <!-- Column containing: Label, Description and Package -->
+    <div class="col-md-4 col-sm-5 inner-column">
+      <div class="form-group row">
+        <label for="editory-entity-type-label" class="col-3 col-form-label">Label</label>
+        <div class="col">
+          <input v-model="editorEntityType.label" class="form-control" type="text" id="editory-entity-type-label">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="editory-entity-type-description" class="col-3 col-form-label">Description</label>
+        <div class="col">
+          <input v-model="editorEntityType.description" class="form-control" type="text" id="editory-entity-type-description">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="editory-entity-type-package" class="col-3 col-form-label">Package</label>
+        <div class="col">
+          <span v-if="editorEntityType.package0">
+            <select class="form-control" id="editory-entity-type-package">
+              <template v-for="package in packages" >
+                <option selected v-if="package.id === editorEntityType.package0.id">{{package.label}}</option>
+                <option v-else>{{package.label}}</option>
+              </template>
+            </select>
+          </span><span v-else>N/A</span>
+        </div>
+      </div>
     </div>
-    <div class="col outer-column">
+
+    <div class="col-md-4 col-sm-5 outer-column">
       <strong>Id attribute:</strong> <span
       v-if="editorEntityType.idAttribute">{{editorEntityType.idAttribute.label}}</span><span v-else>N/A</span><br>
       <strong>Label attribute:</strong> <span
@@ -29,7 +52,7 @@
         </span>
       </span><span v-else>N/A</span><br>
     </div>
-    <div class="col">
+    <div class="col-md-2 col-sm-1">
       <b-button @click="persistChanges" variant="success" class="entity-save-btn" disabled>Save</b-button>
     </div>
 
@@ -52,28 +75,13 @@
 
   export default {
     name: 'metadata-manager-entity-edit-form',
-    data: function () {
-      return {
-        label: '',
-        description: '',
-        idAttribute: {},
-        labelAttribute: {},
-        lookupAttributes: []
-      }
-    },
     methods: {
       persistChanges: function () {
-        const updatedEditorEntityType = this.editorEntityType
-        updatedEditorEntityType.label = this.label
-        updatedEditorEntityType.description = this.description
-        updatedEditorEntityType.idAttribute = this.idAttribute
-        updatedEditorEntityType.labelAttribute = this.labelAttribute
-        updatedEditorEntityType.lookupAttributes = this.lookupAttributes
-
-        this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, updatedEditorEntityType)
+        this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, this.editorEntityType)
       }
     },
     computed: {
+      packages: [{label: 'test'}],
       ...mapGetters({
         editorEntityType: 'getEditorEntityType'
       })
