@@ -5,6 +5,10 @@ const jsonContentHeaders = {
   'Content-Type': 'application/json'
 }
 
+function fetchForStatus (url, settings) {
+  return fetch(url, settings)
+}
+
 function fetchAndHandleResponse (url, settings) {
   return fetch(url, settings)
     .then(response => response.json()
@@ -15,22 +19,6 @@ function fetchAndHandleResponse (url, settings) {
       }
       return json
     })
-}
-
-export function submitForm (url, method, formData, token) {
-  const settings = {
-    method: method,
-    body: formData
-  }
-  if (token) {
-    // for cross-origin requests, use a molgenis token
-    settings.headers = {...settings.headers, 'x-molgenis-token': token}
-    settings.mode = 'cors'
-  } else {
-    // for same origin requests, use the JSESSIONID cookie
-    settings.credentials = 'same-origin'
-  }
-  return fetchAndHandleResponse(url, settings)
 }
 
 export function post (server, uri, data, token) {
@@ -50,7 +38,7 @@ export function post (server, uri, data, token) {
     settings.credentials = 'same-origin'
   }
 
-  return fetchAndHandleResponse(url, settings)
+  return fetchForStatus(url, settings)
 }
 
 function callApi (server, uri, method, token) {

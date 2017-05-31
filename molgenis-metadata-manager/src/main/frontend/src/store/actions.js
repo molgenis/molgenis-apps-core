@@ -1,5 +1,5 @@
 import { get, post } from './rest-client/molgenisAPI'
-import { SET_PACKAGES, SET_ENTITY_TYPES, SET_EDITOR_ENTITY_TYPE } from './mutations'
+import { SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from './mutations'
 
 export const GET_PACKAGES = '__GET_PACKAGES__'
 export const GET_ENTITY_TYPES = '__GET_ENTITY_TYPES__'
@@ -33,7 +33,7 @@ export default {
   },
   [UPDATE_EDITOR_ENTITY_TYPE] ({dispatch}, updatedEditorEntityType) {
     const id = updatedEditorEntityType.id
-    post({apiUrl: '/plugin/metadata-manager'}, '/entityType', {editorEntityType: updatedEditorEntityType})
+    post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
       .then(response => {
         console.log(response, id)
       }, error => {
