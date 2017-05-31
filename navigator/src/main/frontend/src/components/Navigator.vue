@@ -23,13 +23,13 @@
       <div class="col input-group">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="#">
-              <i class="fa fa-home" aria-hidden="true" @click="selectPackage(null);"></i>
-            </a>
+            <router-link to="/">
+              <i class="fa fa-home" aria-hidden="true"></i>
+            </router-link>
           </li>
           <li class="breadcrumb-item" v-for="package in path">
             <a v-if="isLast(path, package)">{{package.label}}</a>
-            <a v-else @click="selectPackage(package.id)" href="#">{{package.label}}</a>
+            <router-link v-else :to="package.id">{{package.label}}</router-link>
           </li>
           <li v-show="query" class="breadcrumb-item">
             <span>search for: <b>{{query}}</b></span>
@@ -47,12 +47,9 @@
             </a>
           </span>
         <span v-else>
-          <a v-if="item.item.id === selectedPackageId" >
+          <router-link :to="item.item.id">
             <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{item.item.label}}
-          </a>
-          <a v-else href="#" @click="selectPackage(item.item.id)">
-            <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{item.item.label}}
-          </a>
+          </router-link>
         </span>
       </template>
     </b-table>
@@ -163,6 +160,11 @@
     },
     mounted: function () {
       this.$store.dispatch(GET_PACKAGES)
+    },
+    watch: {
+      '$route' (to, from) {
+        this.selectPackage(this.$route.params.package)
+      }
     }
   }
 </script>

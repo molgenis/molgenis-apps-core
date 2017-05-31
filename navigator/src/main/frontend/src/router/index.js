@@ -8,7 +8,10 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Navigator',
+      component: Navigator
+    },
+    {
+      path: '/:package',
       component: Navigator
     }
   ]
