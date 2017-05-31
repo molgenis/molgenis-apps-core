@@ -80,7 +80,6 @@
     name: 'Navigator',
     data () {
       return {
-        currentLabel: '',
         fields: {
           label: {
             label: 'Name',
