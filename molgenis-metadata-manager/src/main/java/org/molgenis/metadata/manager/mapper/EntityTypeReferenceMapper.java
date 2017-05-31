@@ -1,5 +1,6 @@
 package org.molgenis.metadata.manager.mapper;
 
+import com.google.common.collect.ImmutableList;
 import org.molgenis.data.DataService;
 import org.molgenis.data.meta.model.EntityType;
 import org.molgenis.data.meta.model.EntityTypeMetadata;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.StreamSupport.stream;
 
 @Component
 class EntityTypeReferenceMapper
@@ -32,11 +34,11 @@ class EntityTypeReferenceMapper
 		return new EntityType(new LazyEntity(entityTypeMetadata, dataService, entityTypeId));
 	}
 
-//	ImmutableList<EditorEntityTypeIdentifier> toEditorEntityTypeIdentifiers(Iterable<EntityType> extendedBy)
-//	{
-//		return ImmutableList
-//				.copyOf(stream(extendedBy.spliterator(), false).map(this::toEditorEntityTypeIdentifier).iterator());
-//	}
+	ImmutableList<EditorEntityTypeIdentifier> toEditorEntityTypeIdentifiers(Iterable<EntityType> extendedBy)
+	{
+		return ImmutableList
+				.copyOf(stream(extendedBy.spliterator(), false).map(this::toEditorEntityTypeIdentifier).iterator());
+	}
 
 	EditorEntityTypeIdentifier toEditorEntityTypeIdentifier(EntityType entityType)
 	{
