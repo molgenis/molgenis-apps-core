@@ -42,22 +42,17 @@
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
       <template slot="label" scope="item" >
         <span v-if="item.item.type === 'entity'">
-            <button
-              type="button"
-              class="btn btn-sm btn-block btn-secondary"
-              style="text-align: left">
+            <a href="#">
               <i class="fa fa-list" aria-hidden="true" @click="openDataSet(item.item.id)"> {{item.item.label}}</i>
-            </button>
+            </a>
           </span>
         <span v-else>
-          <button
-            type="button"
-            class="btn btn-sm btn-block"
-            v-bind:class="[item.item.id === selectedPackageId ? 'btn-primary' : 'btn-secondary']"
-            @click="selectPackage(item.item.id)"
-            style="text-align: left">
-            <i class="fa fa-folder-open-o" aria-hidden="true" > {{item.item.label}}</i>
-          </button>
+          <a v-if="item.item.id === selectedPackageId" >
+            <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{item.item.label}}
+          </a>
+          <a v-else href="#" @click="selectPackage(item.item.id)">
+            <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{item.item.label}}
+          </a>
         </span>
       </template>
     </b-table>

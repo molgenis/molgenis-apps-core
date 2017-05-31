@@ -98,7 +98,7 @@ export default {
           return packageItem.parent && packageItem.parent.id === selectedPackage.id
         })
 
-        commit(SET_PACKAGES, [selectedPackage].concat(childPackages))
+        commit(SET_PACKAGES, childPackages)
         commit(SET_SELECTED_PACKAGE, selectedPackage)
         buildPath(commit, allPackages, selectedPackage, true)
         dispatch(GET_ENTITIES, selectedPackageId)
