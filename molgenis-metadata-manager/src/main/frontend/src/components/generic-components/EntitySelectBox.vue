@@ -1,6 +1,7 @@
 <template>
   <div>
-    <multiselect :value="value"
+    <multiselect :id="id"
+                 :value="value"
                  :options="options"
                  :searchable="true"
                  :close-on-select="true"
@@ -26,6 +27,11 @@
       }
     },
     props: {
+      id: {
+        type: String,
+        required: false,
+        default: 'entity-select-box'
+      },
       value: {
         type: [Object, Array, String, Number],
         required: false
