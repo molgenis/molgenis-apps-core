@@ -25,7 +25,7 @@ module.exports = {
       '/api': {
         target: 'http://localhost:8080'
       },
-      '/plugin/importwizard/importFile': {
+      '/menu/main/dataexplorer': {
         target: 'http://localhost:8080'
       }
     },

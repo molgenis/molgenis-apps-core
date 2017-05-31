@@ -73,7 +73,7 @@
 </style>
 
 <script>
-  import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE, LOGIN} from '../store/actions'
+  import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE} from '../store/actions'
   import {SET_QUERY} from '../store/mutations'
 
   export default {
@@ -163,7 +163,7 @@
       }
     },
     mounted: function () {
-      this.$store.state.token ? this.$store.dispatch(GET_PACKAGES) : this.$store.dispatch(LOGIN)
+      this.$store.dispatch(GET_PACKAGES)
     }
   }
 </script>
