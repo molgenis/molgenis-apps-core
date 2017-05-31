@@ -16,8 +16,7 @@ export default new Router({
     {
       path: '/:entityTypeID',
       name: 'metadata-manager-with-id',
-      component: MetadataManagerContainer,
-      props: true // Pass entityTypeID as prop
+      component: MetadataManagerContainer
     }
   ]
 })
