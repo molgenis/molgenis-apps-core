@@ -19,6 +19,7 @@
 
   import EntitySelectBox from './generic-components/EntitySelectBox'
   import { GET_ENTITY_TYPE_BY_ID } from '../store/actions'
+  import { CLEAR_EDITOR_ENTITY_TYPE } from '../store/mutations'
 
   export default {
     name: 'metadata-manager-header',
@@ -35,6 +36,7 @@
           this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, selectedEntity.id)
         } else {
           this.$router.push({name: 'metadata-manager-without-id'})
+          this.$store.commit(CLEAR_EDITOR_ENTITY_TYPE)
         }
       },
       createNewEntity: function () {

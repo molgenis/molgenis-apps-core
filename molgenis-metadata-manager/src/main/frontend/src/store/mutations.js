@@ -4,6 +4,7 @@ export const REMOVE_ALERT = '__REMOVE_ALERT__'
 export const SET_PACKAGES = '__SET_PACKAGES__'
 export const SET_ENTITY_TYPES = '__SET_ENTITY_TYPES__'
 export const SET_EDITOR_ENTITY_TYPE = '__SET_EDITOR_ENTITY_TYPE__'
+export const CLEAR_EDITOR_ENTITY_TYPE = '__CLEAR_EDITOR_ENTITY_TYPE__'
 export const UPDATE_EDITOR_ENTITY_TYPE = '__UPDATE_EDITOR_ENTITY_TYPE__'
 
 export default {
@@ -24,6 +25,9 @@ export default {
   },
   [SET_EDITOR_ENTITY_TYPE] (state, editorEntityType) {
     state.editorEntityType = editorEntityType
+  },
+  [CLEAR_EDITOR_ENTITY_TYPE] (state) {
+    state.editorEntityType = {}
   },
   [UPDATE_EDITOR_ENTITY_TYPE] (state, updatedEditorEntityType) {
     state.editorEntityType = updatedEditorEntityType
