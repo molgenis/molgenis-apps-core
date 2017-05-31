@@ -1,15 +1,7 @@
 <template>
-  <div class="container">
     <div id="app">
-      <!--<h2>Hello world</h2>-->
-      <!--<b-alert show dismissible>A vue bootstrap alert component</b-alert>-->
-      <div class="row">
-        <div class="col">
-          <router-view></router-view>
-        </div>
-      </div>
+      <router-view></router-view>
     </div>
-  </div>
 </template>
 
 <style>
