@@ -12,14 +12,14 @@
     <!-- Column containing: Label, Description and Package -->
     <div class="col-md-4 col-sm-5 inner-column">
       <div class="form-group row">
-        <label for="editory-entity-type-label" class="col-3 col-form-label">Label</label>
+        <label for="editory-entity-type-label" class="col-4 col-form-label">Label</label>
         <div class="col">
           <input v-model="editorEntityType.label" class="form-control" type="text" id="editory-entity-type-label">
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="editory-entity-type-description" class="col-3 col-form-label">Description</label>
+        <label for="editory-entity-type-description" class="col-4 col-form-label">Description</label>
         <div class="col">
           <input v-model="editorEntityType.description" class="form-control" type="text"
                  id="editory-entity-type-description">
@@ -27,7 +27,7 @@
       </div>
 
       <div class="form-group row">
-        <label class="col-3 col-form-label">Package</label>
+        <label class="col-4 col-form-label">Package</label>
         <div class="col">
           <entity-select-box id="package-select" :value="editorEntityType.package0" :options="packages"
                              :onChange="updatePackage"></entity-select-box>
@@ -64,7 +64,7 @@
 
     <!-- Column containing Save button -->
     <div class="col-md-1 col-sm-1">
-      <b-button @click="save" variant="success" class="entity-save-btn" disabled>Save</b-button>
+      <b-button @click="save" variant="success" class="entity-save-btn">Save</b-button>
     </div>
   </div>
 </template>

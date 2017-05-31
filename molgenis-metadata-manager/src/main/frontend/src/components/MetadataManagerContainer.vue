@@ -24,7 +24,6 @@
     name: 'metadata-manager',
     computed: {
       ...mapGetters({
-        entityType: 'getSelectedEntityType',
         editorEntityType: 'getEditorEntityType'
       })
     },

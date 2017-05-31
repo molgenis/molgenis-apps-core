@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-4">
+      <div class="col-md-4 col-sm-4 col-xs-5">
         <h2>Metadata manager</h2>
       </div>
-      <div class="col-3">
+      <div class="col-md-4 col-sm-4 col-xs-2">
         <entity-select-box :value="selectedEntityType" :options="entityTypes" :onChange="onChange"></entity-select-box>
       </div>
-      <div class="col-4">
+      <div class="col-md-4 col-sm-4 col-xs-5">
         <b-button @click="createNewEntity" variant="primary">New</b-button>
       </div>
     </div>
