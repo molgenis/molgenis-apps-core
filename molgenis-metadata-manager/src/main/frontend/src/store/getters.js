@@ -1,13 +1,10 @@
 export default {
   /**
    * Return the packages from the state
-   * @param state
    */
   getPackages: state => state.packages,
   /**
    * Get the the entire entityType object based on the EntityTypeID in the URL
-   * @param state
-   * @returns {*}
    */
   getSelectedEntityType: state => {
     const entityTypeID = state.route.params.entityTypeID
@@ -17,12 +14,14 @@ export default {
   },
   /**
    * Return the entityTypes from the state
-   * @param state
    */
   getEntityTypes: state => state.entityTypes,
   /**
    * Return the editorEntityType form the state
-   * @param state
    */
-  getEditorEntityType: state => state.editorEntityType
+  getEditorEntityType: state => state.editorEntityType,
+  /**
+   * Return the alert from the state
+   */
+  getAlert: state => state.alert
 }

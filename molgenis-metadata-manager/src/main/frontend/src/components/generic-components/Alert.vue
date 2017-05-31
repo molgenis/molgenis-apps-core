@@ -1,16 +1,21 @@
 <template>
-  <div class="row">
-    <div class="col-md-12">
-      <b-alert :variant="alert.type" show dismissible>{{alert.message}}</b-alert>
-    </div>
+  <div>
+    <b-alert @dismissed="onDismiss" :variant="alert.type" dismissible show>{{alert.message}}</b-alert>
   </div>
 </template>
 
 <script>
   export default {
-    name: 'alert-container',
-    computed: {
-      alert: this.$store.state.alert
+    name: 'alert',
+    props: {
+      alert: {
+        type: Object,
+        required: true
+      },
+      onDismiss: {
+        type: Function,
+        required: true
+      }
     }
   }
 </script>

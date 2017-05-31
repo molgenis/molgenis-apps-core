@@ -12,11 +12,9 @@ export default {
     state.packages = packages
   },
   [CREATE_ALERT] (state, alert) {
-    state.showAlert = true
     state.alert = alert
   },
   [REMOVE_ALERT] (state) {
-    state.showAlert = false
     state.alert.message = null
     state.alert.type = null
   },
