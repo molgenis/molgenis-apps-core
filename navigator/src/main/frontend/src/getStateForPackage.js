@@ -94,7 +94,6 @@ export default function (state, packageId) {
       state.message = null
     })
   }).catch(function (error) {
-    console.log(error)
     state.error = 'snap! failed to retrieve package. ' + error.message
   })
 
