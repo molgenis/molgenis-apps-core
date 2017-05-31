@@ -7,39 +7,53 @@
     </div>
 
     <!-- Put this in a separate component -->
-    <div class="input-group">
-      <input v-model="query" v-on:keyup="submitQuery()" type="text" class="form-control" placeholder="Search packages and data ...">
-      <span @click="submitQuery()" class="input-group-addon">search</span>
-      <span @click="clearQuery()" class="input-group-addon">clear</span>
-    </div>
-
-    <!-- Put this in a separate component -->
     <ol v-if="query != undefined" class="breadcrumb">
-      <li><a @click="selectPackage(null);">My MOLGENIS</a></li>
+      <li><i class="fa fa-home" aria-hidden="true" @click="selectPackage(null);"></i></li>
       <li><a><b>Showing result matching "{{query}}"</b></a></li>
     </ol>
 
     <ol v-else class="breadcrumb">
-      <li><a @click="selectPackage(null);">My MOLGENIS</a></li>
+      <li><i class="fa fa-home" aria-hidden="true" @click="selectPackage(null);"></i></li>
       <li v-for="package in path"><a @click="selectPackage(package.id)">{{package.label}}</a></li>
       <li><a><b>{{currentLabel}}</b></a></li>
     </ol>
 
+    <!-- Put this in a separate component -->
+    <div class="row" style="margin: 2rem 0rem">
+      <div class="col input-group">
+        <input v-model="query" v-on:keyup="submitQuery()" type="text" class="form-control" placeholder="Search packages and data ...">
+        <span class="input-group-btn">
+          <button @click="submitQuery()"  class="btn btn-secondary" :disabled="!query" type="button">Search</button>
+        </span>
+        <span class="input-group-btn">
+          <button @click="clearQuery()" class="btn btn-secondary" :disabled="!query" type="button">Clear</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="pull-left">Selected package:<span>{{selected}}</span></div>
+
     <!-- Main table element -->
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
       <template slot="label" scope="item" >
-        <span style="white-space: nowrap">
-          <span v-if="item.item.type === 'entity'">
-            <button type="button" class="btn btn-sm btn-secondary">
-              <i class="fa fa-list" aria-hidden="true" @click="openDataset(item.item.id)"></i>
+        <span v-if="item.item.type === 'entity'">
+            <button
+              type="button"
+              class="btn btn-sm btn-block btn-secondary"
+              style="text-align: left">
+              <i class="fa fa-list" aria-hidden="true" @click="openDataset(item)"> {{item.item.label}}</i>
             </button>
           </span>
-          <span v-else>
-            <i class="fa fa-folder-open-o" aria-hidden="true" @click="selected = item.item.id"></i>
-          </span>
-          <span>{{item.item.label}}</span>
+        <span v-else>
+          <button
+            type="button"
+            class="btn btn-sm btn-block"
+            v-bind:class="[item.item.id === selected ? 'btn-primary' : 'btn-secondary']"
+            @click="selected = item.item.id"
+            style="text-align: left">
+              <i class="fa fa-folder-open-o" aria-hidden="true" > {{item.item.label}}</i>
+          </button>
         </span>
-
       </template>
     </b-table>
 
@@ -87,8 +101,8 @@
     name: 'Navigator',
     data () {
       return {
-        path: 'test',
-        currentLabel: 'test',
+        path: [],
+        currentLabel: '',
         fields: {
           label: {
             label: 'Name',
@@ -104,7 +118,6 @@
     },
     methods: {
       submitQuery: function () {
-        console.log('do query')
         this.$store.dispatch(GET_PACKAGES, this.$store.state.query)
         this.$store.dispatch(GET_ENTITIES, this.$store.state.query)
       },
@@ -116,6 +129,7 @@
        // getStateForPackage(this, packageId)
       },
       openDataset: function (datasetId) {
+        console.log(datasetId)
         window.open('/menu/main/dataexplorer?entity=' + datasetId)
       }
     },
@@ -142,11 +156,9 @@
       },
       selected: {
         get () {
-          console.log('selected get')
           return this.$store.state.selectedPackage
         },
         set (packageID) {
-          console.log('selected set, id = ' + packageID)
           this.$store.commit(SET_SELECTED_PACKAGE, packageID)
         }
       }
