@@ -21,10 +21,8 @@ export default {
    */
   getEntityTypes: state => state.entityTypes,
   /**
-   * Return a clone of the editorEntityType form the state
+   * Return the editorEntityType form the state
    * @param state
    */
-  getEditorEntityType: state => {
-    return JSON.parse(JSON.stringify(state.editorEntityType))
-  }
+  getEditorEntityType: state => state.editorEntityType
 }
