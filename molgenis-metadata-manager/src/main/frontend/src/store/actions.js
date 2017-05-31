@@ -18,7 +18,10 @@ export default {
   [GET_ENTITY_TYPES] ({commit}) {
     get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
       .then(response => {
-        commit(SET_ENTITY_TYPES, response.items)
+        const nonSystemEntities = response.items.filter(function (item) {
+          return !item.package.id.startsWith('sys')
+        })
+        commit(SET_ENTITY_TYPES, nonSystemEntities)
       }, error => {
         console.log('error', error)
       })
