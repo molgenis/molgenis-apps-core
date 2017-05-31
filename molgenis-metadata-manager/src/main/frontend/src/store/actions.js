@@ -9,7 +9,6 @@ export const SAVE_EDITOR_ENTITY_TYPE = '__SAVE_EDITOR_ENTITY_TYPE__'
 export default {
   /**
    * Retrieve all Packages and filter on non-system Packages
-   * @param commit
    */
   [GET_PACKAGES] ({commit}) {
     // TODO filter system packages
@@ -17,7 +16,10 @@ export default {
       .then(response => {
         commit(SET_PACKAGES, response)
       }, error => {
-        console.log('error', error)
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
       })
   },
   /**
@@ -32,7 +34,10 @@ export default {
         })
         commit(SET_ENTITY_TYPES, nonSystemEntities)
       }, error => {
-        console.log('error', error)
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
       })
   },
   /**
@@ -45,20 +50,24 @@ export default {
       .then(response => {
         commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
       }, error => {
-        console.log('error', error)
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
       })
   },
   /**
    * Persist metadata changes to the database
    * @param updatedEditorEntityType the updated EditorEntityType
    */
-  [SAVE_EDITOR_ENTITY_TYPE] ({commit}, updatedEditorEntityType) {
+  [SAVE_EDITOR_ENTITY_TYPE] ({commit, dispatch}, updatedEditorEntityType) {
     post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
       .then(response => {
         commit(CREATE_ALERT, {
           type: 'success',
           message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
         })
+        dispatch(GET_ENTITY_TYPES)
       }, error => {
         commit(CREATE_ALERT, {
           type: 'danger',
