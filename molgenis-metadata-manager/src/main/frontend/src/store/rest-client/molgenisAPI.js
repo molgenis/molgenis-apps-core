@@ -6,7 +6,10 @@ const jsonContentHeaders = {
 }
 
 function fetchForStatus (url, settings) {
-  return fetch(url, settings)
+  return fetch(url, settings).then(response => {
+    if (response.ok) return response
+    else return response.json().then(json => Promise.reject(json))
+  })
 }
 
 function fetchAndHandleResponse (url, settings) {

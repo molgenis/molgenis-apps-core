@@ -55,17 +55,15 @@ export default {
   [SAVE_EDITOR_ENTITY_TYPE] ({commit}, updatedEditorEntityType) {
     post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
       .then(response => {
-        if (response.ok) {
-          commit(CREATE_ALERT, {
-            type: 'success',
-            message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
-          })
-        } else {
-          commit(CREATE_ALERT, {
-            type: 'danger',
-            message: 'Something went wrong: ' + response.statusText
-          })
-        }
+        commit(CREATE_ALERT, {
+          type: 'success',
+          message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
+        })
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
       })
   }
 }
