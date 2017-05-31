@@ -1,24 +1,14 @@
 <template>
   <div class="container">
 
+    <h1 style="padding-top: 1rem">Navigator</h1>
+
     <div v-if="error != undefined" class="alert alert-danger" role="alert">
       <button @click="error=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{error}}
     </div>
 
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a>
-          <i class="fa fa-home" aria-hidden="true" @click="selectPackage(null);"></i>
-        </a>
-      </li>
-      <li class="breadcrumb-item" v-for="package in path">
-        <b v-if="isLast(path, package)" >{{package.label}}</b>
-        <a v-else @click="selectPackage(package.id)">{{package.label}}</a>
-      </li>
-    </ol>
-
-    <div class="row" style="margin: 2rem 0rem">
-      <div class="col input-group">
+    <div class="navigator-search row justify-content-center">
+      <div class="col-lg-6 input-group">
         <input v-model="query" v-on:keyup="submitQuery()" type="text" class="form-control" placeholder="Search packages and data ...">
         <span class="input-group-btn">
           <button @click="submitQuery()"  class="btn btn-secondary" :disabled="!query" type="button">Search</button>
@@ -26,6 +16,25 @@
         <span class="input-group-btn">
           <button @click="clearQuery()" class="btn btn-secondary" :disabled="!query" type="button">Clear</button>
         </span>
+      </div>
+    </div>
+
+    <div class="navigator-path row">
+      <div class="col input-group">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">
+              <i class="fa fa-home" aria-hidden="true" @click="selectPackage(null);"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item" v-for="package in path">
+            <a v-if="isLast(path, package)">{{package.label}}</a>
+            <a v-else @click="selectPackage(package.id)" href="#">{{package.label}}</a>
+          </li>
+          <li v-show="query" class="breadcrumb-item">
+            <span>search for: <b>{{query}}</b></span>
+          </li>
+        </ol>
       </div>
     </div>
 
@@ -55,6 +64,19 @@
   </div>
 </template>
 
+<style>
+  .navigator-path {
+    margin-top: 2rem;
+  }
+  .navigator-path ol.breadcrumb {
+    background-color: transparent;
+  }
+
+  .navigator-search {
+    margin-top: 2rem;
+  }
+</style>
+
 <script>
   import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE, LOGIN} from '../store/actions'
   import {SET_QUERY} from '../store/mutations'
@@ -71,7 +93,7 @@
           },
           description: {
             label: 'Description',
-            sortable: true
+            sortable: false
           }
         },
         filter: null
