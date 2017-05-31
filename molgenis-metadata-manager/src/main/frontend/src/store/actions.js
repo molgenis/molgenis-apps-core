@@ -4,10 +4,11 @@ import { SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from './mutati
 export const GET_PACKAGES = '__GET_PACKAGES__'
 export const GET_ENTITY_TYPES = '__GET_ENTITY_TYPES__'
 export const GET_ENTITY_TYPE_BY_ID = '__GET_ENTITY_TYPE_BY_ID__'
-export const UPDATE_EDITOR_ENTITY_TYPE = '__UPDATE_EDITOR_ENTITY_TYPE__'
+export const SAVE_EDITOR_ENTITY_TYPE = '__SAVE_EDITOR_ENTITY_TYPE__'
 
 export default {
   [GET_PACKAGES] ({commit}) {
+    // TODO filter system packages
     get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages')
       .then(response => {
         commit(SET_PACKAGES, response)
@@ -16,6 +17,7 @@ export default {
       })
   },
   [GET_ENTITY_TYPES] ({commit}) {
+    // TODO can we filter system entities with REST call??
     get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
       .then(response => {
         const nonSystemEntities = response.items.filter(function (item) {
@@ -34,7 +36,7 @@ export default {
         console.log('error', error)
       })
   },
-  [UPDATE_EDITOR_ENTITY_TYPE] ({dispatch}, updatedEditorEntityType) {
+  [SAVE_EDITOR_ENTITY_TYPE] ({dispatch}, updatedEditorEntityType) {
     const id = updatedEditorEntityType.id
     post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
       .then(response => {
