@@ -3,10 +3,26 @@
     <!-- Column containing  Entity ID, Extends, Extended by, Abstract-->
     <!-- TODO: delete button-->
     <div class="col-md-3 col-sm-12 col-xs-12 inner-column">
-      <strong>Entity:</strong> {{editorEntityType.id}}<br>
-      <strong>Extends:</strong> <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span
-      v-else>N/A</span><br>
-      <strong>Abstract:</strong> <span v-if="editorEntityType.abstract0">Yes</span><span v-else>No</span>
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Entity</label>
+        <div class="col">
+          {{editorEntityType.id}}
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Extends</label>
+        <div class="col">
+          <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span v-else>N/A</span>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-4 col-form-label">Abstract</label>
+        <div class="col checkbox-column">
+            <input :checked="editorEntityType.abstract0" @click="updateIsAbstract" class="form-control" type="checkbox">
+        </div>
+      </div>
     </div>
 
     <!-- Column containing: Label, Description and Package -->
@@ -77,6 +93,10 @@
     float: right
   }
 
+  .checkbox-column {
+    padding-top: 11px
+  }
+
   .inner-column {
     border-right: solid black thin;
   }
@@ -94,6 +114,9 @@
     methods: {
       save: function () {
         this.$store.dispatch(SAVE_EDITOR_ENTITY_TYPE, this.editorEntityType)
+      },
+      updateIsAbstract: function (event) {
+        this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'abstract0', value: event.target.checked})
       },
       updateLabel: function (event) {
         this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'label', value: event.target.value})
