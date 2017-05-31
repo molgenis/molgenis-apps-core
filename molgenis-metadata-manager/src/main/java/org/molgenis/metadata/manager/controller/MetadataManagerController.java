@@ -65,7 +65,7 @@ public class MetadataManagerController extends MolgenisPluginController
 	@ResponseBody
 	public List<EditorPackageIdentifier> getPackages()
 	{
-		return createPackageResponse(metadataService.getPackages());
+		return createPackageListResponse(metadataService.getPackages());
 	}
 
 	@RequestMapping(value = "/entityType/{id:.+}", method = GET)
@@ -121,7 +121,7 @@ public class MetadataManagerController extends MolgenisPluginController
 				Collections.singletonList(new ErrorMessageResponse.ErrorMessage(e.getMessage())));
 	}
 
-	private List<EditorPackageIdentifier> createPackageResponse(List<Package> packages)
+	private List<EditorPackageIdentifier> createPackageListResponse(List<Package> packages)
 	{
 		List<EditorPackageIdentifier> response = newArrayList();
 		for (Package package_ : packages)

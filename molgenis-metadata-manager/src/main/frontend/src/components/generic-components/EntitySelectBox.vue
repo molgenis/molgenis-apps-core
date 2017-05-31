@@ -7,6 +7,7 @@
                  :allow-empty="true"
                  @input="onChange"
                  label="label"
+                 :multiple="multiple"
                  selectLabel=""
                  deselectLabel=""
                  placeholder="Select an entity"
@@ -26,7 +27,7 @@
     },
     props: {
       value: {
-        type: Object,
+        type: [Object, Array, String, Number],
         required: false
       },
       options: {
@@ -36,6 +37,11 @@
       onChange: {
         type: Function,
         required: true
+      },
+      multiple: {
+        type: Boolean,
+        required: false,
+        default: false
       }
     },
     components: {

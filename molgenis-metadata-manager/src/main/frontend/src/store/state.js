@@ -5,6 +5,7 @@ const state = {
     message: null,
     type: null
   },
+  packages: [],
   entityTypes: [],
   editorEntityType: {}
 }
