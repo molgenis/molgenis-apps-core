@@ -33,6 +33,26 @@ export function submitForm (url, method, formData, token) {
   return fetchAndHandleResponse(url, settings)
 }
 
+export function post (server, uri, data, token) {
+  const url = server.apiUrl + uri
+  const settings = {
+    method: 'post',
+    headers: jsonContentHeaders,
+    body: JSON.stringify(data)
+  }
+
+  if (token) {
+    // for cross-origin requests, use a molgenis token
+    settings.headers = {...settings.headers, 'x-molgenis-token': token}
+    settings.mode = 'cors'
+  } else {
+    // for same origin requests, use the JSESSIONID cookie
+    settings.credentials = 'same-origin'
+  }
+
+  return fetchAndHandleResponse(url, settings)
+}
+
 function callApi (server, uri, method, token) {
   const url = server.apiUrl + uri
   const settings = {
@@ -70,4 +90,4 @@ export function logout (server, token) {
   })
 }
 
-export default {login, logout, get, callApi}
+export default {login, logout, get, callApi, post}

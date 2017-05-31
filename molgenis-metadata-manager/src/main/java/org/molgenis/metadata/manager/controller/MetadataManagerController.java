@@ -86,7 +86,7 @@ public class MetadataManagerController extends MolgenisPluginController
 		return createEntityTypeResponse();
 	}
 
-	@RequestMapping(value = "/entityType", method = POST)
+	@RequestMapping(value = "/entityType", method = POST, consumes = "application/json")
 	@ResponseStatus(OK)
 	public void upsertEntityType(@RequestBody EditorEntityType editorEntityType)
 	{
