@@ -4,7 +4,7 @@
       <div class="col-4">
         <h2>Metadata manager</h2>
       </div>
-      <div class="col-2">
+      <div class="col-3">
         <entity-select-box :value="selectedEntityType" :options="entityTypes" :onChange="onChange"></entity-select-box>
       </div>
       <div class="col-4">
