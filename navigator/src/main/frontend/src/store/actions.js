@@ -42,7 +42,7 @@ function buildPath (commit, packages, currentPackage, reset) {
 // Server URL can be found in webpack.config.js ->  devServer: { proxy: [] }
 // Run MOLGENIS docker on 8081 for great success
 export default {
-  [GET_PACKAGES] ({commit, state}, query) {
+  [GET_PACKAGES] ({commit}, query) {
     query = query || ''
     const uri = query ? '/sys_md_Package?sort=label&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
       : '/sys_md_Package?sort=label'
@@ -50,11 +50,10 @@ export default {
     get({apiUrl: '/api/v2'}, uri).then((response) => {
       commit(SET_PACKAGES, response.items)
     }).catch((error) => {
-      console.error(error)
       commit(SET_ERROR, error.body.errors[0].message)
     })
   },
-  [GET_ENTITIES] ({commit, state}, query) {
+  [GET_ENTITIES] ({commit}, query) {
     if (!query) {
       return
     }
@@ -69,7 +68,6 @@ export default {
       })
       commit(SET_ENTITIES, entities)
     }).catch((error) => {
-      console.error(error)
       commit(SET_ERROR, error.body.errors[0].message)
     })
   },
@@ -103,7 +101,6 @@ export default {
         dispatch(GET_ENTITIES, selectedPackageId)
       }
     }).catch((error) => {
-      console.error(error)
       commit(SET_ERROR, error.body.errors[0].message)
     })
   },
