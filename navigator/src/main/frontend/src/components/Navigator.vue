@@ -41,7 +41,7 @@
               type="button"
               class="btn btn-sm btn-block btn-secondary"
               style="text-align: left">
-              <i class="fa fa-list" aria-hidden="true" @click="openDataset(item)"> {{item.item.label}}</i>
+              <i class="fa fa-list" aria-hidden="true" @click="openDataset(item.item.id)"> {{item.item.label}}</i>
             </button>
           </span>
         <span v-else>
@@ -51,7 +51,7 @@
             v-bind:class="[item.item.id === selected ? 'btn-primary' : 'btn-secondary']"
             @click="selected = item.item.id"
             style="text-align: left">
-              <i class="fa fa-folder-open-o" aria-hidden="true" > {{item.item.label}}</i>
+            <i class="fa fa-folder-open-o" aria-hidden="true" > {{item.item.label}}</i>
           </button>
         </span>
       </template>

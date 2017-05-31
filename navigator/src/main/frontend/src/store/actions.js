@@ -30,7 +30,7 @@ export default {
     Vue.http.get('/api/v2/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
       const entities = response.data.items.map(function (item) {
         return {
-          'id': item.fullName,
+          'id': item.id,
           'type': 'entity',
           'label': item.label,
           'description': item.description
