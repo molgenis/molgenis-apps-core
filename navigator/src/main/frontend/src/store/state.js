@@ -1,19 +1,22 @@
 // @flow
 export type State = {
-  message: string,
-  date: Date
+  error: ?string,
+  token: ?string,
+  query: ?string,
+  packages: Array<any>,
+  entities: Array<any>,
+  selectedPackage: any,
+  path: Array<any>
 }
 
-const message: string = 'Hallo'
 const state: State = {
-  message,
-  date: new Date(),
+  error: undefined,
   token: undefined,
   query: undefined,
   packages: [],
   entities: [],
   selectedPackage: undefined,
-  error: undefined
+  path: []
 }
 
 export default state
