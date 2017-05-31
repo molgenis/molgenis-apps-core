@@ -27,16 +27,10 @@
       </div>
 
       <div class="form-group row">
-        <label for="editory-entity-type-package" class="col-3 col-form-label">Package</label>
+        <label class="col-3 col-form-label">Package</label>
         <div class="col">
-          <select class="form-control" id="editory-entity-type-package">
-            <template v-for="package in packages">
-              <option selected v-if="editorEntityType.package0 && package.id === editorEntityType.package0.id">
-                {{package.label}}
-              </option>
-              <option v-else>{{package.label}}</option>
-            </template>
-          </select>
+          <entity-select-box id="package-select" :value="editorEntityType.package0" :options="packages"
+                             :onChange="updatePackage"></entity-select-box>
         </div>
       </div>
     </div>
@@ -46,28 +40,32 @@
       <div class="form-group row">
         <label class="col-4 col-form-label">ID attribute</label>
         <div class="col">
-          <entity-select-box :value="editorEntityType.idAttribute" :options="editorEntityType.attributes" :onChange="updateIdAttribute"></entity-select-box>
+          <entity-select-box id="id-attribute-select" :value="editorEntityType.idAttribute" :options="editorEntityType.attributes"
+                             :onChange="updateIdAttribute"></entity-select-box>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label">Label attribute</label>
         <div class="col">
-          <entity-select-box :value="editorEntityType.labelAttribute" :options="editorEntityType.attributes" :onChange="updateLabelAttribute"></entity-select-box>
+          <entity-select-box id="label-attribute-select" :value="editorEntityType.labelAttribute" :options="editorEntityType.attributes"
+                             :onChange="updateLabelAttribute"></entity-select-box>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="col-4 col-form-label">Lookup attributes</label>
         <div class="col">
-          <entity-select-box :value="editorEntityType.lookupAttributes" :options="editorEntityType.attributes" :onChange="updateLookupAttributes" multiple></entity-select-box>
+          <entity-select-box id="lookup-attribute-select" :value="editorEntityType.lookupAttributes" :options="editorEntityType.attributes"
+                             :onChange="updateLookupAttributes" multiple></entity-select-box>
         </div>
       </div>
     </div>
-    <div class="col-md-2 col-sm-1">
-      <b-button @click="persistChanges" variant="success" class="entity-save-btn" disabled>Save</b-button>
-    </div>
 
+    <!-- Column containing Save button -->
+    <div class="col-md-2 col-sm-1">
+      <b-button @click="save" variant="success" class="entity-save-btn" disabled>Save</b-button>
+    </div>
   </div>
 </template>
 
@@ -83,15 +81,18 @@
 
 <script>
   import { mapGetters } from 'vuex'
-  import { UPDATE_EDITOR_ENTITY_TYPE } from '../store/mutations'
+  import { UPDATE_EDITOR_ENTITY_TYPE } from '../store/actions'
 
   import EntitySelectBox from './generic-components/EntitySelectBox'
 
   export default {
     name: 'metadata-manager-entity-edit-form',
     methods: {
-      persistChanges: function () {
-        this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, this.editorEntityType)
+      save: function () {
+        this.$store.dispatch(UPDATE_EDITOR_ENTITY_TYPE, this.editorEntityType)
+      },
+      updatePackage: function (selected) {
+        this.editorEntityType.package0 = selected
       },
       updateIdAttribute: function (selected) {
         this.editorEntityType.idAttribute = selected
