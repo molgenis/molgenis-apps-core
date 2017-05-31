@@ -61,7 +61,10 @@ export default {
             message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
           })
         } else {
-          console.log('FAIL', response)
+          commit(CREATE_ALERT, {
+            type: 'danger',
+            message: 'Something went wrong: ' + response.statusText
+          })
         }
       })
   }
