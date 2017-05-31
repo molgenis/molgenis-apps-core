@@ -29,7 +29,7 @@ export default {
   [CLEAR_EDITOR_ENTITY_TYPE] (state) {
     state.editorEntityType = {}
   },
-  [UPDATE_EDITOR_ENTITY_TYPE] (state, updatedEditorEntityType) {
-    state.editorEntityType = updatedEditorEntityType
+  [UPDATE_EDITOR_ENTITY_TYPE] (state, update) {
+    state.editorEntityType[update.key] = update.value
   }
 }
