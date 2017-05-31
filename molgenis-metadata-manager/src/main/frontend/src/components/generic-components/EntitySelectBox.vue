@@ -32,10 +32,16 @@
         required: false,
         default: 'entity-select-box'
       },
+      /**
+       * Preselected option(s)
+       */
       value: {
         type: [Object, Array, String, Number],
         required: false
       },
+      /**
+       * List of options
+       */
       options: {
         type: Array,
         required: true
