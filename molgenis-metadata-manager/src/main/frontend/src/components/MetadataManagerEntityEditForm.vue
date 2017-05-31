@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <!-- Column containing  Entity ID, Extends, Extended by, Abstract-->
-    <div class="col-md-2 col-sm-1 inner-column">
+    <div class="col-md-3 col-sm-1 inner-column">
       <strong>Entity:</strong> {{editorEntityType.id}}<br>
       <strong>Extends:</strong> <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span
       v-else>N/A</span><br>
@@ -63,7 +63,7 @@
     </div>
 
     <!-- Column containing Save button -->
-    <div class="col-md-2 col-sm-1">
+    <div class="col-md-1 col-sm-1">
       <b-button @click="save" variant="success" class="entity-save-btn" disabled>Save</b-button>
     </div>
   </div>
