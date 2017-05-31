@@ -13,7 +13,9 @@
       <div class="form-group row">
         <label class="col-4 col-form-label">Extends</label>
         <div class="col">
-          <span v-if="editorEntityType.parent">{{editorEntityType.parent.label}}</span><span v-else>N/A</span>
+          <entity-select-box id="parent-entity-select" :value="editorEntityType.parent"
+                             :options="abstractEntities"
+                             :onChange="updateParentEntity"></entity-select-box>
         </div>
       </div>
 
@@ -28,17 +30,17 @@
     <!-- Column containing: Label, Description and Package -->
     <div class="col-md-4 col-sm-12 col-xs-12 inner-column">
       <div class="form-group row">
-        <label for="editory-entity-type-label" class="col-4 col-form-label">Label</label>
+        <label for="editor-entity-type-label" class="col-4 col-form-label">Label</label>
         <div class="col">
-          <input :value="editorEntityType.label" @input="updateLabel" class="form-control" type="text" id="editory-entity-type-label">
+          <input :value="editorEntityType.label" @input="updateLabel" class="form-control" type="text" id="editor-entity-type-label">
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="editory-entity-type-description" class="col-4 col-form-label">Description</label>
+        <label for="editor-entity-type-description" class="col-4 col-form-label">Description</label>
         <div class="col">
           <input :value="editorEntityType.description" @input="updateDescription" class="form-control" type="text"
-                 id="editory-entity-type-description">
+                 id="editor-entity-type-description">
         </div>
       </div>
 
@@ -115,6 +117,9 @@
       save: function () {
         this.$store.dispatch(SAVE_EDITOR_ENTITY_TYPE, this.editorEntityType)
       },
+      updateParentEntity: function (value) {
+        this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'parent', value: value})
+      },
       updateIsAbstract: function (event) {
         this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'abstract0', value: event.target.checked})
       },
@@ -140,6 +145,7 @@
     computed: {
       ...mapGetters({
         packages: 'getPackages',
+        abstractEntities: 'getAbstractEntities',
         editorEntityType: 'getEditorEntityType'
       })
     },

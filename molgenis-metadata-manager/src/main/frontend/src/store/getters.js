@@ -23,5 +23,6 @@ export default {
   /**
    * Return the alert from the state
    */
-  getAlert: state => state.alert
+  getAlert: state => state.alert,
+  getAbstractEntities: state => state.entityTypes.filter(function (entityType) { return entityType.isAbstract })
 }

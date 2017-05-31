@@ -18,7 +18,7 @@
   import { mapGetters } from 'vuex'
 
   import EntitySelectBox from './generic-components/EntitySelectBox'
-  import { GET_ENTITY_TYPE_BY_ID } from '../store/actions'
+  import { GET_ENTITY_TYPE_BY_ID, CREATE_ENTITY_TYPE } from '../store/actions'
   import { CLEAR_EDITOR_ENTITY_TYPE } from '../store/mutations'
 
   export default {
@@ -40,7 +40,7 @@
         }
       },
       createNewEntity: function () {
-        alert('Not yet implemented :)')
+        this.$store.dispatch(CREATE_ENTITY_TYPE)
       }
     },
     components: {
