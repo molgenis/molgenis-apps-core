@@ -4,7 +4,7 @@
       <div slot="header" class="">
         <metadata-manager-header></metadata-manager-header>
       </div>
-      <metadata-manager-entity-edit-form v-if="entityType"></metadata-manager-entity-edit-form>
+      <metadata-manager-entity-edit-form v-if="editorEntityType.attributes !== undefined"></metadata-manager-entity-edit-form>
       <div slot="footer">
         <metadata-manager-attribute-edit-form></metadata-manager-attribute-edit-form>
       </div>
@@ -24,7 +24,8 @@
     name: 'metadata-manager',
     computed: {
       ...mapGetters({
-        entityType: 'getSelectedEntityType'
+        entityType: 'getSelectedEntityType',
+        editorEntityType: 'getEditorEntityType'
       })
     },
     components: {
