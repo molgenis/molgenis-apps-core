@@ -139,11 +139,6 @@
         get () {
           return this.$store.state.selectedPackage
         }
-      },
-      selectedPackageId: {
-        get () {
-          return this.selectedPackage ? this.selectedPackage.id : undefined
-        }
       }
     },
     mounted: function () {
