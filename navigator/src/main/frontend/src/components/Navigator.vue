@@ -40,15 +40,15 @@
 
     <!-- Main table element -->
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
-      <template slot="label" scope="item" >
-        <span v-if="item.item.type === 'entity'">
-            <a :href="'/menu/main/dataexplorer?entity=' + item.item.id" target="_blank">
-              <i class="fa fa-list" aria-hidden="true"></i> {{item.item.label}}
+      <template slot="label" scope="label" >
+        <span v-if="label.item.type === 'entity'">
+            <a :href="'/menu/main/dataexplorer?entity=' + label.item.id" target="_blank">
+              <i class="fa fa-list" aria-hidden="true"></i> {{label.item.label}}
             </a>
           </span>
         <span v-else>
-          <router-link :to="item.item.id">
-            <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{item.item.label}}
+          <router-link :to="label.item.id">
+            <i class="fa fa-folder-open-o" aria-hidden="true" ></i> {{label.item.label}}
           </router-link>
         </span>
       </template>
@@ -56,12 +56,14 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
   .navigator-path {
     margin-top: 2rem;
   }
-  .navigator-path ol.breadcrumb {
-    background-color: transparent;
+  .navigator-path  {
+    .breadcrumb{
+      background-color: transparent;
+    }
   }
 
   .navigator-search {
@@ -84,7 +86,8 @@
           },
           description: {
             label: 'Description',
-            sortable: false
+            sortable: false,
+            'class': 'hidden-sm-down'
           }
         },
         filter: null
