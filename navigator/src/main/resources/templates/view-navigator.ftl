@@ -14,7 +14,10 @@
     </#list>
 </div>
 <script type="text/javascript">
-
+<#list rootPackages as package>
+        rootPackages.append(${package.id})
+    </#list>
+    console.log(roo)
 </script>
 <script type=text/javascript src=/js/manifest.js></script>
 <script type=text/javascript src=/js/vendor.js></script>

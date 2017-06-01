@@ -1,0 +1,89 @@
+import { get, post } from './rest-client/molgenisAPI'
+import { CREATE_ALERT, SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from './mutations'
+
+export const GET_PACKAGES = '__GET_PACKAGES__'
+export const GET_ENTITY_TYPES = '__GET_ENTITY_TYPES__'
+export const GET_ENTITY_TYPE_BY_ID = '__GET_ENTITY_TYPE_BY_ID__'
+export const CREATE_ENTITY_TYPE = '__CREATE_ENTITY_TYPE__'
+export const SAVE_EDITOR_ENTITY_TYPE = '__SAVE_EDITOR_ENTITY_TYPE__'
+
+export default {
+  /**
+   * Retrieve all Packages and filter on non-system Packages
+   */
+  [GET_PACKAGES] ({commit}) {
+    // TODO filter system packages
+    get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages')
+      .then(response => {
+        commit(SET_PACKAGES, response)
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
+      })
+  },
+  /**
+   * Retrieve all EntityTypes and filter on non-system EntityTypes
+   */
+  [GET_ENTITY_TYPES] ({commit}) {
+    // TODO can we filter system entities with REST call??
+    get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
+      .then(response => {
+        const nonSystemEntities = response.items.filter(function (item) {
+          return !item.package.id.startsWith('sys')
+        })
+        commit(SET_ENTITY_TYPES, nonSystemEntities)
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
+      })
+  },
+  /**
+   * Retrieve EditorEntityType based on EntityType ID
+   *
+   * @param entityTypeID The selected EntityType identifier
+   */
+  [GET_ENTITY_TYPE_BY_ID] ({commit}, entityTypeID) {
+    get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID)
+      .then(response => {
+        commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
+      })
+  },
+  [CREATE_ENTITY_TYPE] ({commit}) {
+    get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType').then(response => {
+      commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
+    }, error => {
+      commit(CREATE_ALERT, {
+        type: 'danger',
+        message: error.errors[0].message
+      })
+    })
+  },
+  /**
+   * Persist metadata changes to the database
+   * @param updatedEditorEntityType the updated EditorEntityType
+   */
+  [SAVE_EDITOR_ENTITY_TYPE] ({commit, dispatch}, updatedEditorEntityType) {
+    post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
+      .then(response => {
+        commit(CREATE_ALERT, {
+          type: 'success',
+          message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
+        })
+        dispatch(GET_ENTITY_TYPES)
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
+      })
+  }
+}

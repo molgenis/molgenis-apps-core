@@ -13,9 +13,8 @@
     <packaging>pom</packaging>
 
     <name>molgenis-apps-core</name>
-    <description>
-        Molgenis core userinterface
-    </description>
+    <description>Core User interface modules for the MOLGENIS platform</description>
+
     <url>http://www.molgenis.org</url>
     <licenses>
         <license>
@@ -29,7 +28,7 @@
 
     <modules>
         <module>web-app</module>
-        <module>navigator</module>
+        <module>molgenis-metadata-manager</module>
     </modules>
 
     <properties>
@@ -398,11 +397,6 @@
             <artifactId>spring-test</artifactId>
             <version>4.3.7.RELEASE</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.molgenis</groupId>
-            <artifactId>molgenis-core</artifactId>
-            <version>${molgenis.dependency}</version>
         </dependency>
     </dependencies>
 

@@ -1,6 +1,6 @@
-package org.molgenis.org.controller.app;
+package org.molgenis.app;
 
-import org.molgenis.org.controller.app.controller.HomeController;
+import org.molgenis.app.controller.HomeController;
 import org.molgenis.auth.*;
 import org.molgenis.bootstrap.populate.SystemEntityRegistry;
 import org.molgenis.data.DataService;

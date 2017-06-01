@@ -1,4 +1,4 @@
-package org.molgenis.org.controller.app;
+package org.molgenis.app;
 
 import org.molgenis.security.MolgenisRoleHierarchy;
 import org.molgenis.security.MolgenisWebAppSecurityConfig;
@@ -58,6 +58,8 @@ public class WebAppSecurityConfig extends MolgenisWebAppSecurityConfig
 				.antMatchers("/omim/**").authenticated()
 
 				.antMatchers("/phenotips/**").authenticated()
+
+				.antMatchers("/metadata-manager/**").authenticated()
 
 				.antMatchers("/charts/**").authenticated();
 	}
