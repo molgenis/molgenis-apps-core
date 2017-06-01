@@ -7,6 +7,7 @@
       <button @click="error=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{error}}
     </div>
 
+    <!-- Search element -->
     <div class="navigator-search row justify-content-center">
       <div class="col-lg-6 input-group">
         <input v-model="query" v-on:keyup="submitQuery()" type="text" class="form-control" placeholder="Search packages and data ...">
@@ -19,6 +20,7 @@
       </div>
     </div>
 
+    <!-- Breadcrumb element -->
     <div class="navigator-path row">
       <div class="col input-group">
         <ol class="breadcrumb">
