@@ -42,8 +42,8 @@
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
       <template slot="label" scope="item" >
         <span v-if="item.item.type === 'entity'">
-            <a href="#">
-              <i class="fa fa-list" aria-hidden="true" @click="openDataSet(item.item.id)"> {{item.item.label}}</i>
+            <a :href="'/menu/main/dataexplorer?entity=' + item.item.id" target="_blank">
+              <i class="fa fa-list" aria-hidden="true"></i> {{item.item.label}}
             </a>
           </span>
         <span v-else>
@@ -101,15 +101,8 @@
         this.$store.dispatch(GET_PACKAGES)
       },
       selectPackage: function (packageId) {
-        if (this.selectedPackageId === packageId) {
-          // No-op as its the currently selected package
-          return
-        }
         this.$store.commit(SET_QUERY, undefined)
         this.$store.dispatch(GET_STATE_FOR_PACKAGE, packageId)
-      },
-      openDataSet: function (datasetId) {
-        window.open('/menu/main/dataexplorer?entity=' + datasetId)
       },
       isLast: function (list, item) {
         const tail = list[list.length - 1]
@@ -159,7 +152,7 @@
       }
     },
     mounted: function () {
-      this.$store.dispatch(GET_PACKAGES)
+      this.$route.params.package ? this.selectPackage(this.$route.params.package) : this.$store.dispatch(GET_PACKAGES)
     },
     watch: {
       '$route' (to, from) {
