@@ -5,13 +5,19 @@ export type Package = {
   description: ?string
 }
 
+export type Entity = {
+  id: string,
+  type: string,
+  label: string,
+  description: ?string
+}
+
 export type State = {
   error: ?string,
   token: ?string,
   query: ?string,
   packages: Array<Package>,
-  entities: Array<any>,
-  selectedPackage: any,
+  entities: Array<Entity>,
   path: Array<Package>
 }
 
@@ -21,7 +27,6 @@ const state: State = {
   query: undefined,
   packages: [],
   entities: [],
-  selectedPackage: undefined,
   path: []
 }
 

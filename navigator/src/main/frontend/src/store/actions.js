@@ -1,5 +1,5 @@
 import { login, get } from '../molgenisApi'
-import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_SELECTED_PACKAGE, SET_TOKEN, SET_ERROR} from './mutations'
+import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_TOKEN, SET_ERROR} from './mutations'
 
 export const GET_PACKAGES = 'GET_PACKAGES'
 export const GET_ENTITIES = 'GET_ENTITIES'
@@ -15,7 +15,6 @@ export const LOGIN = 'LOGIN'
 function resetToHome (commit, packages) {
   commit(SET_PACKAGES, packages)
   commit(RESET_PATH)
-  commit(SET_SELECTED_PACKAGE, null)
   commit(SET_ENTITIES, [])
 }
 
@@ -96,7 +95,6 @@ export default {
         })
 
         commit(SET_PACKAGES, childPackages)
-        commit(SET_SELECTED_PACKAGE, selectedPackage)
         buildPath(commit, allPackages, selectedPackage, true)
         dispatch(GET_ENTITIES, selectedPackageId)
       }
