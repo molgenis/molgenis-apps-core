@@ -1,3 +1,4 @@
+// @flow
 <template>
   <div class="container">
 
@@ -77,6 +78,7 @@
   import _ from 'lodash'
   import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE} from '../store/actions'
   import {SET_QUERY} from '../store/mutations'
+  import { Package } from '../store/state'
 
   export default {
     name: 'Navigator',
@@ -106,11 +108,11 @@
         this.$store.commit(SET_QUERY, undefined)
         this.$store.dispatch(GET_PACKAGES)
       },
-      selectPackage: function (packageId) {
+      selectPackage: function (packageId: string) {
         this.$store.commit(SET_QUERY, undefined)
         this.$store.dispatch(GET_STATE_FOR_PACKAGE, packageId)
       },
-      isLast: function (list, item) {
+      isLast: function (list: Array<Package>, item: Package) {
         const tail = list[list.length - 1]
         return !!tail && !!item && tail.id === item.id
       }

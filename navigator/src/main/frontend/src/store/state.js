@@ -1,12 +1,18 @@
 // @flow
+export type Package = {
+  id: string,
+  label: string,
+  description: ?string
+}
+
 export type State = {
   error: ?string,
   token: ?string,
   query: ?string,
-  packages: Array<any>,
+  packages: Array<Package>,
   entities: Array<any>,
   selectedPackage: any,
-  path: Array<any>
+  path: Array<Package>
 }
 
 const state: State = {
