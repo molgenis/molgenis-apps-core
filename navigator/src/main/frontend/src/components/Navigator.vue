@@ -140,11 +140,6 @@
           return this.$store.state.selectedPackage
         }
       },
-      selectedPackageLabel: {
-        get () {
-          return this.selectedPackage ? this.selectedPackage.label : ''
-        }
-      },
       selectedPackageId: {
         get () {
           return this.selectedPackage ? this.selectedPackage.id : undefined
