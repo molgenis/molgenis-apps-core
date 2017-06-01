@@ -134,11 +134,6 @@
       },
       error () {
         return this.$store.state.error
-      },
-      selectedPackage: {
-        get () {
-          return this.$store.state.selectedPackage
-        }
       }
     },
     mounted: function () {
