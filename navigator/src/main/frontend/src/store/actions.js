@@ -50,7 +50,7 @@ export default {
     get({apiUrl: '/api/v2'}, uri).then((response) => {
       commit(SET_PACKAGES, response.items)
     }).catch((error) => {
-      commit(SET_ERROR, error.body.errors[0].message)
+      commit(SET_ERROR, error.errors[0].message)
     })
   },
   [GET_ENTITIES] ({commit}, query) {
@@ -68,7 +68,7 @@ export default {
       })
       commit(SET_ENTITIES, entities)
     }).catch((error) => {
-      commit(SET_ERROR, error.body.errors[0].message)
+      commit(SET_ERROR, error.errors[0].message)
     })
   },
   [RESET_STATE] ({commit}) {
@@ -101,7 +101,7 @@ export default {
         dispatch(GET_ENTITIES, selectedPackageId)
       }
     }).catch((error) => {
-      commit(SET_ERROR, error.body.errors[0].message)
+      commit(SET_ERROR, error.errors[0].message)
     })
   },
   [LOGIN] ({commit, dispatch}) {
