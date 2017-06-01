@@ -1,3 +1,5 @@
+// @flow
+import type { Package, State } from './state'
 import { login, get } from '../molgenisApi'
 import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_TOKEN, SET_ERROR} from './mutations'
 
@@ -12,7 +14,7 @@ export const LOGIN = 'LOGIN'
  * @param commit, reference to mutation function
  * @param packages, the complete list of packages
  */
-function resetToHome (commit, packages) {
+function resetToHome (commit: Function, packages: Array<Package>) {
   commit(SET_PACKAGES, packages)
   commit(RESET_PATH)
   commit(SET_ENTITIES, [])
@@ -25,7 +27,7 @@ function resetToHome (commit, packages) {
  * @param currentPackage, the tail
  * @param reset, boolean indicating if path needs to be reset before building
  */
-function buildPath (commit, packages, currentPackage, reset) {
+function buildPath (commit: Function, packages, currentPackage: Package, reset: boolean) {
   if (reset) {
     commit(RESET_PATH)
   }
@@ -41,7 +43,7 @@ function buildPath (commit, packages, currentPackage, reset) {
 // Server URL can be found in webpack.config.js ->  devServer: { proxy: [] }
 // Run MOLGENIS docker on 8081 for great success
 export default {
-  [GET_PACKAGES] ({commit}, query) {
+  [GET_PACKAGES] ({commit} : {commit : Function}, query: ?string) {
     query = query || ''
     const uri = query ? '/sys_md_Package?sort=label&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
       : '/sys_md_Package?sort=label'
@@ -52,7 +54,7 @@ export default {
       commit(SET_ERROR, error.errors[0].message)
     })
   },
-  [GET_ENTITIES] ({commit}, query) {
+  [GET_ENTITIES] ({commit} : {commit : Function}, query: ?string) {
     if (!query) {
       return
     }
@@ -70,10 +72,10 @@ export default {
       commit(SET_ERROR, error.errors[0].message)
     })
   },
-  [RESET_STATE] ({commit}) {
+  [RESET_STATE] ({commit} : {commit : Function}) {
     resetToHome(commit, [])
   },
-  [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state}, selectedPackageId) {
+  [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state} : {commit : Function, dispatch : Function, state : State}, selectedPackageId: ?string) {
     get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
       const allPackages = response.items
 
@@ -102,7 +104,7 @@ export default {
       commit(SET_ERROR, error.errors[0].message)
     })
   },
-  [LOGIN] ({commit, dispatch}) {
+  [LOGIN] ({commit, dispatch}: {commit : Function, dispatch : Function}) {
     // Hack login credentials for now
     login('admin', 'admin').then((response) => {
       commit(SET_TOKEN, response.token)

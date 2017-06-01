@@ -1,8 +1,13 @@
 // @flow
+export type Parent = {
+  id: string,
+}
+
 export type Package = {
   id: string,
   label: string,
-  description: ?string
+  description: ?string,
+  parent: Parent
 }
 
 export type Entity = {
