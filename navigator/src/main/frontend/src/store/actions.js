@@ -32,8 +32,9 @@ function buildPath (commit: Function, packages, currentPackage: Package, reset: 
     commit(RESET_PATH)
   }
   if (currentPackage.parent) {
+    const currentParent = currentPackage.parent
     const parentPackage = packages.find(function (packageItem) {
-      return packageItem.id === currentPackage.parent.id
+      return packageItem.id === currentParent.id
     })
     buildPath(commit, packages, parentPackage, false)
   }
