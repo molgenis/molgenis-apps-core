@@ -84,7 +84,7 @@ describe('mutations', () => {
         backend: 'PostgreSQL',
         description: 'test entity',
         id: 'test',
-        package: {id: 'base', label: 'Default', _href: '/api/v2/sys_md_Pacakge/base'},
+        package: {id: 'base', label: 'Default', _href: '/api/v2/sys_md_Package/base'},
         tags: [],
         _href: '/api/v2/base_test'
       }, {
@@ -96,7 +96,7 @@ describe('mutations', () => {
         backend: 'PostgreSQL',
         description: 'test1 entity',
         id: 'test1',
-        package: {id: 'base', label: 'Default', _href: '/api/v2/sys_md_Pacakge/base'},
+        package: {id: 'base', label: 'Default', _href: '/api/v2/sys_md_Package/base'},
         tags: [],
         _href: '/api/v2/base_test1'
       }]
