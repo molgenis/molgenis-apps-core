@@ -5,7 +5,8 @@ import * as api from 'store/rest-client/molgenisAPI.js'
 import {
   SET_PACKAGES,
   CREATE_ALERT,
-  SET_ENTITY_TYPES
+  SET_ENTITY_TYPES,
+  SET_EDITOR_ENTITY_TYPE
 } from 'store/mutations'
 
 import actions from 'store/actions'
@@ -195,6 +196,131 @@ describe('actions', () => {
         message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
       }
       testAction(actions.__GET_ENTITY_TYPES__, null, state, [{type: CREATE_ALERT, payload: payload}], [], done)
+    })
+  })
+  describe('GET_ENTITY_TYPE_BY_ID', () => {
+    afterEach(() => td.reset())
+    const state = {
+      alert: {
+        message: null,
+        type: null
+      },
+      packages: [],
+      entityTypes: [],
+      editorEntityType: {}
+    }
+    it('Should retrieve EditorEntityType based on EntityType ID', done => {
+      const mockedResponse = {
+        entityType: {
+          id: 'root_gender',
+          labelI18n: {},
+          description: 'gender is located in the root package because it is not hospital specific',
+          abstract0: false,
+          attributes: [
+            {
+              aggregatable: false,
+              auto: false,
+              descriptionI18n: {},
+              enumOptions: [],
+              id: 'aaaacxdcqjnofkrvac3owhyabe',
+              labelI18n: {},
+              name: 'id',
+              nullable: false,
+              readonly: true,
+              tags: [],
+              type: 'STRING',
+              unique: true,
+              visible: true
+            },
+            {
+              aggregatable: false,
+              auto: false,
+              descriptionI18n: {},
+              enumOptions: [],
+              id: 'aaaacxdcqjnofkrvac3owhyabi',
+              labelI18n: {},
+              name: 'label',
+              nullable: false,
+              readonly: true,
+              tags: [],
+              type: 'STRING',
+              unique: true,
+              visible: true
+            }
+          ],
+          backend: 'postgreSQL',
+          idAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+          label: 'Gender',
+          labelAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'},
+          lookupAttributes: [
+            {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+            {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'}
+          ],
+          package0: {id: 'root', label: 'root'},
+          tags: []
+        },
+        languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
+      }
+      const entityTypeID = 'root_gender'
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        id: 'root_gender',
+        labelI18n: {},
+        description: 'gender is located in the root package because it is not hospital specific',
+        abstract0: false,
+        attributes: [
+          {
+            aggregatable: false,
+            auto: false,
+            descriptionI18n: {},
+            enumOptions: [],
+            id: 'aaaacxdcqjnofkrvac3owhyabe',
+            labelI18n: {},
+            name: 'id',
+            nullable: false,
+            readonly: true,
+            tags: [],
+            type: 'STRING',
+            unique: true,
+            visible: true
+          },
+          {
+            aggregatable: false,
+            auto: false,
+            descriptionI18n: {},
+            enumOptions: [],
+            id: 'aaaacxdcqjnofkrvac3owhyabi',
+            labelI18n: {},
+            name: 'label',
+            nullable: false,
+            readonly: true,
+            tags: [],
+            type: 'STRING',
+            unique: true,
+            visible: true
+          }
+        ],
+        backend: 'postgreSQL',
+        idAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+        label: 'Gender',
+        labelAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'},
+        lookupAttributes: [
+          {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+          {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'}
+        ],
+        package0: {id: 'root', label: 'root'},
+        tags: []
+      }
+      testAction(actions.__GET_ENTITY_TYPE_BY_ID__, 'root_gender', state, [{
+        type: SET_EDITOR_ENTITY_TYPE,
+        payload: payload
+      }], [], done)
+    })
+    it('Should create alert when failing', done => {
+      //TODO: make
     })
   })
 })
