@@ -8,7 +8,6 @@
 </head>
 <body>
 <div id="app">
-    <h1>Hello Navigator!</h1>
 </div>
 <script type="text/javascript">
 
