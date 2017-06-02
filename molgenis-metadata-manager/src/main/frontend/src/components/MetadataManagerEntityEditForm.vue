@@ -99,8 +99,10 @@
     padding-top: 11px
   }
 
-  .inner-column {
-    border-right: solid black thin;
+  /*screen-md border on inner column when columns aligned next to each other*/
+  @media (min-width: 768px) {
+    .col-md-3.inner-column,
+    .col-md-4.inner-column{border-right: solid black thin;}
   }
 </style>
 
