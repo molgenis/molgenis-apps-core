@@ -2,8 +2,6 @@
 <template>
   <div class="container">
 
-    <h1 style="padding-top: 1rem">Navigator</h1>
-
     <div v-if="error != undefined" class="alert alert-danger" role="alert">
       <button @click="error=null" type="button" class="close"><span aria-hidden="true">&times;</span></button> {{error}}
     </div>
