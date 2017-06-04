@@ -1,13 +1,12 @@
 // @flow
 import type { Package, State } from './state'
-import { login, get } from '../molgenisApi'
-import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_TOKEN, SET_ERROR} from './mutations'
+import { get } from '../molgenisApi'
+import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_ERROR} from './mutations'
 
 export const GET_PACKAGES = 'GET_PACKAGES'
 export const GET_ENTITIES = 'GET_ENTITIES'
 export const RESET_STATE = 'RESET_STATE'
 export const GET_STATE_FOR_PACKAGE = 'GET_STATE_FOR_PACKAGE'
-export const LOGIN = 'LOGIN'
 
 /**
  * Resets the entire state
@@ -103,15 +102,6 @@ export default {
       }
     }).catch((error) => {
       commit(SET_ERROR, error.errors[0].message)
-    })
-  },
-  [LOGIN] ({commit, dispatch}: {commit : Function, dispatch : Function}) {
-    // Hack login credentials for now
-    login('admin', 'admin').then((response) => {
-      commit(SET_TOKEN, response.token)
-      dispatch(GET_PACKAGES)
-    }).catch((error) => {
-      commit(SET_ERROR, error.body.errors[0].message)
     })
   }
 }
