@@ -16,21 +16,18 @@ describe('store', function () {
       it('should fetch the packages and store them in the state', function (done) {
         // mock api call
         const package1 = {id: 'pack1', label: 'packLabel1'}
-        const packages = package1
         const apiResponse = {
-          items: [packages]
+          items: [package1]
         }
         let getSuccess = Promise.resolve(apiResponse)
         get.onFirstCall().returns(getSuccess)
 
         // execute
         store.dispatch('GET_PACKAGES', 'my-test-query')
-
-        // verify
-        getSuccess.then(function () {
-          expect(store.state.packages[0]).to.equal(package1)
-          done()
-        })
+          .then(function () {
+            expect(store.state.packages[0]).to.equal(package1)
+            done()
+          })
       })
 
       it('should pass the error message to the state when the get fails', function (done) {
@@ -60,15 +57,13 @@ describe('store', function () {
 
         // execute
         store.dispatch('GET_ENTITIES', 'my-test-query')
-
-        // verify
-        getSuccess.then(function () {
-          expect(store.state.entities[0].id).to.equal('e1')
-          expect(store.state.entities[0].label).to.equal('el1')
-          expect(store.state.entities[0].description).to.equal(undefined)
-          expect(store.state.entities[0].type).to.equal('entity')
-          done()
-        })
+          .then(function () {
+            expect(store.state.entities[0].id).to.equal('e1')
+            expect(store.state.entities[0].label).to.equal('el1')
+            expect(store.state.entities[0].description).to.equal(undefined)
+            expect(store.state.entities[0].type).to.equal('entity')
+            done()
+          })
       })
 
       it('should set the error when the fetch fails', function (done) {
