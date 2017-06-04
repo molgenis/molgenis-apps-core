@@ -1,8 +1,8 @@
 import * as api from 'src/molgenisApi'
 import store from 'src/store'
 
-describe('store', () => {
-  describe('initial state', () => {
+describe('store', function () {
+  describe('initial state', function () {
     it('should have a empty package list', () => {
       expect(store.state.packages).to.be.empty
     })
@@ -12,8 +12,8 @@ describe('store', () => {
     let get = sinon.stub(api, 'get')
     afterEach(() => get.reset())
 
-    describe('GET_PACKAGES', () => {
-      it('should fetch the packages and store them in the state', done => {
+    describe('GET_PACKAGES', function () {
+      it('should fetch the packages and store them in the state', function (done) {
         // mock api call
         const package1 = {id: 'pack1', label: 'packLabel1'}
         const packages = package1
@@ -33,7 +33,7 @@ describe('store', () => {
         })
       })
 
-      it('should set the error when the fetch fails', done => {
+      it('should pass the error message to the state when the get fails', function (done) {
         // mock api response
         let getFail = Promise.reject({
           errors: [{message: 'an error yo'}]
@@ -42,17 +42,15 @@ describe('store', () => {
 
         // execute
         store.dispatch('GET_PACKAGES', 'my-test-query')
-        getFail.catch(function () { done() })
-      })
-
-      it('should have the error set by now', done => {
-        expect(store.state.error).to.equal('an error yo')
-        done()
+          .catch(function () {
+            expect(store.state.error).to.equal('an error yo')
+            done()
+          })
       })
     })
 
-    describe('GET_ENTITIES', () => {
-      it('should fetch the entities and store them in the state', done => {
+    describe('GET_ENTITIES', function () {
+      it('should fetch the entities and store them in the state', function (done) {
         const entities = [{id: 'e1', label: 'el1'}]
         const apiResponse = {
           items: entities
@@ -73,21 +71,19 @@ describe('store', () => {
         })
       })
 
-      it('should set the error when the fetch fails', done => {
+      it('should set the error when the fetch fails', function (done) {
         // mock api response
         let getFail = Promise.reject({
-          errors: [{message: 'an error yo'}]
+          errors: [{message: 'error on entity query'}]
         })
         get.onFirstCall().returns(getFail)
 
         // execute
         store.dispatch('GET_ENTITIES', 'my-test-query')
-        getFail.catch(function () { done() })
-      })
-
-      it('should have the error set by now', done => {
-        expect(store.state.error).to.equal('an error yo')
-        done()
+          .catch(function () {
+            expect(store.state.error).to.equal('error on entity query')
+            done()
+          })
       })
     })
   })

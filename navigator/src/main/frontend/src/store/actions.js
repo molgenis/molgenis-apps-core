@@ -1,6 +1,6 @@
 // @flow
-import type { Package, State } from './state'
-import { get } from '../molgenisApi'
+import type {Package, State} from './state'
+import {get} from '../molgenisApi'
 import {SET_PACKAGES, SET_ENTITIES, SET_PATH, RESET_PATH, SET_ERROR} from './mutations'
 
 export const GET_PACKAGES = 'GET_PACKAGES'
@@ -9,7 +9,7 @@ export const RESET_STATE = 'RESET_STATE'
 export const GET_STATE_FOR_PACKAGE = 'GET_STATE_FOR_PACKAGE'
 
 /**
- * Resets the entire state
+ * Resets the entire state using the given packages as the package state
  * @param commit, reference to mutation function
  * @param packages, the complete list of packages
  */
@@ -37,42 +37,48 @@ function buildPath (packages, currentPackage: Package, path: Array<Package>) {
   return path
 }
 
-// Server URL can be found in webpack.config.js ->  devServer: { proxy: [] }
-// Run MOLGENIS docker on 8081 for great success
 export default {
-  [GET_PACKAGES] ({commit} : {commit : Function}, query: ?string) {
+  [GET_PACKAGES] ({commit}: { commit: Function }, query: ?string) {
     query = query || ''
     const uri = query ? '/sys_md_Package?sort=label&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
       : '/sys_md_Package?sort=label'
 
-    get({apiUrl: '/api/v2'}, uri).then((response) => {
-      commit(SET_PACKAGES, response.items)
-    }).catch((error) => {
-      commit(SET_ERROR, error.errors[0].message)
-    })
-  },
-  [GET_ENTITIES] ({commit} : {commit : Function}, query: ?string) {
-    if (!query) {
-      return
-    }
-    get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
-      const entities = response.items.map(function (item) {
-        return {
-          'id': item.id,
-          'type': 'entity',
-          'label': item.label,
-          'description': item.description
-        }
+    return new Promise((resolve, reject) => {
+      get({apiUrl: '/api/v2'}, uri).then((response) => {
+        commit(SET_PACKAGES, response.items)
+        resolve()
+      }).catch((error) => {
+        commit(SET_ERROR, error.errors[0].message)
+        reject()
       })
-      commit(SET_ENTITIES, entities)
-    }).catch((error) => {
-      commit(SET_ERROR, error.errors[0].message)
     })
   },
-  [RESET_STATE] ({commit} : {commit : Function}) {
+  [GET_ENTITIES] ({commit}: { commit: Function }, query: string) {
+    return new Promise((resolve, reject) => {
+      if (!query) {
+        resolve()
+      }
+      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
+        const entities = response.items.map(function (item) {
+          return {
+            'id': item.id,
+            'type': 'entity',
+            'label': item.label,
+            'description': item.description
+          }
+        })
+        commit(SET_ENTITIES, entities)
+        resolve()
+      }).catch((error) => {
+        commit(SET_ERROR, error.errors[0].message)
+        reject()
+      })
+    })
+  },
+  [RESET_STATE] ({commit}: { commit: Function }) {
     resetToHome(commit, [])
   },
-  [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state} : {commit : Function, dispatch : Function, state : State}, selectedPackageId: ?string) {
+  [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state}: { commit: Function, dispatch: Function, state: State }, selectedPackageId: ?string) {
     get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
       const allPackages = response.items
 
