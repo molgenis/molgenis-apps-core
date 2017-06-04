@@ -75,7 +75,7 @@
 <script>
   import _ from 'lodash'
   import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE} from '../store/actions'
-  import {SET_QUERY} from '../store/mutations'
+  import {SET_QUERY, SET_ERROR} from '../store/mutations'
   import { Package } from '../store/state'
 
   export default {
@@ -138,8 +138,13 @@
       items () {
         return [].concat(this.packages).concat(this.entities)
       },
-      error () {
-        return this.$store.state.error
+      error: {
+        get () {
+          return this.$store.state.error
+        },
+        set (error) {
+          this.$store.commit(SET_ERROR, error)
+        }
       }
     },
     mounted: function () {
