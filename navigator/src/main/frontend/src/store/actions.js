@@ -1,7 +1,7 @@
 // @flow
 import type { Package, State } from './state'
 import { get } from '../molgenisApi'
-import {SET_PACKAGES, SET_ENTITIES, APPEND_PATH, RESET_PATH, SET_ERROR} from './mutations'
+import {SET_PACKAGES, SET_ENTITIES, SET_PATH, RESET_PATH, SET_ERROR} from './mutations'
 
 export const GET_PACKAGES = 'GET_PACKAGES'
 export const GET_ENTITIES = 'GET_ENTITIES'
@@ -21,23 +21,20 @@ function resetToHome (commit: Function, packages: Array<Package>) {
 
 /**
  * Recursively build the path, going backwards starting at the currentPackage
- * @param commit, reference to mutation function
  * @param packages, the complete list of packages
  * @param currentPackage, the tail
- * @param reset, boolean indicating if path needs to be reset before building
+ * @param path the path where building
  */
-function buildPath (commit: Function, packages, currentPackage: Package, reset: boolean) {
-  if (reset) {
-    commit(RESET_PATH)
-  }
+function buildPath (packages, currentPackage: Package, path: Array<Package>) {
   if (currentPackage.parent) {
     const currentParent = currentPackage.parent
     const parentPackage = packages.find(function (packageItem) {
       return packageItem.id === currentParent.id
     })
-    buildPath(commit, packages, parentPackage, false)
+    path = buildPath(packages, parentPackage, path)
   }
-  commit(APPEND_PATH, currentPackage)
+  path.push(currentPackage)
+  return path
 }
 
 // Server URL can be found in webpack.config.js ->  devServer: { proxy: [] }
@@ -95,9 +92,10 @@ export default {
         const childPackages = allPackages.filter(function (packageItem) {
           return packageItem.parent && packageItem.parent.id === selectedPackage.id
         })
-
         commit(SET_PACKAGES, childPackages)
-        buildPath(commit, allPackages, selectedPackage, true)
+
+        const path = buildPath(allPackages, selectedPackage, [])
+        commit(SET_PATH, path)
         dispatch(GET_ENTITIES, selectedPackageId)
       }
     }).catch((error) => {
