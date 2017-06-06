@@ -80,33 +80,37 @@ export default {
     resetToHome(commit, [])
   },
   [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state}: { commit: Function, dispatch: Function, state: State }, selectedPackageId: ?string) {
-    get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
-      const allPackages = response.items
+    return new Promise((resolve, reject) => {
+      get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
+        const allPackages = response.items
 
-      if (!selectedPackageId) {
-        resetToHome(commit, allPackages)
-      } else {
-        const selectedPackage = allPackages.find(function (packageItem) {
-          return packageItem.id === selectedPackageId
-        })
-
-        if (selectedPackage === null) {
-          state.error = 'couldn\'t find package.'
+        if (!selectedPackageId) {
           resetToHome(commit, allPackages)
+        } else {
+          const selectedPackage = allPackages.find(function (packageItem) {
+            return packageItem.id === selectedPackageId
+          })
+
+          if (!selectedPackage) {
+            commit(SET_ERROR, 'couldn\'t find package.')
+            resetToHome(commit, allPackages)
+            reject()
+          } else {
+            // Find child packages.
+            const childPackages = allPackages.filter(function (packageItem) {
+              return packageItem.parent && packageItem.parent.id === selectedPackage.id
+            })
+            commit(SET_PACKAGES, childPackages)
+
+            const path = buildPath(allPackages, selectedPackage, [])
+            commit(SET_PATH, path)
+            return dispatch(GET_ENTITIES, selectedPackageId)
+          }
         }
-
-        // Find child packages.
-        const childPackages = allPackages.filter(function (packageItem) {
-          return packageItem.parent && packageItem.parent.id === selectedPackage.id
-        })
-        commit(SET_PACKAGES, childPackages)
-
-        const path = buildPath(allPackages, selectedPackage, [])
-        commit(SET_PATH, path)
-        dispatch(GET_ENTITIES, selectedPackageId)
-      }
-    }).catch((error) => {
-      commit(SET_ERROR, error.errors[0].message)
+      }).catch((error) => {
+        commit(SET_ERROR, error.errors[0].message)
+        reject()
+      })
     })
   }
 }

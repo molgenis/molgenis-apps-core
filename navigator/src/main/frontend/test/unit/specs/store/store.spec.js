@@ -81,5 +81,54 @@ describe('store', function () {
           })
       })
     })
+
+    describe('RESET_STATE', function () {
+      it('should clear the state (meaning empty packages, empty path and empty entities)', function () {
+        store.dispatch('RESET_STATE')
+        expect(store.state.packages).to.be.empty
+        expect(store.state.path).to.be.empty
+        expect(store.state.enties).to.be.empty
+      })
+    })
+
+    describe('GET_STATE_FOR_PACKAGE', function (done) {
+      it('should when no package if given reset the state)', function () {
+        const package1 = {id: 'pack1', label: 'packLabel1'}
+        const package2 = {id: 'pack2', label: 'packLabel2'}
+        const package3 = {id: 'pack3', label: 'packLabel3'}
+        const apiResponse = {
+          items: [package1]
+        }
+        let getSuccess = Promise.resolve(apiResponse)
+        get.onFirstCall().returns(getSuccess)
+
+        store.dispatch('GET_STATE_FOR_PACKAGE', '').then(function () {
+          expect(store.state.packages[0]).to.equal(package1)
+          expect(store.state.packages[1]).to.equal(package2)
+          expect(store.state.packages[2]).to.equal(package3)
+          expect(store.state.path).to.be.empty
+          expect(store.state.enties).to.be.empty
+        })
+      })
+      it('should set the error is the given package id is not found', function (done) {
+        const apiResponse = {
+          items: [
+            {id: 'pack1', label: 'packLabel1'},
+            {id: 'pack3', label: 'packLabel3'}
+          ]
+        }
+        let getSuccess = Promise.resolve(apiResponse)
+        get.onFirstCall().returns(getSuccess)
+
+        store.dispatch('GET_STATE_FOR_PACKAGE', 'pack2')
+          .catch(function () {
+            expect(store.state.error).to.equal('couldn\'t find package.')
+            done()
+          })
+      })
+      it('WIP should fetch the content for th given packages and build the path', function (done) {
+        done()
+      })
+    })
   })
 })
