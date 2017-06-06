@@ -1,6 +1,6 @@
 // @flow
 import type {Package, State} from './state'
-import {get} from '../molgenisApi'
+import * as api from 'molgenis-api-client'
 import {SET_PACKAGES, SET_ENTITIES, SET_PATH, RESET_PATH, SET_ERROR} from './mutations'
 
 export const GET_PACKAGES = 'GET_PACKAGES'
@@ -44,7 +44,7 @@ export default {
       : '/sys_md_Package?sort=label'
 
     return new Promise((resolve, reject) => {
-      get({apiUrl: '/api/v2'}, uri).then((response) => {
+      api.get({apiUrl: '/api/v2'}, uri).then((response) => {
         commit(SET_PACKAGES, response.items)
         resolve()
       }).catch((error) => {
@@ -58,7 +58,7 @@ export default {
       if (!query) {
         resolve()
       }
-      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
+      api.get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
         const entities = response.items.map(function (item) {
           return {
             'id': item.id,
@@ -79,7 +79,7 @@ export default {
     resetToHome(commit, [])
   },
   [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state}: { commit: Function, dispatch: Function, state: State }, selectedPackageId: ?string) {
-    get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
+    api.get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
       const allPackages = response.items
 
       if (!selectedPackageId) {
