@@ -10,7 +10,9 @@ describe('store', function () {
 
   describe('actions', () => {
     let get = sinon.stub(api, 'get')
-    afterEach(() => get.reset())
+    afterEach(function () {
+      get.reset()
+    })
 
     describe('GET_PACKAGES', function () {
       it('should fetch the packages and store them in the state', function (done) {
@@ -126,8 +128,28 @@ describe('store', function () {
             done()
           })
       })
-      it('WIP should fetch the content for th given packages and build the path', function (done) {
-        done()
+      it('should fetch the content for the given packages and build the path', function (done) {
+        const apiResponse = {
+          items: [
+            {id: 'level0', label: 'child', parent: {id: 'level1'}},
+            {id: 'level1', label: 'parent', parent: {id: 'level2'}},
+            {id: 'level2', label: 'grandparent'}
+          ]
+        }
+        const entities = [{id: 'e1', label: 'el1'}]
+        let getPackageSuccess = Promise.resolve(apiResponse)
+        let getEntitiesSuccess = Promise.resolve({items: entities})
+        get.onFirstCall().returns(getPackageSuccess)
+        get.onSecondCall().returns(getEntitiesSuccess)
+
+        store.dispatch('GET_STATE_FOR_PACKAGE', 'level1')
+          .then(function () {
+            expect(store.state.packages[0].id).to.equal('level0')
+            expect(store.state.entities[0].id).to.equal('e1')
+            expect(store.state.path[0].label).to.equal('grandparent')
+            expect(store.state.path[1].label).to.equal('parent')
+            done()
+          })
       })
     })
   })

@@ -1,5 +1,5 @@
 // @flow
-import type {Package, State} from './state'
+import type {Package} from './state'
 // $FlowFixMe
 import {get} from 'molgenis-api-client'
 import {SET_PACKAGES, SET_ENTITIES, SET_PATH, RESET_PATH, SET_ERROR} from './mutations'
@@ -79,7 +79,7 @@ export default {
   [RESET_STATE] ({commit}: { commit: Function }) {
     resetToHome(commit, [])
   },
-  [GET_STATE_FOR_PACKAGE] ({commit, dispatch, state}: { commit: Function, dispatch: Function, state: State }, selectedPackageId: ?string) {
+  [GET_STATE_FOR_PACKAGE] ({commit, dispatch}: { commit: Function, dispatch: Function }, selectedPackageId: ?string) {
     return new Promise((resolve, reject) => {
       get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
         const allPackages = response.items
@@ -104,7 +104,7 @@ export default {
 
             const path = buildPath(allPackages, selectedPackage, [])
             commit(SET_PATH, path)
-            return dispatch(GET_ENTITIES, selectedPackageId)
+            dispatch(GET_ENTITIES, selectedPackageId).then(resolve)
           }
         }
       }).catch((error) => {
