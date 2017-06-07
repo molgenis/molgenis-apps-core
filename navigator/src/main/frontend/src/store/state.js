@@ -14,7 +14,8 @@ export type Entity = {
   id: string,
   type: string,
   label: string,
-  description: ?string
+  description: ?string,
+  abstract: boolean
 }
 
 export type State = {

@@ -39,6 +39,21 @@ function buildPath (packages, currentPackage: Package, path: Array<Package>) {
   return path
 }
 
+/**
+ * Transform the result to an Entity object
+ * @param item result row form query to backend
+ * @returns {{id: *, type: string, label: *, description: *, abstract: boolean}}
+ */
+function toEntity (item:any) {
+  return {
+    'id': item.id,
+    'type': 'entity',
+    'label': item.label,
+    'description': item.description,
+    'abstract': !!item.isAbstract
+  }
+}
+
 export default {
   [QUERY_PACKAGES] ({commit}: { commit: Function }, query: ?string) {
     query = query || ''
@@ -61,14 +76,7 @@ export default {
         resolve()
       }
       get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
-        const entities = response.items.map(function (item) {
-          return {
-            'id': item.id,
-            'type': 'entity',
-            'label': item.label,
-            'description': item.description
-          }
-        })
+        const entities = response.items.map(toEntity)
         commit(SET_ENTITIES, entities)
         resolve()
       }).catch((error) => {
@@ -80,14 +88,7 @@ export default {
   [GET_ENTITIES_IN_PACKAGE] ({commit}: { commit: Function }, packageId: string) {
     return new Promise((resolve, reject) => {
       get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=package.id==' + packageId).then((response) => {
-        const entities = response.items.map(function (item) {
-          return {
-            'id': item.id,
-            'type': 'entity',
-            'label': item.label,
-            'description': item.description
-          }
-        })
+        const entities = response.items.map(toEntity)
         commit(SET_ENTITIES, entities)
         resolve()
       }).catch((error) => {

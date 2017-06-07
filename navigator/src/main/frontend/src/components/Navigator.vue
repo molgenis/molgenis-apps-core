@@ -43,7 +43,10 @@
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
       <template slot="label" scope="label" >
         <span v-if="label.item.type === 'entity'">
-            <a :href="'/menu/main/dataexplorer?entity=' + label.item.id" target="_blank">
+            <span v-if="label.item.abstract">
+              {{label.item.label}} (abstract)
+            </span>
+            <a v-else :href="'/menu/main/dataexplorer?entity=' + label.item.id" target="_blank">
               <i class="fa fa-list" aria-hidden="true"></i> {{label.item.label}}
             </a>
           </span>
@@ -85,7 +88,8 @@
         fields: {
           label: {
             label: 'Name',
-            sortable: true
+            sortable: true,
+            'class': 'text-nowrap'
           },
           description: {
             label: 'Description',
