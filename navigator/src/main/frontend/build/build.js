@@ -2,6 +2,7 @@
 require('./check-versions')()
 
 process.env.NODE_ENV = 'production'
+process.noDeprecation = true
 
 var ora = require('ora')
 var path = require('path')
