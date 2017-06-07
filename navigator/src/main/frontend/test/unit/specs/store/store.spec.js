@@ -14,7 +14,7 @@ describe('store', function () {
       get.reset()
     })
 
-    describe('GET_PACKAGES', function () {
+    describe('QUERY_PACKAGES', function () {
       it('should fetch the packages and store them in the state', function (done) {
         // mock api call
         const package1 = {id: 'pack1', label: 'packLabel1'}
@@ -25,7 +25,7 @@ describe('store', function () {
         get.onFirstCall().returns(getSuccess)
 
         // execute
-        store.dispatch('GET_PACKAGES', 'my-test-query')
+        store.dispatch('QUERY_PACKAGES', 'my-test-query')
           .then(function () {
             expect(store.state.packages[0]).to.equal(package1)
             done()
@@ -40,7 +40,7 @@ describe('store', function () {
         get.onFirstCall().returns(getFail)
 
         // execute
-        store.dispatch('GET_PACKAGES', 'my-test-query')
+        store.dispatch('QUERY_PACKAGES', 'my-test-query')
           .catch(function () {
             expect(store.state.error).to.equal('an error yo')
             done()
@@ -48,8 +48,8 @@ describe('store', function () {
       })
     })
 
-    describe('GET_ENTITIES', function () {
-      it('should fetch the entities and store them in the state', function (done) {
+    describe('QUERY_ENTITIES', function () {
+      it('should query the entities and store result in the state', function (done) {
         const entities = [{id: 'e1', label: 'el1'}]
         const apiResponse = {
           items: entities
@@ -58,7 +58,7 @@ describe('store', function () {
         get.onFirstCall().returns(getSuccess)
 
         // execute
-        store.dispatch('GET_ENTITIES', 'my-test-query')
+        store.dispatch('QUERY_ENTITIES', 'my-test-query')
           .then(function () {
             expect(store.state.entities[0].id).to.equal('e1')
             expect(store.state.entities[0].label).to.equal('el1')
@@ -68,7 +68,7 @@ describe('store', function () {
           })
       })
 
-      it('should set the error when the fetch fails', function (done) {
+      it('should set the error when the query fails', function (done) {
         // mock api response
         let getFail = Promise.reject({
           errors: [{message: 'error on entity query'}]
@@ -76,7 +76,7 @@ describe('store', function () {
         get.onFirstCall().returns(getFail)
 
         // execute
-        store.dispatch('GET_ENTITIES', 'my-test-query')
+        store.dispatch('QUERY_ENTITIES', 'my-test-query')
           .catch(function () {
             expect(store.state.error).to.equal('error on entity query')
             done()
@@ -110,6 +110,7 @@ describe('store', function () {
           expect(store.state.packages[2]).to.equal(package3)
           expect(store.state.path).to.be.empty
           expect(store.state.enties).to.be.empty
+          done()
         })
       })
       it('should set the error is the given package id is not found', function (done) {

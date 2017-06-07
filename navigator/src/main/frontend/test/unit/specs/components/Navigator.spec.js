@@ -19,8 +19,8 @@ describe('Navigator', () => {
 
       Navigator.methods.submitQuery()
       Navigator.methods.$store.dispatch.should.have.been.calledWith('RESET_STATE')
-      Navigator.methods.$store.dispatch.should.have.been.calledWith('GET_PACKAGES', 'my-query')
-      Navigator.methods.$store.dispatch.should.have.been.calledWith('GET_ENTITIES', 'my-query')
+      Navigator.methods.$store.dispatch.should.have.been.calledWith('QUERY_PACKAGES', 'my-query')
+      Navigator.methods.$store.dispatch.should.have.been.calledWith('QUERY_ENTITIES', 'my-query')
     })
   })
 
@@ -33,7 +33,7 @@ describe('Navigator', () => {
 
       Navigator.methods.clearQuery('foobar')
       Navigator.methods.$store.commit.should.have.been.calledWith('SET_QUERY', undefined)
-      Navigator.methods.$store.dispatch.should.have.been.calledWith('GET_PACKAGES')
+      Navigator.methods.$store.dispatch.should.have.been.calledWith('QUERY_PACKAGES')
     })
   })
 

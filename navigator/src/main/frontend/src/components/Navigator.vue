@@ -74,7 +74,7 @@
 
 <script>
   import _ from 'lodash'
-  import {GET_PACKAGES, GET_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE} from '../store/actions'
+  import {QUERY_PACKAGES, QUERY_ENTITIES, RESET_STATE, GET_STATE_FOR_PACKAGE} from '../store/actions'
   import {SET_QUERY, SET_ERROR} from '../store/mutations'
   import { Package } from '../store/state'
 
@@ -99,12 +99,12 @@
     methods: {
       submitQuery: _.throttle(function () {
         this.$store.dispatch(RESET_STATE)
-        this.$store.dispatch(GET_PACKAGES, this.$store.state.query)
-        this.$store.dispatch(GET_ENTITIES, this.$store.state.query)
+        this.$store.dispatch(QUERY_PACKAGES, this.$store.state.query)
+        this.$store.dispatch(QUERY_ENTITIES, this.$store.state.query)
       }, 200),
       clearQuery: function () {
         this.$store.commit(SET_QUERY, undefined)
-        this.$store.dispatch(GET_PACKAGES)
+        this.$store.dispatch(QUERY_PACKAGES)
       },
       selectPackage: function (packageId: string) {
         this.$store.commit(SET_QUERY, undefined)
@@ -148,7 +148,7 @@
       }
     },
     mounted: function () {
-      this.$route.params.package ? this.selectPackage(this.$route.params.package) : this.$store.dispatch(GET_PACKAGES)
+      this.$route.params.package ? this.selectPackage(this.$route.params.package) : this.$store.dispatch(QUERY_PACKAGES)
     },
     watch: {
       '$route' (to, from) {
