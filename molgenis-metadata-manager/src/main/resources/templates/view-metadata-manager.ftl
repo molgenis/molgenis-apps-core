@@ -1,5 +1,4 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Diagnostics platform</title>
@@ -8,7 +7,7 @@
     <link href="/css/app.css" rel="stylesheet">
 </head>
 <body>
-<div id="metadata-editor-container"></div>
+<div id="metadata-manager-container"></div>
 
 <script type="text/javascript">
     window.__INITIAL_STATE__ = {
