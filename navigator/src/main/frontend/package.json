@@ -22,7 +22,7 @@
     "i18next-xhr-backend": "^1.4.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
-    "molgenis-api-client": "^1.0.7",
+    "molgenis-api-client": "^1.0.8",
     "moment": "^2.18.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",

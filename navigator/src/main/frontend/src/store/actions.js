@@ -1,6 +1,5 @@
 // @flow
 import type {Package} from './state'
-// $FlowFixMe
 import {get} from 'molgenis-api-client'
 import {SET_PACKAGES, SET_ENTITIES, SET_PATH, RESET_PATH, SET_ERROR} from './mutations'
 
