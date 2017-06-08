@@ -29,6 +29,7 @@
     <modules>
         <module>web-app</module>
         <module>molgenis-metadata-manager</module>
+        <module>navigator</module>
     </modules>
 
     <properties>
