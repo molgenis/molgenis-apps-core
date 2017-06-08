@@ -338,5 +338,125 @@ describe('actions', () => {
       testAction(actions.__GET_ENTITY_TYPE_BY_ID__, entityTypeID, state, [{type: CREATE_ALERT, payload: payload}], [], done)
     })
   })
+  describe('CREATE_ENTITY_TYPE', () => {
+    afterEach(() => td.reset())
+    const state = {
+      alert: {
+        message: null,
+        type: null
+      },
+      packages: [],
+      entityTypes: [],
+      editorEntityType: {}
+    }
+    it('Should create an entity type', done => {
+      const mockedResponse = {
+        entityType: {
+          id: 'aaaacxego5gxpkrvac3owhyaae',
+          labelI18n: {},
+          description: {},
+          abstract0: false,
+          attributes: [],
+          backend: 'postgreSQL',
+          lookupAttributes: [],
+          tags: []
+        },
+        languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
+      }
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        id: 'aaaacxego5gxpkrvac3owhyaae',
+        labelI18n: {},
+        description: {},
+        abstract0: false,
+        attributes: [],
+        backend: 'postgreSQL',
+        lookupAttributes: [],
+        tags: []
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{type: SET_EDITOR_ENTITY_TYPE, payload: payload}], [], done)
+    })
+    it('Should create alert when failing', done => {
+      const mockedResponse = {
+        errors: [{
+          type: 'danger',
+          message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+        }]
+      }
+      const entityTypeID = 'root_gender'
+      const get = td.function('api.get')
+      td.when(td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')))
+        .thenReject(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        type: 'danger',
+        message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{type: CREATE_ALERT, payload: payload}], [], done)
+    })
+  })
+  describe('SAVE_EDITOR_ENTITY_TYPE', () => {
+    afterEach(() => td.reset())
+    const state = {
+      alert: {
+        message: null,
+        type: null
+      },
+      packages: [],
+      entityTypes: [],
+      editorEntityType: {}
+    }
+    it('Should persist metadata changes to the database', done => {
+      const mockedResponse = {
+        entityType: {
+          id: 'aaaacxego5gxpkrvac3owhyaae',
+          labelI18n: {},
+          description: {},
+          abstract0: false,
+          attributes: [],
+          backend: 'postgreSQL',
+          lookupAttributes: [],
+          tags: []
+        },
+        languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
+      }
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        id: 'aaaacxego5gxpkrvac3owhyaae',
+        labelI18n: {},
+        description: {},
+        abstract0: false,
+        attributes: [],
+        backend: 'postgreSQL',
+        lookupAttributes: [],
+        tags: []
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{type: SET_EDITOR_ENTITY_TYPE, payload: payload}], [], done)
+    })
+    it('Should create alert when failing', done => {
+      const mockedResponse = {
+        errors: [{
+          type: 'danger',
+          message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+        }]
+      }
+      const entityTypeID = 'root_gender'
+      const get = td.function('api.get')
+      td.when(td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')))
+        .thenReject(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        type: 'danger',
+        message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{type: CREATE_ALERT, payload: payload}], [], done)
+    })
+  })
 })
 

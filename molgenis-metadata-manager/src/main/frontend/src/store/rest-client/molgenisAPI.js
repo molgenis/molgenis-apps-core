@@ -15,13 +15,8 @@ function fetchForStatus (url, settings) {
 function fetchAndHandleResponse (url, settings) {
   return fetch(url, settings)
     .then(response => response.json()
-      .then(json => ({json, response})))
-    .then(({json, response}) => {
-      if (!response.ok) {
-        return Promise.reject(json)
-      }
-      return json
-    })
+      .then(json => response.ok ? json : Promise.reject(json))
+    )
 }
 
 export function post (server, uri, data, token) {
