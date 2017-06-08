@@ -28,6 +28,7 @@
 
     <modules>
         <module>web-app</module>
+        <module>navigator</module>
     </modules>
 
     <properties>

@@ -269,6 +269,11 @@
             <version>${molgenis.dependency}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.molgenis</groupId>
+            <artifactId>molgenis-navigator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
     </dependencies>
 </project>
