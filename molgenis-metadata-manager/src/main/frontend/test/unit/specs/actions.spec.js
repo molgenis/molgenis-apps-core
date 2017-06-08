@@ -320,7 +320,22 @@ describe('actions', () => {
       }], [], done)
     })
     it('Should create alert when failing', done => {
-      //TODO: make
+      const mockedResponse = {
+        errors: [{
+          type: 'danger',
+          message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+        }]
+      }
+      const entityTypeID = 'root_gender'
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID))
+        .thenReject(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        type: 'danger',
+        message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+      }
+      testAction(actions.__GET_ENTITY_TYPE_BY_ID__, entityTypeID, state, [{type: CREATE_ALERT, payload: payload}], [], done)
     })
   })
 })
