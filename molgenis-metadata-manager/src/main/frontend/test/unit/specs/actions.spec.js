@@ -1,7 +1,8 @@
 /* eslint-disable no-undef */
 import testAction from '../utils/action.utils'
 import td from 'testdouble'
-import * as api from 'store/rest-client/molgenisAPI.js'
+// $FlowFixMe
+import * as api from 'molgenis-api-client'
 
 import { CREATE_ALERT, SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from 'store/mutations'
 

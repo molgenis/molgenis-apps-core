@@ -1,4 +1,5 @@
-import { get, post } from './rest-client/molgenisAPI'
+// $FlowFixMe
+import {get, post} from 'molgenis-api-client'
 import { CREATE_ALERT, SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from './mutations'
 
 export const GET_PACKAGES = '__GET_PACKAGES__'

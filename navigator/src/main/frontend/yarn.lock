@@ -3894,9 +3894,9 @@ mocha@^3.2.0:
     mkdirp "0.5.1"
     supports-color "3.1.2"
 
-molgenis-api-client@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/molgenis-api-client/-/molgenis-api-client-1.0.7.tgz#d1fb8fd76e5629a846ddd4b3181f782ae051a45c"
+molgenis-api-client@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/molgenis-api-client/-/molgenis-api-client-1.1.0.tgz#0271900f6b44a8fdd5c9209352441b13a0ca064d"
   dependencies:
     isomorphic-fetch "^2.2.1"
 
