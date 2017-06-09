@@ -1,13 +1,9 @@
+/* eslint-disable no-undef */
 import testAction from '../utils/action.utils'
 import td from 'testdouble'
 import * as api from 'store/rest-client/molgenisAPI.js'
 
-import {
-  SET_PACKAGES,
-  CREATE_ALERT,
-  SET_ENTITY_TYPES,
-  SET_EDITOR_ENTITY_TYPE
-} from 'store/mutations'
+import { CREATE_ALERT, SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from 'store/mutations'
 
 import actions from 'store/actions'
 describe('actions', () => {
@@ -320,8 +316,264 @@ describe('actions', () => {
       }], [], done)
     })
     it('Should create alert when failing', done => {
-      //TODO: make
+      const mockedResponse = {
+        errors: [{
+          type: 'danger',
+          message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+        }]
+      }
+      const entityTypeID = 'root_gender'
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID))
+        .thenReject(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        type: 'danger',
+        message: 'No [COUNT] permission on entity type [EntityType] with id [sys_md_EntityType]'
+      }
+      testAction(actions.__GET_ENTITY_TYPE_BY_ID__, entityTypeID, state, [{
+        type: CREATE_ALERT,
+        payload: payload
+      }], [], done)
+    })
+  })
+  describe('CREATE_ENTITY_TYPE', () => {
+    afterEach(() => td.reset())
+    const state = {
+      alert: {
+        message: null,
+        type: null
+      },
+      packages: [],
+      entityTypes: [],
+      editorEntityType: {}
+    }
+    it('Should create an entity type', done => {
+      const mockedResponse = {
+        entityType: {
+          id: 'aaaacxego5gxpkrvac3owhyaae',
+          labelI18n: {},
+          description: {},
+          abstract0: false,
+          attributes: [],
+          backend: 'postgreSQL',
+          lookupAttributes: [],
+          tags: []
+        },
+        languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
+      }
+      const get = td.function('api.get')
+      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType'))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        id: 'aaaacxego5gxpkrvac3owhyaae',
+        labelI18n: {},
+        description: {},
+        abstract0: false,
+        attributes: [],
+        backend: 'postgreSQL',
+        lookupAttributes: [],
+        tags: []
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{
+        type: SET_EDITOR_ENTITY_TYPE,
+        payload: payload
+      }], [], done)
+    })
+    it('Should create alert when failing', done => {
+      const mockedResponse = 'SyntaxError: Unexpected token < in JSON at position 0'
+      const get = td.function('api.get')
+      td.when(td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')))
+        .thenReject(mockedResponse)
+      td.replace(api, 'get', get)
+      const payload = {
+        type: 'danger',
+        message: 'Something went wrong, make sure you have permissions for creating entities.'
+      }
+      testAction(actions.__CREATE_ENTITY_TYPE__, null, state, [{type: CREATE_ALERT, payload: payload}], [], done)
+    })
+  })
+  describe('SAVE_EDITOR_ENTITY_TYPE', () => {
+    afterEach(() => td.reset())
+    it('Should persist metadata changes to the database', done => {
+      const state = {
+        alert: {
+          message: null,
+          type: null
+        },
+        packages: [],
+        entityTypes: [],
+        editorEntityType: {
+          id: 'root_gender',
+          labelI18n: {},
+          description: 'gender is located in the root package because it is not hospital specific',
+          abstract0: false,
+          attributes: [
+            {
+              aggregatable: false,
+              auto: false,
+              descriptionI18n: {},
+              enumOptions: [],
+              id: 'aaaacxdcqjnofkrvac3owhyabe',
+              labelI18n: {},
+              name: 'id',
+              nullable: false,
+              readonly: true,
+              tags: [],
+              type: 'STRING',
+              unique: true,
+              visible: true
+            },
+            {
+              aggregatable: false,
+              auto: false,
+              descriptionI18n: {},
+              enumOptions: [],
+              id: 'aaaacxdcqjnofkrvac3owhyabi',
+              labelI18n: {},
+              name: 'label',
+              nullable: false,
+              readonly: true,
+              tags: [],
+              type: 'STRING',
+              unique: true,
+              visible: true
+            }
+          ],
+          backend: 'postgreSQL',
+          idAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+          label: 'Gender',
+          labelAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'},
+          lookupAttributes: [
+            {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+            {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'}
+          ],
+          package0: {id: 'root', label: 'root'},
+          tags: []
+        }
+      }
+      const mockedResponse = {
+        entityType: {
+          id: 'aaaacxego5gxpkrvac3owhyaae',
+          labelI18n: {},
+          description: {},
+          abstract0: false,
+          attributes: [],
+          backend: 'postgreSQL',
+          lookupAttributes: [],
+          tags: []
+        },
+        languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
+      }
+      const updatedEditorEntityType = {
+        id: 'root_gender',
+        labelI18n: {},
+        description: 'Gender of the patient',
+        abstract0: false,
+        attributes: [
+          {
+            aggregatable: false,
+            auto: false,
+            descriptionI18n: {},
+            enumOptions: [],
+            id: 'aaaacxdcqjnofkrvac3owhyabe',
+            labelI18n: {},
+            name: 'id',
+            nullable: false,
+            readonly: true,
+            tags: [],
+            type: 'STRING',
+            unique: true,
+            visible: true
+          },
+          {
+            aggregatable: false,
+            auto: false,
+            descriptionI18n: {},
+            enumOptions: [],
+            id: 'aaaacxdcqjnofkrvac3owhyabi',
+            labelI18n: {},
+            name: 'label',
+            nullable: false,
+            readonly: true,
+            tags: [],
+            type: 'STRING',
+            unique: true,
+            visible: true
+          }
+        ],
+        backend: 'postgreSQL',
+        idAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+        label: 'Gender',
+        labelAttribute: {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'},
+        lookupAttributes: [
+          {id: 'aaaacxdcqjnofkrvac3owhyabe', label: 'id'},
+          {id: 'aaaacxdcqjnofkrvac3owhyabi', label: 'label'}
+        ],
+        package0: {id: 'root', label: 'root'},
+        tags: []
+      }
+      const post = td.function('api.post')
+      td.when(post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType))
+        .thenResolve(mockedResponse)
+      td.replace(api, 'post', post)
+      const payload = {
+        type: 'success',
+        message: 'Successfully updated metadata for EntityType: ' + updatedEditorEntityType.label
+      }
+      testAction(actions.__SAVE_EDITOR_ENTITY_TYPE__, updatedEditorEntityType, state, [{
+        type: CREATE_ALERT,
+        payload: payload
+      }], [{type: 'GET_ENTITY_TYPES'}], done)
+    })
+    it('Should create alert when failing', done => {
+      const state = {
+        alert: {
+          message: null,
+          type: null
+        },
+        packages: [],
+        entityTypes: [],
+        editorEntityType: {
+          id: 'aaaacxego5gxpkrvac3owhyaae',
+          labelI18n: {},
+          description: {},
+          abstract0: false,
+          attributes: [],
+          backend: 'postgreSQL',
+          lookupAttributes: [],
+          tags: []
+        }
+      }
+      const mockedResponse = {
+        errors: [{
+          type: 'danger',
+          message: 'Entity [aaaacxehgxmy3krvac3owhyaae] does not contain any attributes. Did you use the correct package+entity name combination in both the entities as well as the attributes sheet?'
+        }]
+      }
+      const updatedEditorEntityType = {
+        id: 'aaaacxego5gxpkrvac3owhyaae',
+        labelI18n: {},
+        description: 'New description',
+        abstract0: false,
+        attributes: [],
+        backend: 'postgreSQL',
+        lookupAttributes: [],
+        tags: []
+      }
+      const post = td.function('api.post')
+      td.when(post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType))
+        .thenReject(mockedResponse)
+      td.replace(api, 'post', post)
+      const payload = {
+        type: 'danger',
+        message: 'Entity [aaaacxehgxmy3krvac3owhyaae] does not contain any attributes. Did you use the correct package+entity name combination in both the entities as well as the attributes sheet?'
+      }
+      testAction(actions.__SAVE_EDITOR_ENTITY_TYPE__, updatedEditorEntityType, state, [{
+        type: CREATE_ALERT,
+        payload: payload
+      }], [], done)
     })
   })
 })
-

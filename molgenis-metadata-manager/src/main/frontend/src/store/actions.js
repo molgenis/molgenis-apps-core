@@ -58,14 +58,22 @@ export default {
       })
   },
   [CREATE_ENTITY_TYPE] ({commit}) {
-    get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType').then(response => {
-      commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
-    }, error => {
-      commit(CREATE_ALERT, {
-        type: 'danger',
-        message: error.errors[0].message
+    get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')
+      .then(response => {
+        commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
+      }, error => {
+        if (error.errors) {
+          commit(CREATE_ALERT, {
+            type: 'danger',
+            message: error.errors[0].message
+          })
+        } else {
+          commit(CREATE_ALERT, {
+            type: 'danger',
+            message: 'Something went wrong, make sure you have permissions for creating entities.'
+          })
+        }
       })
-    })
   },
   /**
    * Persist metadata changes to the database

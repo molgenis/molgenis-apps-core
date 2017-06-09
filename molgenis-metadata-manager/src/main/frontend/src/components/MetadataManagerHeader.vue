@@ -32,10 +32,10 @@
     methods: {
       onChange: function (selectedEntity) {
         if (selectedEntity !== null) {
-          this.$router.push({name: 'metadata-manager-with-id', params: {entityTypeID: selectedEntity.id}})
+          this.$router.push('/' + selectedEntity.id)
           this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, selectedEntity.id)
         } else {
-          this.$router.push({name: 'metadata-manager-without-id'})
+          this.$router.push('/')
           this.$store.commit(CLEAR_EDITOR_ENTITY_TYPE)
         }
       },
