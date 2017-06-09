@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div id="metadata-manager-container">
+    <div id="app">
       <router-view></router-view>
     </div>
   </div>

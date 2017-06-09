@@ -21,7 +21,7 @@ Vue.use(BootstrapVue)
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#metadata-manager-container',
+  el: '#app',
   store,
   router,
   template: '<App />',
