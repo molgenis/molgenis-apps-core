@@ -112,15 +112,16 @@ export default {
     return new Promise((resolve, reject) => {
       if (!query) {
         resolve()
+      } else {
+        get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&num=1000&q=label=q=' + query + ',description=q=' + query).then((response) => {
+          const entities = response.items.map(toEntity)
+          commit(SET_ENTITIES, entities)
+          resolve()
+        }).catch((error) => {
+          commit(SET_ERROR, error.errors[0].message)
+          reject()
+        })
       }
-      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&num=1000&q=label=q=' + query + ',description=q=' + query).then((response) => {
-        const entities = response.items.map(toEntity)
-        commit(SET_ENTITIES, entities)
-        resolve()
-      }).catch((error) => {
-        commit(SET_ERROR, error.errors[0].message)
-        reject()
-      })
     })
   },
   [GET_ENTITIES_IN_PACKAGE] ({commit}: { commit: Function }, packageId: string) {
