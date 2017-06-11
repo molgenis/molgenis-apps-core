@@ -57,7 +57,7 @@ function toEntity (item:any) {
 export default {
   [QUERY_PACKAGES] ({commit}: { commit: Function }, query: ?string) {
     query = query || ''
-    const uri = query ? '/sys_md_Package?sort=label&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
+    const uri = query ? '/sys_md_Package?sort=label&num=1000&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
       : '/sys_md_Package?sort=label'
 
     return new Promise((resolve, reject) => {
@@ -75,7 +75,7 @@ export default {
       if (!query) {
         resolve()
       }
-      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=label=q=' + query + ',description=q=' + query).then((response) => {
+      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&num=1000&q=label=q=' + query + ',description=q=' + query).then((response) => {
         const entities = response.items.map(toEntity)
         commit(SET_ENTITIES, entities)
         resolve()
@@ -87,7 +87,7 @@ export default {
   },
   [GET_ENTITIES_IN_PACKAGE] ({commit}: { commit: Function }, packageId: string) {
     return new Promise((resolve, reject) => {
-      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&q=package.id==' + packageId).then((response) => {
+      get({apiUrl: '/api/v2'}, '/sys_md_EntityType?sort=label&num=1000&q=package.id==' + packageId).then((response) => {
         const entities = response.items.map(toEntity)
         commit(SET_ENTITIES, entities)
         resolve()
@@ -102,7 +102,7 @@ export default {
   },
   [GET_STATE_FOR_PACKAGE] ({commit, dispatch}: { commit: Function, dispatch: Function }, selectedPackageId: ?string) {
     return new Promise((resolve, reject) => {
-      get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label').then((response) => {
+      get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label&num=1000').then((response) => {
         const allPackages = response.items
 
         if (!selectedPackageId) {
