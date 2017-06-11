@@ -18,7 +18,8 @@ describe('Navigator', () => {
       }
 
       Navigator.methods.submitQuery()
-      Navigator.methods.$store.dispatch.should.have.been.calledWith('RESET_STATE')
+      Navigator.methods.$store.commit.should.have.been.calledWith('SET_PACKAGES', [])
+      Navigator.methods.$store.commit.should.have.been.calledWith('RESET_PATH')
       Navigator.methods.$store.dispatch.should.have.been.calledWith('QUERY_PACKAGES', 'my-query')
       Navigator.methods.$store.dispatch.should.have.been.calledWith('QUERY_ENTITIES', 'my-query')
     })

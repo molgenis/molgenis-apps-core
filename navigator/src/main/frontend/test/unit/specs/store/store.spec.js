@@ -85,11 +85,23 @@ describe('store', function () {
     })
 
     describe('RESET_STATE', function () {
-      it('should clear the state (meaning empty packages, empty path and empty entities)', function () {
-        store.dispatch('RESET_STATE')
-        expect(store.state.packages).to.be.empty
-        expect(store.state.path).to.be.empty
-        expect(store.state.enties).to.be.empty
+      it('should place the root level packages on the state and clear the path en entities ', function (done) {
+        const child = {id: 'c1', label: 'child', parent: 'parent'}
+        const root1 = {id: 'r1', label: 'root1'}
+        const root2 = {id: 'r2', label: 'root2'}
+        const apiResponse = {
+          items: [child, root1, root2]
+        }
+        let getSuccess = Promise.resolve(apiResponse)
+        get.onFirstCall().returns(getSuccess)
+        store.dispatch('RESET_STATE').then(function () {
+          expect(store.state.packages.length).to.equal(2)
+          expect(store.state.packages[0]).to.equal(root1)
+          expect(store.state.packages[1]).to.equal(root2)
+          expect(store.state.path).to.be.empty
+          expect(store.state.enties).to.be.empty
+          done()
+        })
       })
     })
 
