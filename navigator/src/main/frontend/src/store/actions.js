@@ -26,6 +26,7 @@ function resetToHome (commit: Function, packages: Array<Package>) {
  * @param packages, the complete list of packages
  * @param currentPackage, the tail
  * @param path the path where building
+ * @returns path, in order array of packages (grandparent, parent, child, ....)
  */
 function buildPath (packages, currentPackage: Package, path: Array<Package>) {
   if (currentPackage.parent) {
@@ -54,6 +55,10 @@ function toEntity (item:any) {
   }
 }
 
+/**
+ * Get all ( first 1000 ) packages from the server
+ * @returns {Promise}, on success resolves to list of 'all' packages, on failure resolves to error message
+ */
 function getAllPackages () {
   return new Promise((resolve, reject) => {
     const uri = '/sys_md_Package?sort=label&num=1000'
@@ -65,6 +70,11 @@ function getAllPackages () {
   })
 }
 
+/**
+ * Query's the server of ( first 1000 ) packages.
+ * Packages are returned if query matches id, description or label
+ * @returns {Promise}, on success resolves to list of matching packages, on failure resolves to error message
+ */
 function queryPackages (query: string) {
   return new Promise((resolve, reject) => {
     const uri = '/sys_md_Package?sort=label&num=1000&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
