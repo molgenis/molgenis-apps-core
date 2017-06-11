@@ -54,20 +54,48 @@ function toEntity (item:any) {
   }
 }
 
+function getAllPackages () {
+  return new Promise((resolve, reject) => {
+    const uri = '/sys_md_Package?sort=label&num=1000'
+    get({apiUrl: '/api/v2'}, uri).then((response) => {
+      resolve(response.items)
+    }).catch((error) => {
+      reject(error.errors[0].message)
+    })
+  })
+}
+
+function queryPackages (query: string) {
+  return new Promise((resolve, reject) => {
+    const uri = '/sys_md_Package?sort=label&num=1000&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
+    get({apiUrl: '/api/v2'}, uri).then((response) => {
+      resolve(response.items)
+    }).catch((error) => {
+      reject(error.errors[0].message)
+    })
+  })
+}
+
 export default {
   [QUERY_PACKAGES] ({commit}: { commit: Function }, query: ?string) {
-    query = query || ''
-    const uri = query ? '/sys_md_Package?sort=label&num=1000&q=id=q=' + query + ',description=q=' + query + ',label=q=' + query
-      : '/sys_md_Package?sort=label'
-
     return new Promise((resolve, reject) => {
-      get({apiUrl: '/api/v2'}, uri).then((response) => {
-        commit(SET_PACKAGES, response.items)
-        resolve()
-      }).catch((error) => {
-        commit(SET_ERROR, error.errors[0].message)
-        reject()
-      })
+      if (!query) {
+        getAllPackages().then(packages => {
+          commit(SET_PACKAGES, packages)
+          resolve()
+        }, errorMessage => {
+          commit(SET_ERROR, errorMessage)
+          reject()
+        })
+      } else {
+        queryPackages(query).then(packages => {
+          commit(SET_PACKAGES, packages)
+          resolve()
+        }, errorMessage => {
+          commit(SET_ERROR, errorMessage)
+          reject()
+        })
+      }
     })
   },
   [QUERY_ENTITIES] ({commit}: { commit: Function }, query: string) {
