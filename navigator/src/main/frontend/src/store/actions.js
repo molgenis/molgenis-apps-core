@@ -11,12 +11,16 @@ export const GET_STATE_FOR_PACKAGE = 'GET_STATE_FOR_PACKAGE'
 export const GET_ENTITIES_IN_PACKAGE = 'GET_ENTITIES_IN_PACKAGE'
 
 /**
- * Resets the entire state using the given packages as the package state
+ * Resets the entire state using the given packages as the package state.
+ * Only top level packages are set
  * @param commit, reference to mutation function
  * @param packages, the complete list of packages
  */
 function resetToHome (commit: Function, packages: Array<Package>) {
-  commit(SET_PACKAGES, packages)
+  const homePackages = packages.filter(function (packageItem) {
+    return !packageItem.hasOwnProperty('parent')
+  })
+  commit(SET_PACKAGES, homePackages)
   commit(RESET_PATH)
   commit(SET_ENTITIES, [])
 }
@@ -137,13 +141,19 @@ export default {
     })
   },
   [RESET_STATE] ({commit}: { commit: Function }) {
-    resetToHome(commit, [])
+    return new Promise((resolve, reject) => {
+      getAllPackages().then(allPackages => {
+        resetToHome(commit, allPackages)
+        resolve()
+      }, errorMessage => {
+        commit(SET_ERROR, errorMessage)
+        reject()
+      })
+    })
   },
   [GET_STATE_FOR_PACKAGE] ({commit, dispatch}: { commit: Function, dispatch: Function }, selectedPackageId: ?string) {
     return new Promise((resolve, reject) => {
-      get({apiUrl: '/api/v2'}, '/sys_md_Package?sort=label&num=1000').then((response) => {
-        const allPackages = response.items
-
+      getAllPackages().then(allPackages => {
         if (!selectedPackageId) {
           resetToHome(commit, allPackages)
         } else {
@@ -167,8 +177,8 @@ export default {
             dispatch(GET_ENTITIES_IN_PACKAGE, selectedPackageId).then(resolve)
           }
         }
-      }).catch((error) => {
-        commit(SET_ERROR, error.errors[0].message)
+      }, errorMessage => {
+        commit(SET_ERROR, errorMessage)
         reject()
       })
     })
