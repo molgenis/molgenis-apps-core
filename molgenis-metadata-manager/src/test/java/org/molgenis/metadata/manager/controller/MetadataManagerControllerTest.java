@@ -1,5 +1,8 @@
 package org.molgenis.metadata.manager.controller;
 
+import org.mockito.Mock;
+import org.molgenis.ui.menu.Menu;
+import org.molgenis.ui.menu.MenuReaderService;
 import org.molgenis.util.GsonConfig;
 import org.molgenis.util.GsonHttpMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,11 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -26,12 +33,22 @@ public class MetadataManagerControllerTest extends AbstractTestNGSpringContextTe
 
 	private MockMvc mockMvc;
 
+	@Mock
+	private MenuReaderService menuReaderService;
+
 	@BeforeMethod
 	public void setUpBeforeMethod()
 	{
+		initMocks(this);
+
 		FreeMarkerViewResolver freeMarkerViewResolver = new FreeMarkerViewResolver();
 		freeMarkerViewResolver.setSuffix(".ftl");
-		MetadataManagerController metadataEditorController = new MetadataManagerController();
+
+		Menu menu = mock(Menu.class);
+		when(menu.findMenuItemPath(MetadataManagerController.METADATA_MANAGER)).thenReturn("/test/path");
+		when(menuReaderService.getMenu()).thenReturn(menu);
+
+		MetadataManagerController metadataEditorController = new MetadataManagerController(menuReaderService);
 
 		mockMvc = MockMvcBuilders.standaloneSetup(metadataEditorController)
 				.setMessageConverters(new FormHttpMessageConverter(), gsonHttpMessageConverter).build();
@@ -41,6 +58,6 @@ public class MetadataManagerControllerTest extends AbstractTestNGSpringContextTe
 	public void testInit() throws Exception
 	{
 		this.mockMvc.perform(get("/plugin/metadata-manager")).andExpect(status().isOk())
-				.andExpect(view().name("view-metadata-manager"));
+				.andExpect(view().name("view-metadata-manager")).andExpect(model().attribute("baseUrl", "/test/path"));
 	}
 }
