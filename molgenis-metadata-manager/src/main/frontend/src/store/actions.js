@@ -14,7 +14,7 @@ export default {
    */
   [GET_PACKAGES] ({commit}) {
     // TODO filter system packages
-    get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages')
+    get({apiUrl: '/metadata-manager-service'}, '/editorPackages')
       .then(response => {
         commit(SET_PACKAGES, response)
       }, error => {
@@ -53,7 +53,7 @@ export default {
    * @param entityTypeID The selected EntityType identifier
    */
   [GET_ENTITY_TYPE_BY_ID] ({commit}, entityTypeID) {
-    get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID)
+    get({apiUrl: '/metadata-manager-service'}, '/entityType/' + entityTypeID)
       .then(response => {
         commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
       }, error => {
@@ -64,7 +64,7 @@ export default {
       })
   },
   [CREATE_ENTITY_TYPE] ({commit}) {
-    get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')
+    get({apiUrl: '/metadata-manager-service'}, '/create/entityType')
       .then(response => {
         commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
       }, error => {
@@ -86,7 +86,7 @@ export default {
    * @param updatedEditorEntityType the updated EditorEntityType
    */
   [SAVE_EDITOR_ENTITY_TYPE] ({commit, dispatch}, updatedEditorEntityType) {
-    post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
+    post({apiUrl: '/metadata-manager-service'}, '/entityType', updatedEditorEntityType)
       .then(response => {
         commit(CREATE_ALERT, {
           type: 'success',
