@@ -31,15 +31,7 @@ export default {
     // TODO can we filter system entities with REST call??
     get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
       .then(response => {
-        const nonSystemEntities = response.items.filter(function (item) {
-          // TODO we should filter on parent package is sys, a user can also select a package name starting with sys_
-          if (item.package) {
-            return !item.package.id.startsWith('sys_')
-          } else {
-            return true
-          }
-        })
-        commit(SET_ENTITY_TYPES, nonSystemEntities)
+        commit(SET_ENTITY_TYPES, response.items)
       }, error => {
         commit(CREATE_ALERT, {
           type: 'danger',
