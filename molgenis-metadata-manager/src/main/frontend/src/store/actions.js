@@ -1,5 +1,5 @@
 // $FlowFixMe
-import {get, post} from 'molgenis-api-client'
+import { get, post } from 'molgenis-api-client'
 import { CREATE_ALERT, SET_EDITOR_ENTITY_TYPE, SET_ENTITY_TYPES, SET_PACKAGES } from './mutations'
 
 export const GET_PACKAGES = '__GET_PACKAGES__'
@@ -32,7 +32,12 @@ export default {
     get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
       .then(response => {
         const nonSystemEntities = response.items.filter(function (item) {
-          return !item.package.id.startsWith('sys')
+          // TODO we should filter on parent package is sys, a user can also select a package name starting with sys_
+          if (item.package) {
+            return !item.package.id.startsWith('sys_')
+          } else {
+            return true
+          }
         })
         commit(SET_ENTITY_TYPES, nonSystemEntities)
       }, error => {
