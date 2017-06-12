@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a class="btn pull-left" href="/">
+    <a class="btn" href="/">
       <i class="fa fa-chevron-left" aria-hidden="true"></i> back to home
     </a>
     <h1 style="padding-top: 1rem; text-align: center">Navigator</h1>
