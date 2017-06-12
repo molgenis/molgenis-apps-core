@@ -43,10 +43,7 @@
     <b-table bordered :items="items" :fields="fields" :filter="filter" class="text-left">
       <template slot="label" scope="label" >
         <span v-if="label.item.type === 'entity'">
-            <span v-if="label.item.abstract">
-              {{label.item.label}} (abstract)
-            </span>
-            <a v-else :href="'/menu/main/dataexplorer?entity=' + label.item.id" target="_blank">
+            <a :href="'/menu/main/dataexplorer?entity=' + label.item.id" target="_blank">
               <i class="fa fa-list" aria-hidden="true"></i> {{label.item.label}}
             </a>
           </span>
