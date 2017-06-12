@@ -1,3 +1,4 @@
+<#include "resource-macros.ftl"><#include "resource-macros.ftl">
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,13 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/js/favicon.ico">
-    <link href="/css/navigator/app.css" rel="stylesheet">
+    <link href="<@resource_href "/css/navigator/app.css" />" rel="stylesheet">
 </head>
 <body>
 <div id="app">
 </div>
-<script type=text/javascript src=/js/navigator/manifest.js></script>
-<script type=text/javascript src=/js/navigator/vendor.js></script>
-<script type=text/javascript src=/js/navigator/app.js></script>
+<script type=text/javascript src="<@resource_href "/js/navigator/manifest.js"/>"></script>
+<script type=text/javascript src="<@resource_href "/js/navigator/vendor.js"/>"></script>
+<script type=text/javascript src="<@resource_href "/js/navigator/app.js"/>"></script>
 </body>
 </html>
