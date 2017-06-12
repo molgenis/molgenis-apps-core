@@ -60,7 +60,7 @@
     </build>
 
     <dependencies>
-        <!-- Spring dependencies -->
+        <!-- MOLGENIS platform dependencies -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -272,6 +272,13 @@
         <dependency>
             <groupId>org.molgenis</groupId>
             <artifactId>molgenis-navigator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Project dependencies -->
+        <dependency>
+            <groupId>org.molgenis</groupId>
+            <artifactId>molgenis-metadata-manager</artifactId>
             <version>${project.version}</version>
         </dependency>
 
