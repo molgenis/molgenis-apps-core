@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MetadataManagerContainer from 'components/MetadataManagerContainer'
 Vue.use(Router)
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
