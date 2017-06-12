@@ -14,9 +14,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Configuration
 @EnableWebMvc
@@ -40,17 +38,14 @@ public class NavigatorControllerTest
 		mockMvc = MockMvcBuilders.standaloneSetup(navigatorController).build();
 	}
 
-
 	/**
 	 * Test that a get call to the plugin returns the correct view
 	 */
 	@Test
 	public void testInit() throws Exception
 	{
-		mockMvc.perform(get(NavigatorController.URI))
-				.andExpect(status().isOk())
-				.andExpect(view().name("view-navigator"))
-				.andExpect(model().attribute("baseUrl", "/test/path"));
+		mockMvc.perform(get(NavigatorController.URI)).andExpect(status().isOk())
+				.andExpect(view().name("view-navigator")).andExpect(model().attribute("baseUrl", "/test/path"));
 	}
 
 }
