@@ -1,11 +1,91 @@
 <template>
-  <div>
-    Attribute edit stuff here
+  <div class="row">
+    <div class="col-md-3 attribute-tree">
+      <attribute-tree :selectedAttribute="selectedAttribute" :attributes="attributeTree" :onAttributeSelect="onAttributeSelect"></attribute-tree>
+      <p v-if="editorEntityType.parent !== undefined">
+        Parent attributes from <strong>{{editorEntityType.parent.label}}:</strong><br>
+        <span v-for="attribute in editorEntityType.parent.attributes">{{attribute.label}}</span>
+      </p>
+    </div>
+
+    <div class="col-md-9 attribute-edit-form" v-if="selectedAttribute !== undefined">
+      <div class="row">
+        <div class="col">
+          <strong>Attribute:</strong> {{selectedAttribute.label}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="form-group row">
+            <label for="editor-entity-type-label" class="col-4 col-form-label">Label</label>
+            <div class="col">
+              <input :value="selectedAttribute.label" @input="updateLabel" class="form-control" type="text"
+                     id="editor-entity-type-label">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="editor-entity-type-description" class="col-4 col-form-label">Description</label>
+            <div class="col">
+              <input :value="selectedAttribute.description" @input="updateDescription" class="form-control"
+                     type="text"
+                     id="editor-entity-type-description">
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <!-- TODO nullable, auto, visible, unique, read-only, aggregatable -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
+<style>
+  /*screen-md border on inner column when columns aligned next to each other*/
+  @media (min-width: 768px) {
+    .col-md-3.attribute-tree {
+      border-right: solid black thin;
+    }
+  }
+</style>
+
 <script>
+  import AttributeTree from './generic-components/AttributeTree'
+  import { SET_SELECTED_ATTRIBUTE_ID } from '../store/mutations'
+  import { mapGetters } from 'vuex'
+
   export default {
-    name: 'metadata-manager-attribute-edit-form'
+    name: 'metadata-manager-attribute-edit-form',
+    methods: {
+      onAttributeSelect: function (selectedAttribute) {
+        this.$store.commit(SET_SELECTED_ATTRIBUTE_ID, selectedAttribute.id)
+      },
+      updateLabel: function (event) {
+        this.selectedAttribute.label = event.target.value
+        // this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'label', value: event.target.value})
+      },
+      updateDescription: function (event) {
+        this.selectedAttribute.description = event.target.value
+        // this.$store.commit(UPDATE_EDITOR_ENTITY_TYPE, {key: 'description', value: event.target.value})
+      }
+    },
+    computed: {
+      ...mapGetters({
+        editorEntityType: 'getEditorEntityType',
+        attributeTree: 'getAttributeTree',
+        selectedAttribute: 'getSelectedAttribute'
+      })
+    },
+    watch: {
+      editorEntityType: function () {
+        this.selectedAttribute = null
+      }
+    },
+    components: {
+      AttributeTree
+    }
   }
 </script>

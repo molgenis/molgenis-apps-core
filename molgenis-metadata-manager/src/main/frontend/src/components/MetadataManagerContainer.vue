@@ -10,7 +10,7 @@
       <metadata-manager-entity-edit-form v-if="editorEntityType.attributes !== undefined"></metadata-manager-entity-edit-form>
 
       <div slot="footer">
-        <metadata-manager-attribute-edit-form></metadata-manager-attribute-edit-form>
+        <metadata-manager-attribute-edit-form v-if="editorEntityType.attributes !== undefined"></metadata-manager-attribute-edit-form>
       </div>
     </b-card>
   </div>

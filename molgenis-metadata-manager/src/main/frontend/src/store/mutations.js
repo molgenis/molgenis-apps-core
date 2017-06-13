@@ -6,6 +6,7 @@ export const SET_ENTITY_TYPES = '__SET_ENTITY_TYPES__'
 export const SET_EDITOR_ENTITY_TYPE = '__SET_EDITOR_ENTITY_TYPE__'
 export const CLEAR_EDITOR_ENTITY_TYPE = '__CLEAR_EDITOR_ENTITY_TYPE__'
 export const UPDATE_EDITOR_ENTITY_TYPE = '__UPDATE_EDITOR_ENTITY_TYPE__'
+export const SET_SELECTED_ATTRIBUTE_ID = '__SET_SELECTED_ATTRIBUTE_ID__'
 
 export default {
   [SET_PACKAGES] (state, packages) {
@@ -29,5 +30,8 @@ export default {
   },
   [UPDATE_EDITOR_ENTITY_TYPE] (state, update) {
     state.editorEntityType[update.key] = update.value
+  },
+  [SET_SELECTED_ATTRIBUTE_ID] (state, selectedAttributeId) {
+    state.selectedAttributeId = selectedAttributeId
   }
 }
