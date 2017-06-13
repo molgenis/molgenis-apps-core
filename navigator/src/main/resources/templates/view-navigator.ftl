@@ -12,6 +12,7 @@
 </head>
 <body>
     <div id="app"></div>
+
     <script type="text/javascript">
         window.__INITIAL_STATE__ = {
             baseUrl: '${baseUrl}'
