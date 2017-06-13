@@ -14,7 +14,7 @@ export default {
    */
   [GET_PACKAGES] ({commit}) {
     // TODO filter system packages
-    get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages')
+    get({apiUrl: '/metadata-manager-service'}, '/editorPackages')
       .then(response => {
         commit(SET_PACKAGES, response)
       }, error => {
@@ -31,15 +31,7 @@ export default {
     // TODO can we filter system entities with REST call??
     get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000')
       .then(response => {
-        const nonSystemEntities = response.items.filter(function (item) {
-          // TODO we should filter on parent package is sys, a user can also select a package name starting with sys_
-          if (item.package) {
-            return !item.package.id.startsWith('sys_')
-          } else {
-            return true
-          }
-        })
-        commit(SET_ENTITY_TYPES, nonSystemEntities)
+        commit(SET_ENTITY_TYPES, response.items)
       }, error => {
         commit(CREATE_ALERT, {
           type: 'danger',
@@ -53,7 +45,7 @@ export default {
    * @param entityTypeID The selected EntityType identifier
    */
   [GET_ENTITY_TYPE_BY_ID] ({commit}, entityTypeID) {
-    get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID)
+    get({apiUrl: '/metadata-manager-service'}, '/entityType/' + entityTypeID)
       .then(response => {
         commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
       }, error => {
@@ -64,7 +56,7 @@ export default {
       })
   },
   [CREATE_ENTITY_TYPE] ({commit}) {
-    get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')
+    get({apiUrl: '/metadata-manager-service'}, '/create/entityType')
       .then(response => {
         commit(SET_EDITOR_ENTITY_TYPE, response.entityType)
       }, error => {
@@ -86,7 +78,7 @@ export default {
    * @param updatedEditorEntityType the updated EditorEntityType
    */
   [SAVE_EDITOR_ENTITY_TYPE] ({commit, dispatch}, updatedEditorEntityType) {
-    post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType)
+    post({apiUrl: '/metadata-manager-service'}, '/entityType', updatedEditorEntityType)
       .then(response => {
         commit(CREATE_ALERT, {
           type: 'success',

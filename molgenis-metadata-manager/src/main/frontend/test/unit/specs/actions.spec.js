@@ -25,7 +25,7 @@ describe('actions', () => {
         label: 'root_hospital'
       }]
       const get = td.function('api.get')
-      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages'))
+      td.when(get({apiUrl: '/metadata-manager-service'}, '/editorPackages'))
         .thenResolve(mockedResponse)
       td.replace(api, 'get', get)
       const payload = [{id: 'base', label: 'Default'}, {id: 'root', label: 'root'}, {
@@ -42,7 +42,7 @@ describe('actions', () => {
         }]
       }
       const get = td.function('api.get')
-      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/editorPackages'))
+      td.when(get({apiUrl: '/metadata-manager-service'}, '/editorPackages'))
         .thenReject(mockedResponse)
 
       td.replace(api, 'get', get)
@@ -143,38 +143,7 @@ describe('actions', () => {
       td.when(get({apiUrl: '/api'}, '/v2/sys_md_EntityType?num=10000'))
         .thenResolve(mockedResponse)
       td.replace(api, 'get', get)
-      const payload = [{
-        attributes: [
-          {
-            id: 'aaacxdc2l72fkrvac3owhyaae',
-            name: 'id',
-            _href: '/api/v2/sys_md_Attribute/aaaacxdc2l72fkrvac3owhyaae'
-          }, {
-            id: 'aaaacxdc2l72fkrvac3owhyaai',
-            name: 'firstName',
-            _href: '/api/v2/sys_md_Attribute/aaaacxdc2l72fkrvac3owhyaai'
-          }, {
-            id: 'aaaacxdc2l72fkrvac3owhyaam',
-            name: 'lastName',
-            _href: '/api/v2/sys_md_Attribute/aaaacxdc2l72fkrvac3owhyaam'
-          }, {
-            id: 'aaaacxdc2l72fkrvac3owhyaaq',
-            name: 'present',
-            _href: '/api/v2/sys_md_Attribute/aaaacxdc2l72fkrvac3owhyaaq'
-          }, {
-            id: 'aaaacxdc2l72fkrvac3owhyaau',
-            name: 'extra',
-            _href: '/api/v2/sys_md_Attribute/aaaacxdc2l72fkrvac3owhyaau'
-          }],
-        isAbstract: false,
-        backend: 'PostgreSQL',
-        label: 'borrel',
-        id: 'demo_borrel',
-        package: {id: 'demo', label: 'demo', _href: '/api/v2/sys_md_Package/demo'},
-        tags: [],
-        _href: '/api/v2/demo_borrel'
-      }]
-      testAction(actions.__GET_ENTITY_TYPES__, null, state, [{type: SET_ENTITY_TYPES, payload: payload}], [], done)
+      testAction(actions.__GET_ENTITY_TYPES__, null, state, [{type: SET_ENTITY_TYPES, payload: mockedResponse.items}], [], done)
     })
     it('Should create alert when failing', done => {
       const mockedResponse = {
@@ -260,7 +229,7 @@ describe('actions', () => {
       }
       const entityTypeID = 'root_gender'
       const get = td.function('api.get')
-      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID))
+      td.when(get({apiUrl: '/metadata-manager-service'}, '/entityType/' + entityTypeID))
         .thenResolve(mockedResponse)
       td.replace(api, 'get', get)
       const payload = {
@@ -325,7 +294,7 @@ describe('actions', () => {
       }
       const entityTypeID = 'root_gender'
       const get = td.function('api.get')
-      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/entityType/' + entityTypeID))
+      td.when(get({apiUrl: '/metadata-manager-service'}, '/entityType/' + entityTypeID))
         .thenReject(mockedResponse)
       td.replace(api, 'get', get)
       const payload = {
@@ -364,7 +333,7 @@ describe('actions', () => {
         languageCodes: ['en', 'nl', 'de', 'es', 'it', 'pt', 'fr', 'xx']
       }
       const get = td.function('api.get')
-      td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType'))
+      td.when(get({apiUrl: '/metadata-manager-service'}, '/create/entityType'))
         .thenResolve(mockedResponse)
       td.replace(api, 'get', get)
       const payload = {
@@ -385,7 +354,7 @@ describe('actions', () => {
     it('Should create alert when failing', done => {
       const mockedResponse = 'SyntaxError: Unexpected token < in JSON at position 0'
       const get = td.function('api.get')
-      td.when(td.when(get({apiUrl: '/plugin/metadata-manager'}, '/create/entityType')))
+      td.when(td.when(get({apiUrl: '/metadata-manager-service'}, '/create/entityType')))
         .thenReject(mockedResponse)
       td.replace(api, 'get', get)
       const payload = {
@@ -516,7 +485,7 @@ describe('actions', () => {
         tags: []
       }
       const post = td.function('api.post')
-      td.when(post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType))
+      td.when(post({apiUrl: '/metadata-manager-service'}, '/entityType', updatedEditorEntityType))
         .thenResolve(mockedResponse)
       td.replace(api, 'post', post)
       const payload = {
@@ -564,7 +533,7 @@ describe('actions', () => {
         tags: []
       }
       const post = td.function('api.post')
-      td.when(post({apiUrl: '/plugin/metadata-manager'}, '/entityType', updatedEditorEntityType))
+      td.when(post({apiUrl: '/metadata-manager-service'}, '/entityType', updatedEditorEntityType))
         .thenReject(mockedResponse)
       td.replace(api, 'post', post)
       const payload = {

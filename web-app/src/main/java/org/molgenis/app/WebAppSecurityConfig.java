@@ -55,11 +55,7 @@ public class WebAppSecurityConfig extends MolgenisWebAppSecurityConfig
 
 				.antMatchers("/annotators/**").authenticated()
 
-				.antMatchers("/omim/**").authenticated()
-
-				.antMatchers("/phenotips/**").authenticated()
-
-				.antMatchers("/metadata-manager/**").authenticated()
+				.antMatchers("/metadata-manager-service/**").authenticated()
 
 				.antMatchers("/charts/**").authenticated();
 	}
