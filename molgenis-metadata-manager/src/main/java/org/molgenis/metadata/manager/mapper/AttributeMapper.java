@@ -160,6 +160,7 @@ public class AttributeMapper
 		attribute.setVisibleExpression(editorAttribute.getVisibleExpression());
 		attribute.setValidationExpression(editorAttribute.getValidationExpression());
 		attribute.setDefaultValue(editorAttribute.getDefaultValue());
+		attribute.setParent(attributeReferenceMapper.toAttributeReference(editorAttribute.getParent()));
 		return attribute;
 	}
 
