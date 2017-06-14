@@ -37,7 +37,9 @@ export default (action, payload, state, expectedMutations, expectedActions, done
       done()
     }
   }
+
   action({commit, dispatch, state}, payload)
+
   if (expectedMutations.length === 0 && expectedActions.length === 0) {
     expect(mutationCount).to.equal(0)
     expect(actionCount).to.equal(0)

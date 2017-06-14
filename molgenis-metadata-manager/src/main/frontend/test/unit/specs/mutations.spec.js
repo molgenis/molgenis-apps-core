@@ -13,6 +13,7 @@ describe('mutations', () => {
       expect(state.packages).to.equal(packages)
     })
   })
+
   describe('Testing mutation CREATE_ALERT', () => {
     it('Updates alert message', () => {
       const state = {
@@ -104,6 +105,7 @@ describe('mutations', () => {
       expect(state.entityTypes).to.equal(entityTypes)
     })
   })
+
   describe('Testing mutation SET_EDITOR_ENTITY_TYPE', () => {
     it('Sets selected entity type to edit', () => {
       const state = {
@@ -161,6 +163,7 @@ describe('mutations', () => {
       expect(state.editorEntityType).to.equal(editorEntityType)
     })
   })
+
   describe('Testing mutation CLEAR_EDITOR_ENTITY_TYPE', () => {
     it('Clears the selected entity type', () => {
       const state = {
@@ -217,6 +220,7 @@ describe('mutations', () => {
       expect(state.editorEntityType).to.deep.equal({})
     })
   })
+
   describe('Testing mutation UPDATE_EDITOR_ENTITY_TYPE', () => {
     it('Updates an altered value of the selected entity type', () => {
       const state = {
@@ -275,6 +279,17 @@ describe('mutations', () => {
       }
       mutations.__UPDATE_EDITOR_ENTITY_TYPE__(state, update)
       expect(state.editorEntityType.description).to.equal('Option-selection-list for gender')
+    })
+  })
+
+  describe('Testing mutation SET_SELECTED_ATTRIBUTE_ID', () => {
+    it('Updates the selected attribute ID', () => {
+      const state = {
+        selectedAttributeId: null
+      }
+      const id = 'newAttributeId'
+      mutations.__SET_SELECTED_ATTRIBUTE_ID__(state, id)
+      expect(state.selectedAttributeId).to.equal('newAttributeId')
     })
   })
 })
