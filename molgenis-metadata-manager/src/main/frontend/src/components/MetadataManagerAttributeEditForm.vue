@@ -8,6 +8,7 @@
 
       <attribute-tree :selectedAttribute="selectedAttribute" :attributes="attributeTree"
                       :onAttributeSelect="onAttributeSelect"></attribute-tree>
+
       <p v-if="editorEntityType.parent !== undefined">
         Parent attributes from <strong>{{editorEntityType.parent.label}}:</strong><br>
         <span v-for="attribute in editorEntityType.parent.attributes">{{attribute.label}}</span>
@@ -39,6 +40,15 @@
                      type="text"
                      id="editor-entity-type-description">
             </div>
+
+            <!--<div class="form-group row">-->
+            <!--<label class="col-4 col-form-label">Package</label>-->
+            <!--<div class="col">-->
+            <!--<entity-select-box id="package-select" :value="attribute.type" :options="attributeTypes"-->
+            <!--:onChange="updatePackage"></entity-select-box>-->
+            <!--</div>-->
+            <!--</div>-->
+
           </div>
         </div>
 
@@ -89,7 +99,8 @@
       ...mapGetters({
         editorEntityType: 'getEditorEntityType',
         attributeTree: 'getAttributeTree',
-        selectedAttribute: 'getSelectedAttribute'
+        selectedAttribute: 'getSelectedAttribute',
+        attributeTypes: 'getAttributeTypes'
       })
     },
     watch: {

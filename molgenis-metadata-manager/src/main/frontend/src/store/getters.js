@@ -7,6 +7,11 @@ export default {
    * Return the entityTypes from the state
    */
   getEntityTypes: state => state.entityTypes,
+  /**
+   * Return the attributeTypes from the state
+   */
+  getAttributeTypes: state => state.attributeTypes,
+  /**
    * Return the entire entityType object based on the EntityTypeID in the URL
    */
   getSelectedEntityType: state => {

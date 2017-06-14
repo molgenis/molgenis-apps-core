@@ -7,6 +7,7 @@ export const GET_ENTITY_TYPES = '__GET_ENTITY_TYPES__'
 export const GET_ENTITY_TYPE_BY_ID = '__GET_ENTITY_TYPE_BY_ID__'
 export const CREATE_ENTITY_TYPE = '__CREATE_ENTITY_TYPE__'
 export const SAVE_EDITOR_ENTITY_TYPE = '__SAVE_EDITOR_ENTITY_TYPE__'
+export const GET_ATTRIBUTE_TYPES = '__GET_ATTRIBUTE_TYPES__'
 
 export default {
   /**
@@ -40,6 +41,20 @@ export default {
       })
   },
   /**
+   * Retrieve all Attribute types
+   */
+  [GET_ATTRIBUTE_TYPES] ({commit}) {
+    get({apiUrl: '/api'}, '/v2/sys_md_Attribute/meta/type')
+      .then(response => {
+        response.enumOptions
+      }, error => {
+        commit(CREATE_ALERT, {
+          type: 'danger',
+          message: error.errors[0].message
+        })
+      })
+  },
+  /**
    * Retrieve EditorEntityType based on EntityType ID
    *
    * @param entityTypeID The selected EntityType identifier
@@ -55,6 +70,10 @@ export default {
         })
       })
   },
+  /**
+   * Create a new EntityType
+   * Response returns an blank EditorEntityType
+   */
   [CREATE_ENTITY_TYPE] ({commit}) {
     get({apiUrl: '/metadata-manager-service'}, '/create/entityType')
       .then(response => {

@@ -22,7 +22,7 @@
   import MetadataManagerEntityEditForm from './MetadataManagerEntityEditForm'
   import MetadataManagerAttributeEditForm from './MetadataManagerAttributeEditForm'
 
-  import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID, GET_PACKAGES } from '../store/actions'
+  import { GET_ENTITY_TYPES, GET_ENTITY_TYPE_BY_ID, GET_PACKAGES, GET_ATTRIBUTE_TYPES } from '../store/actions'
   import { REMOVE_ALERT, SET_SELECTED_ATTRIBUTE_ID } from '../store/mutations'
   import { mapGetters } from 'vuex'
 
@@ -52,7 +52,10 @@
       // Retrieve packages for package select
       this.$store.dispatch(GET_PACKAGES)
 
-      // Retrieve editorEntityType for selected entityTypeID
+      // Retrieve attribute types for Type selection
+      this.$store.dispatch(GET_ATTRIBUTE_TYPES)
+
+      // Retrieve editorEntityType for entityType ID in URL
       const entityTypeID = this.$route.params.entityTypeID
       if (entityTypeID !== undefined) {
         this.$store.dispatch(GET_ENTITY_TYPE_BY_ID, entityTypeID)

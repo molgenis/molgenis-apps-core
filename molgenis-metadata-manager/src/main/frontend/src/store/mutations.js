@@ -1,5 +1,6 @@
 export const SET_PACKAGES = '__SET_PACKAGES__'
 export const SET_ENTITY_TYPES = '__SET_ENTITY_TYPES__'
+export const SET_ATTRIBUTE_TYPES = '__SET_ATTRIBUTE_TYPES__'
 export const SET_EDITOR_ENTITY_TYPE = '__SET_EDITOR_ENTITY_TYPE__'
 export const CLEAR_EDITOR_ENTITY_TYPE = '__CLEAR_EDITOR_ENTITY_TYPE__'
 export const UPDATE_EDITOR_ENTITY_TYPE = '__UPDATE_EDITOR_ENTITY_TYPE__'
@@ -14,6 +15,9 @@ export default {
   },
   [SET_ENTITY_TYPES] (state, entityTypes) {
     state.entityTypes = entityTypes
+  },
+  [SET_ATTRIBUTE_TYPES] (state, attributeTypes) {
+    state.attributeTypes = attributeTypes
   },
   [SET_EDITOR_ENTITY_TYPE] (state, editorEntityType) {
     state.editorEntityType = editorEntityType
