@@ -144,6 +144,7 @@ public class AttributeMapperTest
 		verify(attribute).setIdentifier(id);
 		verify(attribute).setName(name);
 		verify(attribute).setEntity(entityType);
+		verify(attribute).setParent(parentAttribute);
 		verify(attribute).setSequenceNumber(0);
 		verify(attribute).setDataType(STRING);
 		verify(attribute).setIdAttribute(true);

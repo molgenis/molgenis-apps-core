@@ -7,7 +7,9 @@ const state = {
   },
   packages: [],
   entityTypes: [],
-  editorEntityType: {}
+  attributeTypes: [],
+  editorEntityType: {},
+  selectedAttributeId: null
 }
 
 export default state

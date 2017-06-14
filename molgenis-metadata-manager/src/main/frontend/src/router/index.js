@@ -17,6 +17,10 @@ export default new Router({
     {
       path: '/:entityTypeID',
       component: MetadataManagerContainer
+    },
+    {
+      path: '/:entityTypeID/:attributeID',
+      component: MetadataManagerContainer
     }
   ]
 })
