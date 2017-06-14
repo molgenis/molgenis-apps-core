@@ -22,6 +22,7 @@
             <div class="col">
               {{selectedAttribute.label}}
             </div>
+          </div>
 
           <div class="form-group row">
             <label for="editor-entity-type-label" class="col-4 col-form-label">Label</label>
