@@ -1,8 +1,5 @@
 <template>
   <div>
-    <strong>Attributes</strong>
-    <button class="btn btn-primary btn-sm float-right">Add attribute</button>
-    <hr>
     <b-card>
       <ul class="fa-ul">
         <attribute-tree-node v-for="attribute in attributes" :attribute="attribute" :onAttributeSelect="onAttributeSelect"></attribute-tree-node>

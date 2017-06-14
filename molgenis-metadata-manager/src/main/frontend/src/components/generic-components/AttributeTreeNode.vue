@@ -1,6 +1,9 @@
 <template>
+  <!-- TODO: Buttons for changing order -->
   <li>
-    <span v-bind:class="{ 'selected-attribute-node': attribute.selected }" @click="onAttributeSelect(attribute)"><i v-bind:class="['fa', isFolder ? 'fa-folder-o' : 'fa-columns']"></i> {{attribute.label}}</span>
+    <span v-bind:class="{ 'selected-attribute-node': attribute.selected }" @click="onAttributeSelect(attribute)">
+      <i v-bind:class="['fa', isFolder ? 'fa-folder-o' : 'fa-columns']"></i> {{attribute.label}}
+    </span>
     <ul v-if="isFolder">
       <attribute-tree-node v-for="child in attribute.children" :attribute="child" :onAttributeSelect="onAttributeSelect"></attribute-tree-node>
     </ul>
@@ -11,9 +14,9 @@
   li {
     list-style-type: none;
   }
-  
+
   .selected-attribute-node {
-    background-color: #31b0d5;
+    background-color: #c4e3f3;
   }
 </style>
 

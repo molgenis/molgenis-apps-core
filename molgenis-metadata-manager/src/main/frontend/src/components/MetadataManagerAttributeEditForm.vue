@@ -1,7 +1,13 @@
 <template>
   <div class="row">
     <div class="col-md-3 attribute-tree">
-      <attribute-tree :selectedAttribute="selectedAttribute" :attributes="attributeTree" :onAttributeSelect="onAttributeSelect"></attribute-tree>
+      <strong>Attributes</strong>
+      <button @click="addAttribute" class="btn btn-primary btn-sm float-right">Add attribute</button>
+
+      <hr>
+
+      <attribute-tree :selectedAttribute="selectedAttribute" :attributes="attributeTree"
+                      :onAttributeSelect="onAttributeSelect"></attribute-tree>
       <p v-if="editorEntityType.parent !== undefined">
         Parent attributes from <strong>{{editorEntityType.parent.label}}:</strong><br>
         <span v-for="attribute in editorEntityType.parent.attributes">{{attribute.label}}</span>
@@ -11,12 +17,12 @@
     <div class="col-md-9 attribute-edit-form" v-if="selectedAttribute !== undefined">
       <div class="row">
         <div class="col">
-          <strong>Attribute:</strong> {{selectedAttribute.label}}
-        </div>
-      </div>
+          <div class="form-group row">
+            <label for="editor-entity-type-label" class="col-2 col-form-label">Attribute</label>
+            <div class="col">
+              {{selectedAttribute.label}}
+            </div>
 
-      <div class="row">
-        <div class="col">
           <div class="form-group row">
             <label for="editor-entity-type-label" class="col-4 col-form-label">Label</label>
             <div class="col">
@@ -61,7 +67,13 @@
     name: 'metadata-manager-attribute-edit-form',
     methods: {
       onAttributeSelect: function (selectedAttribute) {
+        // On attribute select, update the path to consist of /<entityTypeID>/<attrributeID>
+        const entityTypeID = this.$route.params.entityTypeID
+        this.$router.push({path: '/' + entityTypeID + '/' + selectedAttribute.id})
         this.$store.commit(SET_SELECTED_ATTRIBUTE_ID, selectedAttribute.id)
+      },
+      addAttribute: function () {
+        alert('Not yet implemented :)')
       },
       updateLabel: function (event) {
         this.selectedAttribute.label = event.target.value
