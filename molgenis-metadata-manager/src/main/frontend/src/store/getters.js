@@ -4,6 +4,9 @@ export default {
    */
   getPackages: state => state.packages,
   /**
+   * Return the entityTypes from the state
+   */
+  getEntityTypes: state => state.entityTypes,
    * Return the entire entityType object based on the EntityTypeID in the URL
    */
   getSelectedEntityType: state => {
@@ -12,10 +15,6 @@ export default {
       return entityType.id === entityTypeID
     })[0]
   },
-  /**
-   * Return the entityTypes from the state
-   */
-  getEntityTypes: state => state.entityTypes,
   /**
    * Return the editorEntityType form the state
    */
